@@ -305,7 +305,8 @@ def _note(store, can_edit, ix, settings):
             existing = any(ss.get(k) for k in W.NOTE_FIELDS)
             replace_ok = True
             if existing:
-                replace_ok = st.checkbox("Replace the current draft text (your edits will be lost)", key="ws_replace_ok")
+                rv = ss.setdefault("ws_rep_v", 0)
+                replace_ok = st.checkbox("Replace the current draft text (your edits will be lost)", key=f"ws_replace_ok_{rv}")
             g1, g2 = st.columns(2)
             with g1:
                 go_ai = st.button("Generate with local AI", type="primary", disabled=not (lm["ready"] and has_text and tr_ok and replace_ok and n_unc == 0), width="stretch")
@@ -386,7 +387,7 @@ def _generate(store, enc_id, settings, use_llm: bool):
     store.save_draft(enc_id, n, method=gen.method, model=gen.model)
     ss["ws_status"] = "note_draft"
     ss["ws_saved"] = {**ss["ws_saved"], "note": W.snap("note")}
-    ss["ws_replace_ok"] = False
+    ss["ws_rep_v"] = ss.get("ws_rep_v", 0) + 1
     C.flash("Draft note generated. It is a DRAFT - review and edit every section." if gen.method == "llm" else "Draft built from your entries without AI. Complete the narrative sections.", "success" if gen.method == "llm" else "warning")
     st.rerun()
 
