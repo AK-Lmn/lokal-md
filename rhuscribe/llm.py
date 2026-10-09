@@ -45,12 +45,18 @@ def status(model: str) -> dict:
     }
 
 
-def chat_json(model: str, system: str, user: str, schema: dict | None, timeout: float = 300, num_ctx: int = 8192) -> str:
+def chat_json(model: str, system: str, user: str, schema: dict | None, timeout: float = 300, num_ctx: int = 4096) -> str:
     payload = {
         "model": model, "stream": False,
         "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
-        "options": {"temperature": 0, "num_ctx": num_ctx, "seed": 7},
-        "format": schema if schema else "json",
+        "options": {
+            "temperature": 0,
+            "num_ctx": num_ctx,
+            "num_predict": 1024,
+            "seed": 7,
+            "stop": ["<|eot_id|>", "<|start_header_id|>", "<|end_header_id|>", "<|end_of_text|>", "</s>"],
+        },
+        "format": "json",
         "keep_alive": "10m",
     }
     out = _req("/api/chat", payload, timeout=timeout)
