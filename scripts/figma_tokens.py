@@ -97,6 +97,8 @@ def main() -> None:
     frame = next((c for c in doc.get("children", []) if c["type"] == "FRAME"), doc) if doc["type"] == "CANVAS" else doc
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "icons").mkdir(exist_ok=True)
+    for stale in (OUT / "icons").glob("*.svg"):  # icons removed in Figma must not shadow stock Lucide ones
+        stale.unlink()
 
     for fmt, extra in (("png", {"scale": 1}), ("svg", {"svg_include_id": "false", "svg_outline_text": "false"})):
         url = _api(f"/images/{file_key}", token, ids=frame["id"], format=fmt, **extra)["images"][frame["id"]]
