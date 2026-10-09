@@ -50,15 +50,27 @@ def render() -> None:
 
     _header(store, enc_id, locked)
     st.markdown(
-        '<div style="margin: 0.1rem 0 0.8rem;">'
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin: 0.2rem 0 0.8rem;">'
+        '<div>'
         '<h2 style="margin:0; font-size:1.5rem; font-weight:700; color:var(--ink);">Clinical workspace</h2>'
         '<div style="color:var(--muted); font-size:0.88rem;">One encounter. From patient intake to clinician approval.</div>'
+        '</div>'
+        '<div style="display:flex; align-items:center; gap:6px; color:#0b6e75; font-size:0.82rem; font-weight:600; background:#edf8f6; padding:4px 10px; border-radius:100px;">'
+        '<span style="width:7px; height:7px; border-radius:50%; background:#0b6e75;"></span> On-device intelligence'
+        '</div>'
         '</div>',
         unsafe_allow_html=True,
     )
     if st.session_state.get("ws_tab_ctl") not in TAB_LABEL:
         st.session_state["ws_tab_ctl"] = "intake"
     tab = st.segmented_control("Workspace section", [k for k, _ in TABS], format_func=lambda k: TAB_LABEL[k], key="ws_tab_ctl", required=True, label_visibility="collapsed") or "intake"
+    
+    st.markdown(
+        '<div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--muted); margin: 0.6rem 0 1rem; padding: 6px 12px; background:#f8fafc; border:1px solid var(--line); border-radius:8px;">'
+        '<span>ℹ️</span> <span>Illustrative clinical encounter. Clinical narrative and medication entries are subject to attending clinician verification.</span>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
     if locked:
         C.banner("This encounter is approved/archived and read-only. Clinicians can start an amendment from 'Review & approve'.", "info", "")
 
@@ -83,14 +95,22 @@ def _header(store, enc_id: str, locked: bool) -> None:
         st.markdown(
             f'<div class="rs-enchead">'
             f'<div style="display:flex; justify-content:space-between; align-items:center;">'
-            f'<div><span style="font-size:1.15rem; font-weight:700; color:var(--ink);">Patient Ref {C.esc(pref or enc_id)}</span> &nbsp; {C.status_chip(status)}'
-            + (C.chip("Unsaved changes", "danger") if dirty else C.chip("All changes saved", "ok") if not locked else "")
-            + f'<div class="meta">{C.esc(age)} · {C.esc(sex)} · {C.esc(ctype)} · Encounter <code>{C.esc(enc_id)}</code></div></div>'
-            f'<div style="display:flex; align-items:center; gap:6px; color:#0b6e75; font-size:0.8rem; font-weight:600;"><span style="width:7px; height:7px; border-radius:50%; background:#0b6e75;"></span> On-device intelligence</div>'
+            f'<div style="display:flex; align-items:center; gap:12px;">'
+            f'<div style="width:36px; height:36px; border-radius:50%; background:#f1f5f9; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:18px;">👤</div>'
+            f'<div>'
+            f'<div style="display:flex; align-items:center; gap:8px;">'
+            f'<span style="font-size:1.15rem; font-weight:700; color:var(--ink);">Patient Ref {C.esc(pref or enc_id)}</span>'
+            f'{C.status_chip(status)}'
+            f'</div>'
+            f'<div class="meta">{C.esc(age)} · {C.esc(sex)} · {C.esc(ctype)} · Encounter <code>{C.esc(enc_id)}</code></div>'
+            f'</div>'
+            f'</div>'
             f'</div></div>',
             unsafe_allow_html=True,
         )
     with c2:
+        saved_text = "Unsaved changes" if dirty else "Saved locally"
+        st.caption(f"💾 {saved_text}")
         if st.button("Save changes", type="primary", disabled=locked or not dirty, width="stretch"):
             save(store)
             st.rerun()
