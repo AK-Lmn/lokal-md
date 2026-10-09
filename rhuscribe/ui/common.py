@@ -62,42 +62,49 @@ def show_flash() -> None:
 CSS = """
 <style>
 :root{
-  --ink:#16252c; --ink2:#34454d; --muted:#586971; --line:#cfd8dd; --line2:#e3e9ec; --bg:#f6f7f8; --card:#ffffff;
-  --accent:#0d6b73; --accent-dark:#09535a; --accent-soft:#e1f0f1; --warm:#e0803a; --blue:#2f6fb5; --green:#2e8b57; --navy:#0b3a46;
-  --ok:#1d6b3f; --warn:#8a5a00; --danger:#a3241d; --info:#1f5a94;
+  --ink:#14262e; --ink2:#34454d; --muted:#52656f; --line:#dce5e9; --line2:#e8eef1; --bg:#f8fafc; --card:#ffffff;
+  --accent:#0b6e75; --accent-dark:#07494e; --accent-soft:#edf8f6; --mint:#2dd4bf; --warm:#e0803a; --blue:#2f6fb5; --green:#1b6b3a; --navy:#07494e;
+  --ok:#1b6b3a; --warn:#95520b; --danger:#a3241d; --info:#1f5a94;
 }
-html, body, .stApp, [class*="css"] { font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; color: var(--ink); }
+html, body, .stApp, [class*="css"] { font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif; color: var(--ink); }
 .stApp { background: var(--bg); }
-.block-container { padding-top: 4.25rem; padding-bottom: 4rem; max-width: 1200px; }
-h1, h2, h3, h4, h5 { color: var(--ink); letter-spacing: 0; }
-h1 { font-size: 1.5rem !important; font-weight: 650 !important; margin-bottom: .2rem; }
-h2 { font-size: 1.2rem !important; font-weight: 650 !important; }
+.block-container { padding-top: 3.8rem; padding-bottom: 4rem; max-width: 1240px; }
+h1, h2, h3, h4, h5 { color: var(--ink); letter-spacing: -0.01em; }
+h1 { font-size: 1.6rem !important; font-weight: 700 !important; margin-bottom: .25rem; }
+h2 { font-size: 1.25rem !important; font-weight: 700 !important; }
 h3 { font-size: 1.05rem !important; font-weight: 650 !important; }
 h4, h5 { font-size: .95rem !important; font-weight: 650 !important; text-transform: none; }
 p, li, label, span { color: inherit; }
 
-/* ---------- sidebar: light, quiet ---------- */
-section[data-testid="stSidebar"] { background: #eef2f3; border-right: 1px solid var(--line); }
+/* ---------- sidebar: clean, crisp, matching Figma design ---------- */
+section[data-testid="stSidebar"] { background: #ffffff; border-right: 1px solid var(--line); }
 section[data-testid="stSidebar"] .stButton > button::before { opacity: .85; }
 section[data-testid="stSidebar"] .stButton > button[kind="primary"]::before { opacity: 1; }
-.rs-brandrow { display:flex; align-items:center; gap:10px; padding: .4rem .5rem .6rem; margin-bottom: .9rem; }
+.rs-brandrow { display:flex; align-items:center; gap:12px; padding: .6rem .6rem .8rem; margin-bottom: .8rem; border-bottom: 1px solid var(--line2); }
 .rs-logo { width: 38px; height: 38px; flex:none; line-height:0; }
-.rs-hero { background: linear-gradient(160deg,#0f7780 0%,#0b3a46 100%); color:#fff; border-radius: 14px; padding: 40px 36px; min-height: 440px; border-bottom: 5px solid var(--warm); }
-.rs-hero h2 { border: 0 !important; padding: 0 !important; margin: 22px 0 12px !important; color:#fff !important; font-size: 1.6rem !important; margin: 18px 0 8px; }
+.rs-hero { background: linear-gradient(160deg,#0b6e75 0%,#042f2e 100%); color:#fff; border-radius: 16px; padding: 42px 38px; min-height: 440px; border-bottom: 5px solid var(--mint); }
+.rs-hero h2 { border: 0 !important; padding: 0 !important; margin: 22px 0 12px !important; color:#fff !important; font-size: 1.7rem !important; margin: 18px 0 8px; }
 .rs-hero p { color: #d7ecee; font-size: .95rem; line-height: 1.55; }
-.rs-tagline { color:#fff; font-size: 1.3rem; font-weight: 600; line-height: 1.35; margin: 0 0 8px; }
-.rs-tagsub { color:#a9d3d7; font-size: .8rem; letter-spacing: .02em; margin-bottom: 4px; }
+.rs-tagline { color:#fff; font-size: 1.35rem; font-weight: 650; line-height: 1.35; margin: 0 0 8px; }
+.rs-tagsub { color:#a9d3d7; font-size: .82rem; letter-spacing: .02em; margin-bottom: 4px; }
 .rs-hero li { color:#eaf6f7; margin: 10px 0; font-size:.93rem; list-style:none; }
 .rs-hero ul { padding: 0; margin: 22px 0 0; }
-section[data-testid="stSidebar"] [data-testid="stVerticalBlock"] { gap: .3rem; }
-section[data-testid="stSidebar"] .stButton > button { width: 100%; justify-content: flex-start; text-align: left; border: 0; border-radius: 6px;
-  background: transparent; color: var(--ink2); padding: .6rem .85rem; font-weight: 500; font-size: .92rem; min-height: 0; }
-section[data-testid="stSidebar"] .stButton > button:hover { background: #dfe5e8; color: var(--ink); }
-section[data-testid="stSidebar"] .stButton > button[kind="primary"] { background: var(--accent); color: #fff; font-weight: 650; box-shadow: 0 1px 3px rgba(13,107,115,.35); }
+section[data-testid="stSidebar"] [data-testid="stVerticalBlock"] { gap: .35rem; }
+section[data-testid="stSidebar"] .stButton > button { width: 100%; justify-content: flex-start; text-align: left; border: 0; border-radius: 10px;
+  background: transparent; color: var(--ink); padding: .62rem .9rem; font-weight: 500; font-size: .92rem; min-height: 42px; }
+section[data-testid="stSidebar"] .stButton > button:hover { background: var(--accent-soft); color: var(--accent-dark); }
+section[data-testid="stSidebar"] .stButton > button[kind="primary"] { background: var(--accent); color: #fff; font-weight: 600; box-shadow: 0 1px 2px rgba(11,110,117,.25); }
 section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover { background: var(--accent-dark); color: #fff; }
-.rs-brand { font-weight: 700; font-size: 1.1rem; color: var(--ink); padding: .2rem .3rem 0; }
-.rs-brand small { display:block; font-weight: 400; font-size: .76rem; color: var(--muted); }
-.rs-navlabel { text-transform: uppercase; font-size: .68rem; letter-spacing: .07em; color: var(--muted); padding: 1.2rem 0 1rem .85rem; font-weight: 600; line-height: 1.3; margin: 0; }
+.rs-brand { font-weight: 700; font-size: 1.15rem; color: var(--ink); padding: .1rem .2rem 0; line-height: 1.25; }
+.rs-brand small { display:block; font-weight: 400; font-size: .75rem; color: var(--muted); margin-top: 2px; }
+.rs-navlabel { text-transform: uppercase; font-size: .68rem; letter-spacing: .08em; color: var(--muted); padding: 1.1rem 0 .5rem .75rem; font-weight: 700; line-height: 1.3; margin: 0; }
+
+/* ---------- offline vault card (Figma spec) ---------- */
+.rs-vault-card { background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 10px 0; }
+.rs-vault-badge { display:inline-flex; align-items:center; gap:6px; background: #edf8f6; color: #0b6e75; font-size: .75rem; font-weight: 650; padding: 3px 8px; border-radius: 100px; margin-bottom: 6px; }
+.rs-vault-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #0b6e75; }
+.rs-vault-desc { font-size: .75rem; color: var(--muted); line-height: 1.45; margin-bottom: 6px; }
+.rs-vault-foot { font-size: .72rem; color: #0b6e75; font-weight: 600; }
 
 .block-container h5 { border-left: 4px solid var(--warm); padding-left: .6rem; margin: .9rem 0 .9rem; }
 .block-container h4 { border-left: 4px solid var(--accent); padding-left: .6rem; margin: 1.2rem 0 .9rem; }

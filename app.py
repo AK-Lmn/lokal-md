@@ -97,6 +97,14 @@ def sidebar() -> None:
         st.markdown('<div class="rs-navlabel">Records &amp; admin</div>', unsafe_allow_html=True)
         for key, label in NAV2:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
+        st.markdown(
+            '<div class="rs-vault-card">'
+            '<div class="rs-vault-badge"><span class="dot"></span> Offline vault active</div>'
+            '<div class="rs-vault-desc">Records stay on this device. No internet connection required.</div>'
+            '<div class="rs-vault-foot">🔒 Encrypted local storage</div>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
         st.markdown("---")
         st.markdown(f'<div class="rs-small" style="margin-bottom:.7rem;line-height:1.5">{C.esc(user["display_name"])}<br>{C.esc(user["role"])}</div>', unsafe_allow_html=True)
         c1, c2 = st.columns(2)
