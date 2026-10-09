@@ -535,6 +535,9 @@ def _export(store, enc_id, ix, settings):
         st.caption("This will export a clearly marked DRAFT. Unsaved edits are not included - save first.")
     if st.button("Prepare PDF"):
         try:
+            import importlib
+            from .. import pdf_export
+            importlib.reload(pdf_export)
             review = store.latest_review(enc_id)
             cur = bool(review) and services.review_is_current(store, enc_id, review, ix)
             creator = C.conn().execute("SELECT display_name FROM users WHERE id=?", (rec.get("approved_by") or store.get_encounter(enc_id)["created_by"],)).fetchone()
@@ -543,6 +546,8 @@ def _export(store, enc_id, ix, settings):
                                        demo_mode=False)
             ss["ws_pdf"] = (enc_id, rec["status"], rec["version"], pdf)
             audit.record(C.conn(), C.user(), "export.pdf", "encounter", enc_id, {"status": rec["status"], "version": rec["version"]})
+            C.flash("Fresh PDF prepared. Click Download below.")
+            st.rerun()
         except Exception as e:
             ss.pop("ws_pdf", None)
             st.error(f"PDF export failed ({type(e).__name__}). Nothing was saved or sent anywhere.")
