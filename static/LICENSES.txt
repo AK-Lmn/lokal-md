@@ -2,7 +2,8 @@ Bundled UI assets (served locally; no CDN at runtime)
 
 fonts/inter-latin.woff2 - Inter Variable (latin subset), (c) The Inter Project Authors, SIL Open Font License 1.1
   https://github.com/rsms/inter  (packaged by @fontsource-variable/inter 5.0.18)
-icons/*.svg - Lucide icons (lucide-static 0.441.0), ISC License, https://lucide.dev
+icons/*.svg - Lucide icons (lucide-static 0.441.0 / 0.460.0), ISC License, https://lucide.dev
 fonts/ibm-plex-mono-latin-*.woff2 - IBM Plex Mono (latin subset), (c) IBM Corp., SIL Open Font License 1.1
   https://github.com/IBM/plex  (packaged by @fontsource/ibm-plex-mono 5.1.0)
 figma/ - design export, icons and tokens from the Lokal.MD Figma file (scripts/figma_tokens.py). Icons are Lucide (ISC).
+figma/screens/ - reference PNG exports of each Lokal.MD Figma screen (comparison only, not loaded at runtime).

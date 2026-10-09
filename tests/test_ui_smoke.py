@@ -56,7 +56,7 @@ def test_01_setup_admin(app):
     at.checkbox[0].check()
     run(at)
     click(at, "Continue to the application")
-    assert any(t.value == "Dashboard" for t in at.title)
+    assert any(t.value == "Clinical dashboard" for t in at.title)
 
 
 def test_02_admin_creates_clinician(app):
@@ -78,8 +78,8 @@ def test_03_signout_and_login_as_clinician(app):
     labels = [t.label for t in at.text_input]
     at.text_input[labels.index("Username")].input("drcruz")
     at.text_input[labels.index("Password")].input(PW)
-    click(at, "Sign in")
-    assert any(t.value == "Dashboard" for t in at.title)
+    click(at, "Unlock Clinical Vault")
+    assert any(t.value == "Clinical dashboard" for t in at.title)
 
 
 def test_04_new_consultation_to_workspace(app):
@@ -87,8 +87,8 @@ def test_04_new_consultation_to_workspace(app):
     nav(at, "New Consultation")
     at.text_input(key="nc_ref").set_value("SYN-UI-001")
     at.number_input(key="nc_age").set_value(45.0)
-    at.text_input(key="nc_cc").set_value("Headache for 2 days")
-    click(at, "Type details manually")
+    at.text_area(key="nc_cc").set_value("Headache for 2 days")
+    click(at, "Save as Draft Intake")
     assert not at.error, [e.value for e in at.error]
     assert any("ENC-" in m.value for m in at.markdown)
     assert at.session_state["ws_patient_ref"] == "SYN-UI-001"
@@ -179,10 +179,12 @@ def test_07_pdf_export_from_ui(app):
 def test_08_history_requires_purpose_and_logs(app):
     at = app
     nav(at, "Encounter History")
-    assert any(m for m in at.markdown)
+    assert any(t.value == "Encounter History & Audit Trail" for t in at.title)
+    assert "HASH CHAIN INTACT" in banners(at)
+    click(at, "View record")
     # purpose gate: open button disabled until a purpose is chosen
-    sel = at.dataframe[0]
-    assert sel is not None
+    ob = [b for b in at.button if b.label == "Open record"][0]
+    assert ob.disabled or not at.session_state["user"]
 
 
 def test_09_inactivity_lock_wipes_workspace_and_requires_login(app):
@@ -196,13 +198,13 @@ def test_09_inactivity_lock_wipes_workspace_and_requires_login(app):
     run(at)
     assert "user" not in at.session_state and "vault" not in at.session_state
     assert not any(str(k).startswith("ws_") for k in at.session_state.keys())
-    assert any("Sign in" in s.value for s in at.subheader)
+    assert any("Welcome to your clinical vault" in s.value for s in at.subheader)
     # sign back in
     labels = [t.label for t in at.text_input]
     assert at.text_input[labels.index("Username")].value == "drcruz"
     at.text_input[labels.index("Password")].input(PW)
-    click(at, "Sign in")
-    assert any(t.value == "Dashboard" for t in at.title)
+    click(at, "Unlock Clinical Vault")
+    assert any(t.value == "Clinical dashboard" for t in at.title)
 
 
 def test_10_forgot_password_link_visible_after_failed_signin(app):
@@ -212,6 +214,6 @@ def test_10_forgot_password_link_visible_after_failed_signin(app):
     labels = [t.label for t in at.text_input]
     at.text_input[labels.index("Username")].input("drcruz")
     at.text_input[labels.index("Password")].input("definitely-wrong-1A")
-    click(at, "Sign in")
+    click(at, "Unlock Clinical Vault")
     assert at.error, "expected an error message"
     assert any(b.key == "forgot_pw" for b in at.button)

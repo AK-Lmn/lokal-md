@@ -1,73 +1,87 @@
-"""Dashboard: workload overview, drafts awaiting review, activity and local readiness."""
+"""Dashboard (Figma "Lokal.MD clinical dashboard"): workload KPIs, recent patient queue, quick actions and local readiness."""
 from __future__ import annotations
 
 from datetime import datetime, timezone
 
 import streamlit as st
 
-from .. import audit, llm, netguard, transcription
+from .. import llm, netguard, transcription
 from ..auth import can
 from ..safety import refdata
-from ..timeutil import local_display
 from . import common as C
-from .encounters import _table, open_encounter
-
-ACTION_TEXT = {
-    "encounter.created": "Encounter created", "encounter.updated": "Encounter updated", "note.draft_saved": "Note draft saved", "note.approved": "Note approved",
-    "medreview.run": "Medication check run", "transcript.saved": "Transcript saved", "export.pdf": "PDF exported", "login.success": "Signed in",
-    "encounter.deleted": "Encounter deleted", "backup.created": "Backup created", "note.amendment_started": "Amendment started", "medreview.acknowledged": "Finding acknowledged",
-}
-
+from .encounters import open_encounter
 
 def render() -> None:
     store = C.store()
     user = C.user()
     s = C.settings()
-    st.title("Dashboard")
+    C.page_header("Clinical dashboard", "A clear view of your clinic. Every patient, every note, securely local.", [("Private by design", "shield-check", "")])
     C.show_flash()
-    st.caption(f"Signed in as {user['display_name']} · {user['role']}")
     if can(user, "encounter.list_meta"):
         cnt = store.counts()
-        cols = st.columns(4)
-        C.metric("Encounters today", cnt["today"], cols[0])
-        C.metric("Open", cnt["open"], cols[1], "blue")
-        C.metric("Drafts awaiting review", cnt["drafts"], cols[2], "warm")
-        C.metric("Approved", cnt["approved"], cols[3], "green")
-    st.write("")
-    left, right = st.columns([1.5, 1], gap="large")
+        checks = C.conn().execute("SELECT COUNT(*) FROM audit_log WHERE action='medreview.run'").fetchone()[0]
+        last = s.get("last_backup_at")
+        k = st.container(key="dash_kpis").columns(4)
+        C.kpi(k[0], "Today's Consultations", "stethoscope", cnt["today"], "Patients", f"{cnt['open']} open · {cnt['total']} total encounters")
+        C.kpi(k[1], "Pending SOAP Approvals", "clipboard-list", cnt["drafts"], "Notes", "Ready for clinician review" if cnt["drafts"] else "Nothing waiting for sign-off", "warm")
+        C.kpi(k[2], "Medication Safety Checks", "shield-check", checks, "Checked", "Medication rules verified locally")
+        C.kpi(k[3], "Offline Vault Status", "database", "Local Vault Secured", foot=f"Last backup {last[:10]}" if last else "All records saved on this device",
+              text=True, accent="(AES-256-GCM)")
+    left, right = st.container(key="dash_main").columns([2.1, 1], gap="medium")
     with left:
-        st.markdown("#### Drafts awaiting review")
-        drafts = store.list_encounters(status="note_draft", limit=20)
-        if drafts:
-            sel = _table(drafts, "dash_drafts", compact=True)
-            if sel and can(user, "encounter.view") and st.button("Open selected draft", type="primary"):
-                open_encounter(sel["id"], tab="approve")
-        else:
-            C.empty_state("No drafts waiting", "Notes you generate or save appear here until approved.")
-        st.markdown("#### Recent encounters")
-        recent = store.list_encounters(limit=8)
-        if recent:
-            sel2 = _table(recent, "dash_recent", compact=True)
-            if sel2 and can(user, "encounter.view") and st.button("Open selected encounter"):
-                open_encounter(sel2["id"])
-        else:
-            C.empty_state("No encounters yet", "Start with New Consultation.")
-            if st.button("Start a consultation", type="primary"):
+        _queue(store, user)
+    with right:
+        with st.container(border=True):
+            st.markdown('<div class="rs-tblhead" style="padding:0"><div class="t">Quick Actions</div></div>', unsafe_allow_html=True)
+            if st.button("Start New Consultation", key="qa_new", type="primary", width="stretch"):
                 st.session_state["page"] = "new"
                 st.rerun()
-    with right:
-        st.markdown("#### Local system readiness")
-        _readiness(s)
-        st.markdown("#### Recent activity")
-        rows = audit.recent(C.conn(), 40)
-        if not can(user, "audit.view"):
-            rows = [r for r in rows if r["user_id"] == user["id"]]
-        rows = rows[:8]
+            if st.button("Browse Patient Encounters", key="qa_enc", width="stretch"):
+                st.session_state["page"] = "encounters"
+                st.rerun()
+            if st.button("Encounter History & Audit", key="qa_hist", width="stretch"):
+                st.session_state["page"] = "history"
+                st.rerun()
+        with st.container(border=True):
+            st.markdown(f'<div class="rs-tblhead" style="padding:0"><div class="t">System Diagnostic Card</div><span style="color:var(--accent)">{C.icon_html("activity", 18)}</span></div>',
+                        unsafe_allow_html=True)
+            _readiness(s)
+    st.markdown(f'<div class="rs-foot"><span>{C.icon_html("lock", 13)} Patient records stay on this device. No cloud processing.</span>'
+                f'<span>Last refreshed {datetime.now().strftime("%H:%M")}</span></div>', unsafe_allow_html=True)
+
+
+def _queue(store, user) -> None:
+    with st.container(border=True, key="tbl_dash"):
+        h1, h2 = st.columns([3, 1.1], vertical_alignment="center")
+        h1.markdown('<div class="rs-tblhead" style="padding:4px 0"><div><div class="t">Recent Patient Queue</div>'
+                    '<div class="s">Recent encounters, from intake to signed note.</div></div></div>', unsafe_allow_html=True)
+        status = h2.selectbox("Status filter", ["All", "open", "note_draft", "approved", "archived"], label_visibility="collapsed", key="dash_status",
+                              format_func=lambda x: "All statuses" if x == "All" else C.STATUS_CHIP[x][0])
+        if not can(user, "encounter.list_meta"):
+            C.empty_state("No access", "Your role cannot list encounters.")
+            return
+        rows = store.list_encounters(status=None if status == "All" else status, limit=6)
+        w = [1.3, 0.8, 2.2, 1.2, 1.5]
+        C.th(st.columns(w, vertical_alignment="center"), ["Patient Ref", "Age/Sex", "Chief Complaint", "Status", "Workspace"])
         if not rows:
-            st.caption("No activity yet.")
-        for r in rows:
-            st.markdown(f'<div class="rs-small">{C.esc(local_display(r["ts"]))} · {C.esc(ACTION_TEXT.get(r["action"], r["action"].replace(".", " ").replace("_", " ").capitalize()))}'
-                        f'{" · " + C.esc(r["target_id"]) if r["target_type"] == "encounter" else ""}</div>', unsafe_allow_html=True)
+            r = st.columns([1])[0]
+            r.markdown('<div class="rs-tfoot" style="padding:18px 0;text-align:center">No encounters yet. Start with New Consultation.</div>', unsafe_allow_html=True)
+        for i, r in enumerate(rows):
+            c = st.columns(w, vertical_alignment="center")
+            d, t = C.split_ts(r["updated_at"])
+            C.td(c[0], f'<b>{C.esc(r["patient_ref"])}</b><span class="m">{C.esc(t)} · {C.esc(d[5:])}</span>')
+            C.td(c[1], C.age_sex(r))
+            C.td(c[2], C.esc(r["chief_complaint"] or "—"))
+            C.td(c[3], C.status_chip(r["status"]))
+            if c[4].button("Open Workspace", key=f"dq_{r['id']}", type="primary" if r["status"] in ("open", "note_draft") and i == 0 else "secondary",
+                           disabled=not can(user, "encounter.view"), icon=":material/north_east:"):
+                open_encounter(r["id"], tab="approve" if r["status"] == "note_draft" else "intake")
+        f1, f2 = st.columns([3, 1.2], vertical_alignment="center")
+        total = store.counts()["total"]
+        f1.markdown(f'<div class="rs-tfoot">Showing {len(rows)} of {total} encounters · Pseudonymised references</div>', unsafe_allow_html=True)
+        if f2.button("View all encounters →", key="dash_all", type="tertiary"):
+            st.session_state["page"] = "encounters"
+            st.rerun()
 
 
 def _readiness(s: dict) -> None:
@@ -82,14 +96,14 @@ def _readiness(s: dict) -> None:
         except ValueError:
             pass
     rows = [
-        ("Data encryption", "AES-256-GCM", "ok"),
-        ("Network guard", "Outbound blocked" if netguard.is_installed() else "NOT active", "ok" if netguard.is_installed() else "danger"),
-        ("Speech recognition", f"{s['whisper_model']} ready" if asr["ready"] else asr["message"], "ok" if asr["ready"] else "warn"),
-        ("Local language model", f"{s['ollama_model']} ready" if lm["ready"] else lm["message"], "ok" if lm["ready"] else "warn"),
-        ("Medication data", ("Loaded" if ix.is_synthetic else ("Approved" if ix.is_approved_for_clinical else "Imported, unapproved")) if ix else "None active", ("warn" if (not ix or ix.is_synthetic or not ix.is_approved_for_clinical) else "ok")),
-        ("Raw audio", "Deleted after use" if s["audio_retention"] == "delete" else f"Kept {s['audio_retention_days']} days", "ok" if s["audio_retention"] == "delete" else "warn"),
-        ("Last backup", "never" if age_days is None else f"{age_days} day(s) ago", "warn" if age_days is None or age_days > s["backup_reminder_days"] else "ok"),
+        ("mic", "Local Whisper audio engine", f"{s['whisper_model']} ready" if asr["ready"] else "Model not installed", "ok" if asr["ready"] else "warn"),
+        ("cpu", "LLM inference", f"{s['ollama_model']} ready" if lm["ready"] else "Not reachable", "ok" if lm["ready"] else "warn"),
+        ("lock", "Data encryption", "AES-256-GCM", "ok"),
+        ("shield-check", "Network guard", "Outbound blocked" if netguard.is_installed() else "NOT active", "ok" if netguard.is_installed() else "danger"),
+        ("pill", "Medication data", ("Loaded (sample)" if ix.is_synthetic else ("Approved" if ix.is_approved_for_clinical else "Imported, unapproved")) if ix else "None active",
+         ("warn" if (not ix or ix.is_synthetic or not ix.is_approved_for_clinical) else "ok")),
+        ("mic", "Raw audio", "Deleted after use" if s["audio_retention"] == "delete" else f"Kept {s['audio_retention_days']} days", "ok" if s["audio_retention"] == "delete" else "warn"),
+        ("hard-drive", "Last backup", "never" if age_days is None else f"{age_days} day(s) ago", "warn" if age_days is None or age_days > s["backup_reminder_days"] else "ok"),
     ]
-    html = "".join(f'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #e3e9ec;font-size:.9rem"><span>{C.esc(a)}</span><span>{C.chip(b, k)}</span></div>' for a, b, k in rows)
-    st.markdown(f'<div class="rs-card">{html}</div>', unsafe_allow_html=True)
-    st.caption("Features marked unavailable do not stop manual transcripts, note editing, medication-rule checks or PDF export.")
+    st.markdown("".join(f'<div class="rs-diag"><span>{C.icon_html(i, 15, "var(--muted)")}&nbsp; {C.esc(a)}</span>{C.chip(b, k)}</div>' for i, a, b, k in rows), unsafe_allow_html=True)
+    st.caption("Unavailable AI features do not stop manual transcripts, note editing, medication-rule checks or PDF export.")

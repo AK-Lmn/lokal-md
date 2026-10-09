@@ -127,7 +127,8 @@ class Store:
             item = {"id": r["id"], "status": r["status"], "created_at": r["created_at"], "updated_at": r["updated_at"], "patient_ref": "(restricted)", "chief_complaint": "", "diagnosis": ""}
             if phi_ok:
                 d = self._decode_enc(r)["data"]
-                item.update(patient_ref=d.patient_ref, chief_complaint=d.inputs.chief_complaint, diagnosis=d.inputs.working_diagnosis, name=d.profile.display_name)
+                item.update(patient_ref=d.patient_ref, chief_complaint=d.inputs.chief_complaint, diagnosis=d.inputs.working_diagnosis, name=d.profile.display_name,
+                            age=d.profile.age_text(), sex=d.profile.sex, consult_type=d.consult_type)
                 hay = " ".join([r["id"], d.patient_ref, d.profile.display_name, d.inputs.chief_complaint, d.inputs.working_diagnosis]).lower()
                 if deep:
                     hay += " " + (self.get_transcript_text(r["id"]) or "").lower()
