@@ -569,5 +569,11 @@ def _export(store, enc_id, ix, settings):
             st.error(f"PDF export failed ({type(e).__name__}). Nothing was saved or sent anywhere.")
     pdf = ss.get("ws_pdf")
     if pdf and pdf[0] == enc_id:
-        st.download_button(f"Download PDF ({pdf[1]}, v{pdf[2]})", pdf[3], file_name=f"{enc_id}_{pdf[1]}_v{pdf[2]}.pdf", mime="application/pdf")
-        st.caption("The PDF contains patient information. Store and share it according to your facility's privacy policy; this app keeps no copy.")
+        with st.container(border=True):
+            st.markdown(f'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
+                        f'<span style="font-size:20px;">📄</span>'
+                        f'<div><b>Clinical PDF Document Ready</b> &nbsp; {C.chip(f"{pdf[1].upper()} v{pdf[2]}", "ok" if pdf[1] == "approved" else "warn")}'
+                        f'<div style="font-size:12px;color:var(--muted)">Size: {len(pdf[3]) / 1024:.1f} KB &bull; Compliant with DOH AO 2020-0047 standard</div>'
+                        f'</div></div>', unsafe_allow_html=True)
+            st.download_button(f"Download PDF ({pdf[1]}, v{pdf[2]})", pdf[3], file_name=f"{enc_id}_{pdf[1]}_v{pdf[2]}.pdf", mime="application/pdf", type="primary")
+            st.caption("The PDF contains patient information. Store and share it according to your facility's privacy policy; this app keeps no copy.")

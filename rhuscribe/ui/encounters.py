@@ -50,6 +50,68 @@ def _pager(key: str, n: int, size: int, cols) -> tuple[int, int]:
     return (pg - 1) * size, min(pg * size, n)
 
 
+@st.dialog("Patient Encounter Quick-Peek", width="large")
+def _quick_peek_dialog(enc_id: str) -> None:
+    store = C.store()
+    user = C.user()
+    try:
+        enc = store.get_encounter(enc_id)
+        draft = store.get_draft(enc_id)
+        appr = store.get_approved(enc_id)
+        note_rec = appr or draft
+        orders = store.get_orders(enc_id)
+        review = store.latest_review(enc_id)
+    except Exception as e:
+        st.error(f"Cannot load encounter preview: {e}")
+        return
+
+    data = enc.get("data")
+    p = data.profile if data else None
+    v = data.vitals if data else None
+    inp = data.inputs if data else None
+
+    c1, c2 = st.columns([3, 1.2], vertical_alignment="center")
+    c1.markdown(f'<div style="font-size:1.2rem;font-weight:700;color:var(--ink)">Patient Ref {C.esc(data.patient_ref if data else enc_id)}</div>'
+                f'<div style="color:var(--muted);font-size:0.85rem">{C.esc(p.age_text() if p else "?")} · {C.esc(p.sex if p else "")} · {C.esc(enc.get("status", ""))}</div>', unsafe_allow_html=True)
+    c2.markdown(C.status_chip(enc.get("status", "open")), unsafe_allow_html=True)
+    st.divider()
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("**Recorded Vitals**")
+        if v:
+            bps = f"{v.bp_systolic_mmhg}/{v.bp_diastolic_mmhg}" if v.bp_systolic_mmhg else "—"
+            hr = f"{v.heart_rate_bpm} bpm" if v.heart_rate_bpm else "—"
+            temp = f"{v.temperature_c:.1f} °C" if v.temperature_c else "—"
+            spo2 = f"{v.spo2_percent}%" if v.spo2_percent else "—"
+            st.markdown(f"- **BP**: {bps} &nbsp;&bull;&nbsp; **HR**: {hr}\n- **Temp**: {temp} &nbsp;&bull;&nbsp; **SpO2**: {spo2}")
+        else:
+            st.caption("No vitals recorded.")
+        st.markdown("**Chief Complaint & Diagnosis**")
+        st.write(inp.chief_complaint if (inp and inp.chief_complaint) else "_No chief complaint recorded._")
+        if inp and inp.working_diagnosis:
+            st.caption(f"Working Diagnosis: {inp.working_diagnosis}")
+
+    with col2:
+        st.markdown("**Medications & Safety Review**")
+        if orders:
+            for o in orders:
+                st.markdown(f"- **{C.esc(o.drug_name)}** {C.esc(o.strength or '')} — {C.esc(o.frequency or '')}")
+        else:
+            st.caption("No medication orders recorded.")
+        if review:
+            st.markdown(f"Safety Engine: `{review['overall_status']}` ({len(review.get('findings', []))} findings checked)")
+        else:
+            st.caption("No safety review run yet.")
+
+    st.markdown("---")
+    b1, b2 = st.columns([2, 1])
+    if b1.button("Open Full Clinical Workspace →", type="primary", width="stretch", disabled=not can(user, "encounter.view")):
+        open_encounter(enc_id)
+    if b2.button("Close", width="stretch"):
+        st.rerun()
+
+
 def render_list() -> None:
     store = C.store()
     user = C.user()
@@ -60,7 +122,7 @@ def render_list() -> None:
             st.session_state["page"] = "new"
             st.rerun()
     C.show_flash()
-    q = st.text_input("Search", placeholder="Search by patient reference (e.g. PT-PQCTPD), encounter ID, chief complaint or diagnosis ...",
+    q = st.text_input("Search", placeholder="Search by patient reference (e.g. PT-PQCTPD), encounter ID, chief complaint or diagnosis ... [Ctrl+K]",
                       label_visibility="collapsed", key="enc_q")
     c1, c2, c3 = st.columns([1.2, 1.9, 2.4], vertical_alignment="center")
     status = c1.selectbox("Status", ["All", "open", "note_draft", "approved", "archived"], label_visibility="collapsed", key="enc_status",
@@ -76,7 +138,7 @@ def render_list() -> None:
         C.empty_state("No encounters found", "Create one with New Consultation." if not q else "Try a different search.")
         return
     with st.container(border=True, key="tbl_enc"):
-        w = [1.35, 0.75, 1.15, 2.3, 1.05, 1.5]
+        w = [1.3, 0.75, 1.15, 2.1, 1.05, 1.9]
         C.th(st.columns(w, vertical_alignment="center"), ["Patient Reference", "Age/Sex", "Date & Time", "Consultation", "Note Status", "Actions"])
         foot = st.container()
         f = st.columns([3.2, 0.9, 0.8, 0.9], vertical_alignment="center")
@@ -91,7 +153,10 @@ def render_list() -> None:
                 C.td(c[2], f'{C.esc(d)}<span class="m">{C.esc(t)} · Local time</span>')
                 C.td(c[3], f'{C.esc(r["chief_complaint"] or "No chief complaint recorded")}<span class="m">{C.esc(r.get("consult_type", ""))}</span>')
                 C.td(c[4], C.status_chip(r["status"]))
-                if c[5].button("Open Workspace", key=f"eo_{r['id']}", icon=":material/north_east:", disabled=not can(user, "encounter.view"),
+                a1, a2 = c[5].columns([1, 1.2], gap="small")
+                if a1.button("Peek", key=f"peek_{r['id']}", icon=":material/visibility:", disabled=not can(user, "encounter.view")):
+                    _quick_peek_dialog(r["id"])
+                if a2.button("Open", key=f"eo_{r['id']}", icon=":material/north_east:", disabled=not can(user, "encounter.view"),
                                help=None if can(user, "encounter.view") else "Your role cannot open clinical content."):
                     open_encounter(r["id"])
 

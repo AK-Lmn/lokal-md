@@ -139,9 +139,16 @@ section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover { back
 .block-container h1 { margin-bottom: var(--s-3); }
 
 /* ---------- segmented controls / Figma five-step navigation ---------- */
-[data-testid="stButtonGroup"] button[role="radio"] { background: var(--card); color: var(--muted); border: 1px solid var(--line); font-size: 12px; font-weight: 500; }
-[data-testid="stButtonGroup"] button[role="radio"]:hover { background: var(--accent-soft); color: var(--accent); }
-[data-testid="stButtonGroup"] button[role="radio"][aria-checked="true"] { background: var(--accent-soft) !important; border-color: var(--accent) !important; }
+[data-testid="stSegmentedControl"] { background: var(--bg); padding: 4px; border-radius: var(--r); border: 1px solid var(--line); }
+[data-testid="stButtonGroup"] button[role="radio"] {
+  background: transparent; color: var(--muted); border: 1px solid transparent; font-size: 13px; font-weight: 500;
+  border-radius: 8px !important; transition: all .15s ease-in-out;
+}
+[data-testid="stButtonGroup"] button[role="radio"]:hover { background: rgba(255, 255, 255, 0.7); color: var(--accent); }
+[data-testid="stButtonGroup"] button[role="radio"][aria-checked="true"] {
+  background: var(--card) !important; border: 1px solid var(--line) !important; border-bottom: 3px solid var(--accent) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important; font-weight: 650 !important;
+}
 [data-testid="stButtonGroup"] button[role="radio"][aria-checked="true"], [data-testid="stButtonGroup"] button[role="radio"][aria-checked="true"] * { color: var(--accent) !important; }
 .st-key-ws_tab_ctl, .st-key-ws_tab_ctl [data-testid="stButtonGroup"] { width: 100%; counter-reset: step; }
 .st-key-ws_tab_ctl [data-testid="stButtonGroup"] > div { display:flex; flex-wrap: nowrap; gap: var(--s-3); width: 100%; }
