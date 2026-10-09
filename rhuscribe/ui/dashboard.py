@@ -30,9 +30,9 @@ def render() -> None:
         cnt = store.counts()
         cols = st.columns(4)
         C.metric("Encounters today", cnt["today"], cols[0])
-        C.metric("Open", cnt["open"], cols[1])
-        C.metric("Drafts awaiting review", cnt["drafts"], cols[2])
-        C.metric("Approved", cnt["approved"], cols[3])
+        C.metric("Open", cnt["open"], cols[1], "blue")
+        C.metric("Drafts awaiting review", cnt["drafts"], cols[2], "warm")
+        C.metric("Approved", cnt["approved"], cols[3], "green")
     st.write("")
     left, right = st.columns([1.5, 1], gap="large")
     with left:

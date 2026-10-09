@@ -63,7 +63,7 @@ CSS = """
 <style>
 :root{
   --ink:#16252c; --ink2:#34454d; --muted:#586971; --line:#cfd8dd; --line2:#e3e9ec; --bg:#f6f7f8; --card:#ffffff;
-  --accent:#0d6b73; --accent-dark:#09535a; --accent-soft:#e6f1f2;
+  --accent:#0d6b73; --accent-dark:#09535a; --accent-soft:#e1f0f1; --warm:#e0803a; --blue:#2f6fb5; --green:#2e8b57; --navy:#0b3a46;
   --ok:#1d6b3f; --warn:#8a5a00; --danger:#a3241d; --info:#1f5a94;
 }
 html, body, .stApp, [class*="css"] { font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; color: var(--ink); }
@@ -79,10 +79,11 @@ p, li, label, span { color: inherit; }
 /* ---------- sidebar: light, quiet ---------- */
 section[data-testid="stSidebar"] { background: #eef2f3; border-right: 1px solid var(--line); }
 section[data-testid="stSidebar"] .stButton > button::before { opacity: .85; }
+section[data-testid="stSidebar"] .stButton > button[kind="primary"]::before { opacity: 1; }
 .rs-brandrow { display:flex; align-items:center; gap:10px; padding: .4rem .5rem .6rem; margin-bottom: .9rem; }
 .rs-logo { width: 38px; height: 38px; flex:none; line-height:0; }
-.rs-hero { background: #0d6b73; color:#fff; border-radius: 14px; padding: 40px 36px; min-height: 440px; }
-.rs-hero h2 { color:#fff !important; font-size: 1.6rem !important; margin: 18px 0 8px; }
+.rs-hero { background: linear-gradient(160deg,#0f7780 0%,#0b3a46 100%); color:#fff; border-radius: 14px; padding: 40px 36px; min-height: 440px; border-bottom: 5px solid var(--warm); }
+.rs-hero h2 { border: 0 !important; padding: 0 !important; margin: 22px 0 12px !important; color:#fff !important; font-size: 1.6rem !important; margin: 18px 0 8px; }
 .rs-hero p { color: #d7ecee; font-size: .95rem; line-height: 1.55; }
 .rs-hero li { color:#eaf6f7; margin: 10px 0; font-size:.93rem; list-style:none; }
 .rs-hero ul { padding: 0; margin: 22px 0 0; }
@@ -90,11 +91,18 @@ section[data-testid="stSidebar"] [data-testid="stVerticalBlock"] { gap: .3rem; }
 section[data-testid="stSidebar"] .stButton > button { width: 100%; justify-content: flex-start; text-align: left; border: 0; border-radius: 6px;
   background: transparent; color: var(--ink2); padding: .6rem .85rem; font-weight: 500; font-size: .92rem; min-height: 0; }
 section[data-testid="stSidebar"] .stButton > button:hover { background: #dfe5e8; color: var(--ink); }
-section[data-testid="stSidebar"] .stButton > button[kind="primary"] { background: #fff; color: var(--accent-dark); font-weight: 650; box-shadow: inset 3px 0 0 var(--accent); }
+section[data-testid="stSidebar"] .stButton > button[kind="primary"] { background: var(--accent); color: #fff; font-weight: 650; box-shadow: 0 1px 3px rgba(13,107,115,.35); }
+section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover { background: var(--accent-dark); color: #fff; }
 .rs-brand { font-weight: 700; font-size: 1.1rem; color: var(--ink); padding: .2rem .3rem 0; }
 .rs-brand small { display:block; font-weight: 400; font-size: .76rem; color: var(--muted); }
 .rs-navlabel { text-transform: uppercase; font-size: .68rem; letter-spacing: .07em; color: var(--muted); padding: 1.2rem 0 1rem .85rem; font-weight: 600; line-height: 1.3; margin: 0; }
 
+.block-container h5 { border-left: 4px solid var(--warm); padding-left: .6rem; margin-top: .4rem; }
+.block-container h4 { border-left: 4px solid var(--accent); padding-left: .6rem; }
+[data-testid="stButtonGroup"] button[role="radio"] { background: #fff; color: var(--ink2); border: 1px solid #b4c1c8; }
+[data-testid="stButtonGroup"] button[role="radio"]:hover { background: var(--accent-soft); }
+[data-testid="stButtonGroup"] button[role="radio"][aria-checked="true"] { background: var(--accent) !important; border-color: var(--accent) !important; font-weight: 650; }
+[data-testid="stButtonGroup"] button[role="radio"][aria-checked="true"], [data-testid="stButtonGroup"] button[role="radio"][aria-checked="true"] * { color: #fff !important; }
 /* ---------- inputs: white, bordered, always readable ---------- */
 [data-testid="stWidgetLabel"], [data-testid="stWidgetLabel"] * { color: var(--ink) !important; opacity: 1 !important; font-size: .88rem; font-weight: 500; }
 [data-baseweb="input"], [data-baseweb="textarea"], [data-baseweb="select"] > div, [data-testid="stNumberInputContainer"] { background: #fff !important; border: 1px solid #b4c1c8 !important; border-radius: 6px !important; }
@@ -127,6 +135,7 @@ details, [data-testid="stExpander"] { background: #fff; border: 1px solid var(--
 /* ---------- surfaces ---------- */
 .rs-card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(22,37,44,.05); }
 .rs-metric { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 2px rgba(22,37,44,.05); border-top: 3px solid var(--accent); }
+.rs-metric.t-blue { border-top-color: var(--blue); } .rs-metric.t-warm { border-top-color: var(--warm); } .rs-metric.t-green { border-top-color: var(--green); }
 .rs-metric .v { font-size: 2rem; font-weight: 650; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
 .rs-metric .l { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 
@@ -140,8 +149,8 @@ details, [data-testid="stExpander"] { background: #fff; border: 1px solid var(--
 /* banners: plain, left rule, dark text */
 .rs-banner { border: 1px solid var(--line); border-left-width: 4px; border-radius: 6px; padding: 8px 12px; margin: 0 0 8px 0; font-size: .9rem; background:#fff; color: var(--ink); }
 .rs-banner.demo { border-left-color:#c98a00; background:#fffaf0; font-weight: 600; font-size: .85rem; padding: 6px 12px; }
-.rs-banner.danger { border-left-color: var(--danger); } .rs-banner.ok { border-left-color: var(--ok); }
-.rs-banner.info { border-left-color: var(--info); } .rs-banner.warn { border-left-color:#c98a00; }
+.rs-banner.danger { border-left-color: var(--danger); background:#fdf3f2; } .rs-banner.ok { border-left-color: var(--ok); background:#f2faf5; }
+.rs-banner.info { border-left-color: var(--info); background:#f3f7fc; } .rs-banner.warn { border-left-color:#c98a00; background:#fffaf0; }
 
 .rs-enchead { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(22,37,44,.05); }
 .rs-enchead .id { font-family: Consolas, "Courier New", monospace; font-weight: 700; font-size: 1rem; }
@@ -155,6 +164,7 @@ details, [data-testid="stExpander"] { background: #fff; border: 1px solid var(--
 .rs-empty { text-align:center; color: var(--muted); padding: 22px 10px; border: 1px dashed #b4c1c8; border-radius: 8px; background: #fff; }
 .rs-check { display:flex; gap:10px; padding: 7px 0; border-bottom: 1px solid var(--line2); font-size:.92rem; }
 .rs-check .s { font-weight: 700; min-width: 74px; } .rs-check .s.block { color: var(--danger); } .rs-check .s.note { color: var(--warn); } .rs-check .s.pass { color: var(--ok); }
+.rs-check .s { text-transform: uppercase; font-size: .72rem; letter-spacing: .05em; padding-top: 2px; }
 :focus-visible { outline: 3px solid #1f8fff !important; outline-offset: 2px; }
 @media (max-width: 800px){ .block-container{ padding-left: .8rem; padding-right: .8rem; } }
 </style>
@@ -230,8 +240,8 @@ def check_rows(rows: list[tuple[str, str, str]]) -> None:
     st.markdown("".join(f'<div class="rs-check"><span class="s {k}">{esc(l)}</span><span>{esc(x)}</span></div>' for k, l, x in rows), unsafe_allow_html=True)
 
 
-def metric(label: str, value, col=None) -> None:
-    (col or st).markdown(f'<div class="rs-metric"><div class="v">{esc(value)}</div><div class="l">{esc(label)}</div></div>', unsafe_allow_html=True)
+def metric(label: str, value, col=None, tone: str = "") -> None:
+    (col or st).markdown(f'<div class="rs-metric {"t-" + tone if tone else ""}"><div class="v">{esc(value)}</div><div class="l">{esc(label)}</div></div>', unsafe_allow_html=True)
 
 
 def empty_state(title: str, hint: str = "") -> None:
