@@ -26,6 +26,21 @@ Tests: `python -m pytest`. Offline self-test (run with the network unplugged): `
 | Access | Roles: admin, clinician (only role that can approve), staff, pharmacist; purpose-of-access for history; inactivity lock (auto-saves drafts, wipes session) |
 | Export | ReportLab PDF with DRAFT/APPROVED banners, medication findings and approval record exactly as stored (no invented signatures) |
 
+## Data sources
+The repository contains **no third-party medication data**; only clearly-labelled synthetic demo records. A starter dataset can be
+built locally from public sources (details, licences and gaps in [`docs/DATA_SOURCES.md`](docs/DATA_SOURCES.md)):
+
+| Content | Source | Licence |
+|---|---|---|
+| Ingredient names / combination aliases | DOH Philippine National Formulary – Essential Medicines List (8th ed., as of 2 Nov 2022) | Government publication (reuse terms not stated) |
+| Drug–drug interaction pairs + severity | [DDInter 2.0](https://ddinter2.scbdd.com/download/) (Xiong et al., *Nucleic Acids Res.* 2022) | **CC BY-NC-SA 4.0 – non-commercial** |
+| Contraindications, paediatric age statements | [openFDA](https://open.fda.gov/) US drug labels (auto-extracted, verify) | openFDA terms |
+| Dose limits, allergy cross-reactivity, drug classes, Philippine brand names | **none found – not imported** | – |
+
+Build with `scripts/build_reference/*`, import with `python scripts/import_reference.py bundle.json`. Imported data is
+"awaiting review" until a second qualified person approves it; the app stays in demonstration mode until then.
+Non-commercial DDInter data must be replaced or licensed before commercial deployment.
+
 ## Design notes
 * **Offline by construction:** Streamlit binds to 127.0.0.1; telemetry off; no external assets; a process-level socket guard
   refuses any non-loopback connection; models load with `local_files_only`; the Ollama client ignores proxies.

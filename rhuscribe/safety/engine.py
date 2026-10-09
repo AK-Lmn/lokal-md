@@ -263,12 +263,7 @@ def run_checks(
     inter_found = 0
     for i, a in enumerate(keys):
         for b in keys[i + 1:]:
-            for rule in ix.interactions:
-                (at, ak), (bt, bk) = rule["a_t"], rule["b_t"]
-                fwd = ix.matches(at, ak, a) and ix.matches(bt, bk, b)
-                rev = ix.matches(at, ak, b) and ix.matches(bt, bk, a)
-                if not (fwd or rev):
-                    continue
+            for rule in ix.interaction_rules(a, b):
                 pk = (frozenset((a, b)), rule["id"])
                 if pk in seen_pairs:
                     continue

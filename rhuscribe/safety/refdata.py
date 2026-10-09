@@ -287,6 +287,17 @@ class RefIndex:
     dose_limits: list[dict] = field(default_factory=list)
     age_warnings: list[dict] = field(default_factory=list)
     allergy_cross: list[dict] = field(default_factory=list)
+    _int_pair: dict = field(default_factory=dict)
+    _int_other: list = field(default_factory=list)
+
+    def interaction_rules(self, a: str, b: str) -> list[dict]:
+        """Rules for an ingredient pair: O(1) for ingredient-level rules, scan only class-level ones."""
+        out = list(self._int_pair.get(frozenset((a, b)), ()))
+        for r in self._int_other:
+            (at, ak), (bt, bk) = r["a_t"], r["b_t"]
+            if (self.matches(at, ak, a) and self.matches(bt, bk, b)) or (self.matches(at, ak, b) and self.matches(bt, bk, a)):
+                out.append(r)
+        return out
 
     @property
     def rule_count(self) -> int:
@@ -357,7 +368,12 @@ def _index_from_rows(dataset: dict, rows: dict[str, list[dict]]) -> RefIndex:
             if r["target_key"] not in d:
                 d.append(r["target_key"])
     for i, r in enumerate(rows["interactions"]):
-        ix.interactions.append({**r, "id": r.get("id", i + 1), "a_t": split_subject(r["a"]), "b_t": split_subject(r["b"])})
+        rule = {**r, "id": r.get("id", i + 1), "a_t": split_subject(r["a"]), "b_t": split_subject(r["b"])}
+        ix.interactions.append(rule)
+        if rule["a_t"][0] == "ingredient" and rule["b_t"][0] == "ingredient":
+            ix._int_pair.setdefault(frozenset((rule["a_t"][1], rule["b_t"][1])), []).append(rule)
+        else:
+            ix._int_other.append(rule)
     for i, r in enumerate(rows["contraindications"]):
         ix.contraindications.append({**r, "id": r.get("id", i + 1), "s_t": split_subject(r["subject"])})
     for i, r in enumerate(rows["dose_limits"]):
@@ -429,10 +445,23 @@ def get_dataset(conn, ds_id: str) -> dict | None:
     return dict(r) if r else None
 
 
+_INDEX_CACHE: dict[str, RefIndex] = {}
+
+
 def load_index(conn: sqlite3.Connection, ds_id: str) -> RefIndex:
     ds = get_dataset(conn, ds_id)
     if not ds:
         raise RefError("Dataset not found")
+    cached = _INDEX_CACHE.get(ds["checksum"] + ds_id)
+    if cached is not None:
+        cached.dataset = ds  # status/active may have changed; rule rows are immutable
+        return cached
+    ix = _load_index_uncached(conn, ds_id, ds)
+    _INDEX_CACHE[ds["checksum"] + ds_id] = ix
+    return ix
+
+
+def _load_index_uncached(conn: sqlite3.Connection, ds_id: str, ds: dict) -> RefIndex:
 
     def q(sql):
         return [dict(r) for r in conn.execute(sql, (ds_id,))]
