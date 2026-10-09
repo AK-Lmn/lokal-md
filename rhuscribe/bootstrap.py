@@ -20,9 +20,9 @@ def init(conn: sqlite3.Connection) -> None:
 def _normalise_sample_set(conn: sqlite3.Connection) -> None:
     """Earlier builds stored the bundled sample set with '[SYNTHETIC]' prefixes and a different name/citation."""
     ids = [r[0] for r in conn.execute("SELECT id FROM ref_datasets WHERE kind='synthetic_demo'")]
-    cite = "Tala sample reference set (unverified)"
+    cite = "Lokal.MD sample reference set (unverified)"
     for ds in ids:
-        conn.execute("UPDATE ref_datasets SET name='Tala sample reference set' WHERE id=? AND name IN ('SYNTHETIC DEMO DATA','Synthetic sample data')", (ds,))
+        conn.execute("UPDATE ref_datasets SET name='Lokal.MD sample reference set' WHERE id=? AND name IN ('SYNTHETIC DEMO DATA','Synthetic sample data','Tala sample reference set')", (ds,))
         for table, text_col in (("ref_interactions", "effect"), ("ref_contraindications", "note"), ("ref_dose_limits", "note"),
                                 ("ref_age_warnings", "message"), ("ref_allergy_cross", "note")):
             conn.execute(f"UPDATE {table} SET {text_col}=REPLACE({text_col}, '[SYNTHETIC] ', ''), source_citation=? "

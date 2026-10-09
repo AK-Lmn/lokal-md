@@ -11,15 +11,15 @@ from __future__ import annotations
 
 from .refdata import Bundle
 
-SYN = "Tala sample reference set (unverified)"
+SYN = "Lokal.MD sample reference set (unverified)"
 
 
 def demo_bundle_dict() -> dict:
     return {
         "meta": {
-            "name": "Tala sample reference set",
+            "name": "Lokal.MD sample reference set",
             "version": "demo-1",
-            "source_description": "Sample records (synthetic) bundled with Tala to exercise the rules engine. Not clinically validated.",
+            "source_description": "Sample records (synthetic) bundled with Lokal.MD to exercise the rules engine. Not clinically validated.",
         },
         "classes": [
             {"key": "nsaid", "name": "NSAID", "aliases": ["nsaids", "non steroidal anti inflammatory"]},

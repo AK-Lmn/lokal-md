@@ -1,6 +1,6 @@
 # Medication reference data
 
-Tala ships **only a synthetic sample dataset** (`rhuscribe/safety/demo_data.py`). Every record is
+Lokal.MD ships **only a synthetic sample dataset** (`rhuscribe/safety/demo_data.py`). Every record is
 tagged `SYNTHETIC-DEMO (unverified)`. It exists to test the rules engine and **must not be used for patient care**.
 
 ## Strict mode (reviewed data only)

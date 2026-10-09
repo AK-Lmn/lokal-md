@@ -1,4 +1,4 @@
-"""Tala - offline clinical consultation & prescription-review assistant.
+"""Lokal.MD - offline clinical consultation & prescription-review assistant.
 
 Run:  streamlit run app.py        (binds to 127.0.0.1 only; see .streamlit/config.toml)
 """
@@ -18,7 +18,7 @@ netguard.install()  # refuse any non-loopback outbound connection from this proc
 
 import streamlit as st  # noqa: E402
 
-st.set_page_config(page_title="Tala", page_icon=str(Path(__file__).parent / "static" / "favicon.png"), layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Lokal.MD", page_icon=str(Path(__file__).parent / "static" / "favicon.png"), layout="wide", initial_sidebar_state="expanded")
 
 from rhuscribe import APP_NAME  # noqa: E402
 from rhuscribe.auth import can  # noqa: E402

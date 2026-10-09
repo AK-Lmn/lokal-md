@@ -29,7 +29,7 @@ def render():
             st.markdown(
                 f'<div class="rs-hero"><div class="rs-logo" style="width:46px;height:46px">{C.logo_svg(46)}</div>'
                 f'<h2>{APP_NAME}</h2><div class="rs-tagline">Clinical notes that keep working when the lights go out.</div>'
-                f'<div class="rs-tagsub">Tala (Tagalog): a star to steer by, and a record.</div>'
+                f'<div class="rs-tagsub">Lokal.MD: on-device clinical intelligence for Philippine healthcare.</div>'
                 f'<ul><li>{C.icon_html("shield-check", 16, "#bfe3e6")}&nbsp; Runs entirely on this computer. No patient data leaves it.</li>'
                 f'<li>{C.icon_html("lock", 16, "#bfe3e6")}&nbsp; Records are encrypted; sessions lock when idle.</li>'
                 f'<li>{C.icon_html("mic", 16, "#bfe3e6")}&nbsp; Speech and note drafting use local AI models, no internet needed.</li>'

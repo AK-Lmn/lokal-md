@@ -1,7 +1,18 @@
-# Tala — offline clinical consultation & prescription-review assistant
+# Lokal.MD — offline clinical consultation & prescription-review assistant
 
-A local-first documentation aid for Rural Health Units, barangay health centres and disaster-response teams in the
-Philippines. Runs on one ordinary laptop; **no cloud AI, no telemetry**. Records are encrypted at rest.
+> **AppBuildersPH Hackathon 2026 Submission** · **Theme: Local AI (On-Device Inference)**  
+> *"An AI product that remains genuinely useful when the cloud disappears."*
+
+A local-first, air-gapped documentation aid for Rural Health Units (RHUs), barangay health stations, and disaster-response teams in the Philippines. Runs on one ordinary laptop; **no cloud AI, no telemetry, no API bills**. Patient health records are encrypted at rest with AES-256-GCM.
+
+### Why Local AI is Fundamental
+Under the **Philippine Data Privacy Act of 2012**, transmitting patient consultations and identifiable medical records to third-party cloud servers creates severe compliance, ethical, and security risks. Furthermore, during typhoons, natural disasters, or in remote island/mountain RHUs with zero connectivity, cloud healthcare tools fail completely. Lokal.MD runs 100% on-device: patient data never leaves the hardware, operations never stop during blackouts, and public health units incur ₱0 in subscription fees.
+
+### AI Disclosures
+- **Speech-to-Text**: `faster-whisper` (Systran/faster-whisper-base/small) running locally via CTranslate2.
+- **Clinical Structuring (SOAP Notes)**: `llama3.2:3b` running on-device via local Ollama.
+- **Safety Engine**: Deterministic offline SQLite rules engine checking contraindications, allergies, and dosage limits.
+- **AI Development Tools**: Built using **Devin** (Cognition) + Antigravity.
 
 > **Status: functional MVP.** Ships with a *synthetic sample* medication reference set (labelled as such on every result and PDF). It is not a certified
 > medical device and has not been assessed for Data Privacy Act or regulatory compliance. See "Limitations".
