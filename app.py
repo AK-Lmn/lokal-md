@@ -25,9 +25,9 @@ from rhuscribe.ui import common as C  # noqa: E402
 from rhuscribe.ui import dashboard, encounters, login, new_consult, session, settings_page, workspace  # noqa: E402
 from rhuscribe.ui import wsstate as W  # noqa: E402
 
-NAV = [("dashboard", "📊  Dashboard"), ("encounters", "📋  Patient Encounters"), ("new", "➕  New Consultation")]
+NAV = [("dashboard", "Dashboard"), ("encounters", "Patient Encounters"), ("new", "New Consultation")]
 WS_NAV = [("intake", "Intake & vitals"), ("transcript", "Transcription workspace"), ("note", "Clinical notes (SOAP)"), ("meds", "Medication safety"), ("approve", "Review, approve & export")]
-NAV2 = [("history", "🗂  Encounter History"), ("settings", "⚙  Settings")]
+NAV2 = [("history", "Encounter History"), ("settings", "Settings")]
 
 
 def request_nav(target: str) -> None:
@@ -82,7 +82,7 @@ def sidebar() -> None:
     user = C.user()
     page = ss.get("page", "dashboard")
     with st.sidebar:
-        st.markdown(f'<div class="rs-brand">🩺 {APP_NAME}<small>Offline clinical assistant</small></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="rs-brand">{APP_NAME}<small>Offline clinical assistant</small></div>', unsafe_allow_html=True)
         st.markdown('<div class="rs-navlabel">Work</div>', unsafe_allow_html=True)
         for key, label in NAV:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
@@ -97,9 +97,9 @@ def sidebar() -> None:
         for key, label in NAV2:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
         st.markdown("---")
-        st.markdown(f'<div class="rs-small" style="color:#bcd">{C.esc(user["display_name"])}<br>{C.esc(user["role"])}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="rs-small" style="margin-bottom:.5rem">{C.esc(user["display_name"])}<br>{C.esc(user["role"])}</div>', unsafe_allow_html=True)
         c1, c2 = st.columns(2)
-        if c1.button("🔒 Lock"):
+        if c1.button("Lock"):
             session.lock("manual")
             st.rerun()
         if c2.button("Sign out"):

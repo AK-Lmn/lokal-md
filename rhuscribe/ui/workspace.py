@@ -47,7 +47,7 @@ def render() -> None:
         st.session_state["ws_tab_ctl"] = "intake"
     tab = st.segmented_control("Workspace section", [k for k, _ in TABS], format_func=lambda k: TAB_LABEL[k], key="ws_tab_ctl", required=True, label_visibility="collapsed") or "intake"
     if locked:
-        C.banner("This encounter is approved/archived and read-only. Clinicians can start an amendment from 'Review & approve'.", "info", "🔒")
+        C.banner("This encounter is approved/archived and read-only. Clinicians can start an amendment from 'Review & approve'.", "info", "")
 
     {"intake": _intake, "transcript": _transcript, "note": _note, "meds": _meds, "approve": _approve}[tab](store, can_edit, ix, settings)
 
@@ -72,7 +72,7 @@ def _header(store, enc_id: str, locked: bool) -> None:
             unsafe_allow_html=True,
         )
     with c2:
-        if st.button("💾 Save changes", type="primary", disabled=locked or not dirty, width="stretch"):
+        if st.button("Save changes", type="primary", disabled=locked or not dirty, width="stretch"):
             save(store)
             st.rerun()
 
@@ -175,7 +175,7 @@ def _transcript(store, can_edit, ix, settings):
     if not dis:
         st.markdown("##### Capture or import audio")
         n = ss.setdefault("ws_aud_n", 0)
-        src_pick = st.radio("Audio source", ["record", "upload"], format_func={"record": "🎙 Record with microphone", "upload": "📁 Upload a file"}.get,
+        src_pick = st.radio("Audio source", ["record", "upload"], format_func={"record": "Record with microphone", "upload": "Upload a file"}.get,
                             horizontal=True, key="ws_aud_src", label_visibility="collapsed")
         audio = None
         if src_pick == "record":
@@ -205,7 +205,7 @@ def _transcript(store, can_edit, ix, settings):
                "Recognition of Tagalog/Taglish and medical terms is imperfect - always review.")
     hints = soap.transcript_drug_hints(ss.get("ws_transcript", ""), ix)
     if hints:
-        C.banner("Possible mis-heard drug names (check against the recording): " + "; ".join(f"'{h}' → {d}" for h, d in hints), "warn", "💊")
+        C.banner("Possible mis-heard drug names (check against the recording): " + "; ".join(f"'{h}' (possibly {d})" for h, d in hints), "warn", "")
     if dis:
         return
     c1, c2, c3 = st.columns([1.4, 1.6, 2])
@@ -301,14 +301,14 @@ def _note(store, can_edit, ix, settings):
             tr_ok = (not has_text) or tr.get("status") == "reviewed"
             n_unc = transcription.count_uncertain(ss.get("ws_transcript", ""))
             if has_text and not tr_ok:
-                C.banner("Review the transcript first (Transcript tab → Mark as reviewed). Notes are generated from the reviewed transcript only.", "warn")
+                C.banner("Review the transcript first (Transcript tab, Mark as reviewed). Notes are generated from the reviewed transcript only.", "warn")
             existing = any(ss.get(k) for k in W.NOTE_FIELDS)
             replace_ok = True
             if existing:
                 replace_ok = st.checkbox("Replace the current draft text (your edits will be lost)", key="ws_replace_ok")
             g1, g2 = st.columns(2)
             with g1:
-                go_ai = st.button("✨ Generate with local AI", type="primary", disabled=not (lm["ready"] and has_text and tr_ok and replace_ok and n_unc == 0), width="stretch")
+                go_ai = st.button("Generate with local AI", type="primary", disabled=not (lm["ready"] and has_text and tr_ok and replace_ok and n_unc == 0), width="stretch")
             with g2:
                 go_tpl = st.button("Build from entries (no AI)", disabled=not replace_ok, width="stretch")
             if go_ai or go_tpl:
@@ -357,7 +357,7 @@ def _note(store, can_edit, ix, settings):
     st.text_input("Follow-up" + badge("follow_up"), key="ws_n_fu", disabled=dis)
     mentions = soap.unchecked_drug_mentions([ss.get("ws_n_tx", ""), ss.get("ws_transcript", "")], W.collect_orders(), W.lines(ss.get("ws_curmeds", "")), services.get_reference_index(C.conn(), settings))
     if mentions:
-        C.banner("Mentioned in the plan/transcript but NOT entered as a medication order (so not safety-checked): " + ", ".join(mentions), "warn", "💊")
+        C.banner("Mentioned in the plan/transcript but NOT entered as a medication order (so not safety-checked): " + ", ".join(mentions), "warn", "")
 
 
 def _readonly_list(label, items, src):
@@ -397,11 +397,11 @@ def _meds(store, can_edit, ix, settings):
     enc_id = W.active_id()
     dis = not can_edit
     if ix is None:
-        C.banner("No usable medication reference dataset is active - checks cannot run. See Settings → Medication reference.", "danger")
+        C.banner("No usable medication reference dataset is active - checks cannot run. See Settings, Medication reference.", "danger")
     else:
         medview.dataset_line({"dataset": ix.dataset, "synthetic": ix.is_synthetic, "approved_for_clinical": ix.is_approved_for_clinical, "rule_count": ix.rule_count})
         if ix.is_synthetic:
-            C.banner("The loaded rules are SYNTHETIC demonstration data. Results below are for testing the software only.", "demo", "⚠")
+            C.banner("The loaded rules are SYNTHETIC demonstration data. Results below are for testing the software only.", "demo", "")
 
     st.markdown("##### Medication orders")
     st.caption("Enter the medicines the clinician has decided to prescribe. The software never prescribes or approves anything - it only checks what you enter.")
@@ -426,7 +426,7 @@ def _meds(store, can_edit, ix, settings):
             x, y = st.columns(2)
             x.text_input("Indication (optional)", key=k("indication"), disabled=dis)
             y.text_input("Instructions (optional)", key=k("instr"), disabled=dis)
-    if not dis and st.button("➕ Add medication order"):
+    if not dis and st.button("Add medication order"):
         W.add_order()
         st.rerun()
 
@@ -450,7 +450,7 @@ def _meds(store, can_edit, ix, settings):
         if p.sex == "female" and p.pregnancy_status == "unknown":
             gaps.append("pregnancy status")
         if gaps:
-            C.banner("Missing patient information limits the check: " + ", ".join(gaps) + ". Complete it in Intake.", "warn", "ℹ")
+            C.banner("Missing patient information limits the check: " + ", ".join(gaps) + ". Complete it in Intake.", "warn", "")
     run = st.button("Save & run medication safety check", type="primary", disabled=not can(C.user(), "medreview.run") or ix is None or locked_view())
     if run:
         if not locked_view() and not save(store, quiet=True):
@@ -480,7 +480,7 @@ def _approve(store, can_edit, ix, settings):
         rec = store.get_approved(enc_id)
         if rec:
             ap = rec["approver"] or {}
-            C.banner(f"Approved - version {rec['version']} on {local_display(rec['approved_at'])}", "ok", "✔")
+            C.banner(f"Approved - version {rec['version']} on {local_display(rec['approved_at'])}", "ok", "")
             st.markdown(f"**Approved by:** {C.esc(ap.get('name', ''))} · **Credentials:** {C.esc(ap.get('credentials') or 'not recorded')} · **Licence:** {C.esc(ap.get('license_no') or 'not recorded')}")
             st.caption("Electronic approval by an authenticated account. This is not a handwritten or digital signature.")
         if can(user, "note.approve") and status == "approved":
@@ -502,14 +502,12 @@ def _approve(store, can_edit, ix, settings):
         if ready is None:
             C.banner("No draft note yet. Generate or write the SOAP note first.", "warn")
         else:
-            for b in ready.blockers:
-                C.banner(b, "danger", "⛔")
-            for w in ready.warnings:
-                C.banner(w, "warn", "⚠")
+            rows = [("block", "Blocked", x) for x in ready.blockers] + [("note", "Check", w) for w in ready.warnings]
             if ready.ok and not dirty:
-                C.banner("All required checks are satisfied. Approval is the clinician's decision.", "ok", "✔")
+                rows.append(("pass", "Ready", "All required checks are satisfied. Approval is the clinician's decision."))
+            C.check_rows(rows)
         if not can(user, "note.approve"):
-            C.banner("Only a clinician account can approve notes. A draft stays a draft until then.", "info", "ℹ")
+            C.banner("Only a clinician account can approve notes. A draft stays a draft until then.", "info", "")
         else:
             att = st.checkbox("I have personally reviewed this note, the transcript and every medication-safety finding, and I take responsibility for its content.", key="ws_attest")
             if st.button("Approve note", type="primary", disabled=not (att and ready and ready.ok and not dirty)):
@@ -551,5 +549,5 @@ def _export(store, enc_id, ix, settings):
             st.error(f"PDF export failed ({type(e).__name__}). Nothing was saved or sent anywhere.")
     pdf = ss.get("ws_pdf")
     if pdf and pdf[0] == enc_id:
-        st.download_button(f"⬇ Download PDF ({pdf[1]}, v{pdf[2]})", pdf[3], file_name=f"{enc_id}_{pdf[1]}_v{pdf[2]}.pdf", mime="application/pdf")
+        st.download_button(f"Download PDF ({pdf[1]}, v{pdf[2]})", pdf[3], file_name=f"{enc_id}_{pdf[1]}_v{pdf[2]}.pdf", mime="application/pdf")
         st.caption("The PDF contains patient information. Store and share it according to your facility's privacy policy; this app keeps no copy.")

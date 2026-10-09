@@ -89,7 +89,7 @@ def test_04_new_consultation_to_workspace(app):
     at.text_input(key="nc_ref").set_value("SYN-UI-001")
     at.number_input(key="nc_age").set_value(45.0)
     at.text_input(key="nc_cc").set_value("Headache for 2 days")
-    click(at, "⌨ Type details manually")
+    click(at, "Type details manually")
     assert not at.error, [e.value for e in at.error]
     assert any("ENC-" in m.value for m in at.markdown)
     assert at.session_state["ws_patient_ref"] == "SYN-UI-001"
@@ -105,11 +105,11 @@ def test_05_intake_orders_med_check_and_note(app):
     at.selectbox(key="ws_cond_status").select("none_known")
     at.text_area(key="ws_curmeds").set_value("warfarin 5 mg once daily")
     run(at)
-    click(at, "💾 Save changes")
+    click(at, "Save changes")
     assert "ws_saved" in at.session_state
     # medication safety tab
     nav(at, "Medication safety")
-    click(at, "➕ Add medication order")
+    click(at, "Add medication order")
     uid = at.session_state["ws_ord_ids"][0]
     at.text_input(key=f"ws_ord_{uid}_drug").set_value("Ibuprofen")
     at.number_input(key=f"ws_ord_{uid}_amount").set_value(400.0)
@@ -174,7 +174,7 @@ def test_06_template_note_and_approval_gates(app):
 def test_07_pdf_export_from_ui(app):
     at = app
     click(at, "Prepare PDF")
-    assert any(d.label.startswith("⬇ Download PDF") for d in at.get("download_button")) or at.session_state["ws_pdf"][3].startswith(b"%PDF")
+    assert any(d.label.startswith("Download PDF") for d in at.get("download_button")) or at.session_state["ws_pdf"][3].startswith(b"%PDF")
 
 
 def test_08_history_requires_purpose_and_logs(app):

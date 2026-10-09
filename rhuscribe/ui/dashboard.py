@@ -66,7 +66,7 @@ def render() -> None:
         if not rows:
             st.caption("No activity yet.")
         for r in rows:
-            st.markdown(f'<div class="rs-small">{C.esc(local_display(r["ts"]))} · {C.esc(ACTION_TEXT.get(r["action"], r["action"]))}'
+            st.markdown(f'<div class="rs-small">{C.esc(local_display(r["ts"]))} · {C.esc(ACTION_TEXT.get(r["action"], r["action"].replace(".", " ").replace("_", " ").capitalize()))}'
                         f'{" · " + C.esc(r["target_id"]) if r["target_type"] == "encounter" else ""}</div>', unsafe_allow_html=True)
 
 

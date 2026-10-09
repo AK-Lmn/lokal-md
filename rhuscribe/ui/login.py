@@ -11,7 +11,7 @@ from . import common as C
 
 def _brand():
     st.markdown(
-        f'<div style="text-align:center;margin:1.2rem 0 .4rem"><span style="font-size:2.2rem">🩺</span>'
+        f'<div style="text-align:center;margin:1.2rem 0 .8rem">'
         f'<div style="font-size:1.7rem;font-weight:750;color:#0b6e75">{APP_NAME}</div>'
         f'<div class="rs-small">Offline clinical consultation &amp; prescription-review assistant</div></div>',
         unsafe_allow_html=True,
@@ -37,7 +37,7 @@ def render():
 def _setup(conn):
     if st.session_state.get("_setup_recovery"):
         st.subheader("Save your recovery key")
-        C.banner("Shown once. Without your password OR this key, encrypted records cannot be recovered by anyone.", "warn", "🔑")
+        C.banner("Shown once. Without your password OR this key, encrypted records cannot be recovered by anyone.", "warn", "")
         st.code(st.session_state["_setup_recovery"], language=None)
         st.download_button("Download recovery key (.txt)", f"{APP_NAME} recovery key\n{st.session_state['_setup_recovery']}\n\nStore offline, separate from this computer.\n",
                            file_name="rhu-scribe-recovery-key.txt")
@@ -72,7 +72,7 @@ def _setup(conn):
 def _signin(conn):
     locked_user = st.session_state.get("locked_username", "")
     if locked_user:
-        C.banner("Session locked. Sign in again to continue; unsaved work was kept as a draft where possible.", "info", "🔒")
+        C.banner("Session locked. Sign in again to continue; unsaved work was kept as a draft where possible.", "info", "")
     st.subheader("Sign in")
     with st.form("signin"):
         un = st.text_input("Username", value=locked_user)

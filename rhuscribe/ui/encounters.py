@@ -35,11 +35,11 @@ def render_list() -> None:
     store = C.store()
     st.title("Patient Encounters")
     C.show_flash()
-    c1, c2, c3, c4 = st.columns([3, 1.6, 1.4, 1.2], vertical_alignment="bottom")
+    c1, c2, c3, c4 = st.columns([2.6, 1.5, 1.5, 1.4], vertical_alignment="bottom")
     q = c1.text_input("Search", placeholder="Encounter ID, patient reference, chief complaint, diagnosis ...")
     status = c2.selectbox("Status", ["All", "open", "note_draft", "approved", "archived"], format_func=lambda s: "All statuses" if s == "All" else C.STATUS_CHIP[s][0])
     deep = c3.checkbox("Also search transcripts & notes", help="Slower: decrypts and searches every record.")
-    if c4.button("➕ New", type="primary", width="stretch"):
+    if c4.button("New encounter", type="primary", width="stretch"):
         st.session_state["page"] = "new"
         st.rerun()
     rows = store.list_encounters(status=None if status == "All" else status, query=q, deep=deep)

@@ -35,11 +35,11 @@ def render() -> None:
     st.markdown("##### How will you document this consultation?")
     b1, b2, b3 = st.columns(3)
     start = None
-    if b1.button("🎙 Record audio", type="primary", width="stretch"):
+    if b1.button("Record audio", type="primary", width="stretch"):
         start = "transcript"
-    if b2.button("📁 Upload a recording", width="stretch"):
+    if b2.button("Upload a recording", width="stretch"):
         start = "transcript"
-    if b3.button("⌨ Type details manually", width="stretch"):
+    if b3.button("Type details manually", width="stretch"):
         start = "intake"
     if start:
         try:

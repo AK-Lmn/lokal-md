@@ -368,7 +368,7 @@ def _deletion():
         elif not due:
             st.caption("No records are past the retention review period.")
         else:
-            st.warning(f"{len(due)} record(s) are past {s['record_retention_years']} year(s). Review against your records policy; deletion is always manual (History → Delete permanently).")
+            st.warning(f"{len(due)} record(s) are past {s['record_retention_years']} year(s). Review against your records policy; deletion is always manual (History > Delete permanently).")
             st.dataframe([{"Encounter": d["id"], "Last updated": local_display(d["updated_at"])} for d in due], hide_index=True)
     st.markdown("##### Delete an encounter")
     eid = st.text_input("Encounter ID", key="del_id_settings")
