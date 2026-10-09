@@ -83,24 +83,18 @@ def sidebar() -> None:
     user = C.user()
     page = ss.get("page", "dashboard")
     with st.sidebar:
-        st.markdown(
-            f'<div class="rs-brandrow">'
-            f'<div class="rs-logo">{C.logo_svg(38)}</div>'
-            f'<div class="rs-brand">{APP_NAME}<small>Local intelligence for local clinics.</small></div>'
-            f'</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown('<div class="rs-navlabel">WORKSPACE</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="rs-brandrow"><div class="rs-logo">{C.logo_svg(38)}</div><div class="rs-brand" style="padding:0">{APP_NAME}<small>Local intelligence for local clinics</small></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="rs-navlabel">Work</div>', unsafe_allow_html=True)
         for key, label in NAV:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
         if W.active_id():
-            st.markdown(f'<div class="rs-navlabel">OPEN: {C.esc(W.active_id())}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="rs-navlabel">Open: {C.esc(W.active_id())}</div>', unsafe_allow_html=True)
             for key, label in WS_NAV:
                 active = page == "workspace" and ss.get("ws_tab_ctl", "intake") == key
                 st.button(label, key=f"nav_ws_{key}", type="primary" if active else "secondary", on_click=request_nav, args=(f"ws:{key}",))
             if W.is_dirty():
                 st.markdown(C.chip("Unsaved changes", "danger"), unsafe_allow_html=True)
-        st.markdown('<div class="rs-navlabel">SETTINGS &amp; RECORDS</div>', unsafe_allow_html=True)
+        st.markdown('<div class="rs-navlabel">Records &amp; admin</div>', unsafe_allow_html=True)
         for key, label in NAV2:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
         st.markdown(
@@ -111,17 +105,8 @@ def sidebar() -> None:
             '</div>',
             unsafe_allow_html=True,
         )
-        st.markdown('<div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--line2);"></div>', unsafe_allow_html=True)
-        initials = "".join([part[0].upper() for part in (user["display_name"] or "DR").split()[:2]]) or "MD"
-        role_label = "Rural health physician" if "clinician" in user.get("role", "").lower() else user.get("role", "")
-        st.markdown(
-            f'<div class="rs-usercard">'
-            f'<div class="rs-avatar">{initials}</div>'
-            f'<div><div class="rs-username">{C.esc(user["display_name"])}</div>'
-            f'<div class="rs-userrole">{C.esc(role_label)}</div></div>'
-            f'</div>',
-            unsafe_allow_html=True,
-        )
+        st.markdown("---")
+        st.markdown(f'<div class="rs-small" style="margin-bottom:.7rem;line-height:1.5">{C.esc(user["display_name"])}<br>{C.esc(user["role"])}</div>', unsafe_allow_html=True)
         c1, c2 = st.columns(2)
         if c1.button("Lock", key="btn_lock"):
             session.lock("manual")
