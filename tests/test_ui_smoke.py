@@ -184,7 +184,7 @@ def test_08_history_requires_purpose_and_logs(app):
     click(at, "View record")
     # purpose gate: open button disabled until a purpose is chosen
     ob = [b for b in at.button if b.label == "Open record"][0]
-    assert ob.disabled or not at.session_state["user"]
+    assert ob.disabled
 
 
 def test_09_inactivity_lock_wipes_workspace_and_requires_login(app):
