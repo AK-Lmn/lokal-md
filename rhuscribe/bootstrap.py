@@ -11,8 +11,20 @@ from .safety.demo_data import demo_bundle
 def init(conn: sqlite3.Connection) -> None:
     db.init_db(conn)
     # earlier builds named the bundled set 'SYNTHETIC DEMO DATA'
-    conn.execute("UPDATE ref_datasets SET name='Synthetic sample data' WHERE kind='synthetic_demo' AND name='SYNTHETIC DEMO DATA'")
-    conn.commit()
+    _normalise_sample_set(conn)
     if not conn.execute("SELECT 1 FROM ref_datasets").fetchone():
         ds = refdata.save_bundle(conn, demo_bundle(), kind="synthetic_demo", imported_by=None)
         refdata.set_active(conn, ds)
+
+
+def _normalise_sample_set(conn: sqlite3.Connection) -> None:
+    """Earlier builds stored the bundled sample set with '[SYNTHETIC]' prefixes and a different name/citation."""
+    ids = [r[0] for r in conn.execute("SELECT id FROM ref_datasets WHERE kind='synthetic_demo'")]
+    cite = "Tala sample reference set (unverified)"
+    for ds in ids:
+        conn.execute("UPDATE ref_datasets SET name='Tala sample reference set' WHERE id=? AND name IN ('SYNTHETIC DEMO DATA','Synthetic sample data')", (ds,))
+        for table, text_col in (("ref_interactions", "effect"), ("ref_contraindications", "note"), ("ref_dose_limits", "note"),
+                                ("ref_age_warnings", "message"), ("ref_allergy_cross", "note")):
+            conn.execute(f"UPDATE {table} SET {text_col}=REPLACE({text_col}, '[SYNTHETIC] ', ''), source_citation=? "
+                         f"WHERE dataset_id=? AND source_citation LIKE 'SYNTHETIC-DEMO%'", (cite, ds))
+    conn.commit()

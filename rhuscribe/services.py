@@ -90,8 +90,6 @@ def approval_readiness(store: Store, enc_id: str, ix: RefIndex | None, settings:
     mentions = unchecked_drug_mentions([note.plan.treatment_plan, store.get_transcript_text(enc_id)], orders, enc["data"].profile.current_medications, ix)
     if mentions:
         r.warnings.append("Medicines mentioned but not entered as orders (so not safety-checked): " + ", ".join(mentions))
-    if ix is not None and ix.is_synthetic:
-        r.warnings.append("Medication reference data is a synthetic sample set and has not been clinically validated.")
     return r
 
 

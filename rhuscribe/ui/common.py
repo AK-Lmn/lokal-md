@@ -85,6 +85,8 @@ section[data-testid="stSidebar"] .stButton > button[kind="primary"]::before { op
 .rs-hero { background: linear-gradient(160deg,#0f7780 0%,#0b3a46 100%); color:#fff; border-radius: 14px; padding: 40px 36px; min-height: 440px; border-bottom: 5px solid var(--warm); }
 .rs-hero h2 { border: 0 !important; padding: 0 !important; margin: 22px 0 12px !important; color:#fff !important; font-size: 1.6rem !important; margin: 18px 0 8px; }
 .rs-hero p { color: #d7ecee; font-size: .95rem; line-height: 1.55; }
+.rs-tagline { color:#fff; font-size: 1.3rem; font-weight: 600; line-height: 1.35; margin: 0 0 8px; }
+.rs-tagsub { color:#a9d3d7; font-size: .8rem; letter-spacing: .02em; margin-bottom: 4px; }
 .rs-hero li { color:#eaf6f7; margin: 10px 0; font-size:.93rem; list-style:none; }
 .rs-hero ul { padding: 0; margin: 22px 0 0; }
 section[data-testid="stSidebar"] [data-testid="stVerticalBlock"] { gap: .3rem; }

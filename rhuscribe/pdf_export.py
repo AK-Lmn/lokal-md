@@ -130,7 +130,7 @@ def build_pdf(
         ds = res.get("dataset", {})
         S.append(Paragraph(
             f"Run {_t(local_display(review['run_at']))} against reference dataset <b>{_t(ds.get('name', '?'))}</b> v{_t(ds.get('version', '?'))} "
-            f"({'SYNTHETIC SAMPLE DATA - not clinically validated' if res.get('synthetic') else ('professionally approved' if res.get('approved_for_clinical') else 'imported, NOT yet approved')}).",
+            f"({'sample reference set - not clinically validated' if res.get('synthetic') else ('professionally approved' if res.get('approved_for_clinical') else 'imported, NOT yet approved')}).",
             st["small"]))
         if not review_current:
             S.append(Paragraph("<b>This check is OUT OF DATE: medications or patient data changed after it was run.</b>", st["base"]))

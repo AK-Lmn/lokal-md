@@ -43,7 +43,7 @@ def test_interaction_detected_class_level(ix):
     r = run_checks(profile(), 70, [order("Warfarin", 5, "mg", freq="OD"), order("Ibuprofen", 400)], ix)
     inter = [f for f in cats(r, "detected_concern") if f.check_type == "interactions"]
     assert inter and inter[0].severity == "major"
-    assert inter[0].evidence[0]["source"].startswith("SYNTHETIC-DEMO")
+    assert inter[0].evidence[0]["source"].startswith("Tala sample reference set")
     assert r.overall == "concerns_detected"
     assert r.synthetic is True
 

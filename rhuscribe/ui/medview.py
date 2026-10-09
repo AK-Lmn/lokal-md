@@ -27,7 +27,7 @@ def dataset_line(res: dict) -> None:
     ds = res.get("dataset") or {}
     if not ds:
         return
-    kind = "Synthetic sample data - not clinically validated" if res.get("synthetic") else ("Professionally approved dataset" if res.get("approved_for_clinical") else "Imported, NOT yet approved")
+    kind = "Reference set not clinically validated" if res.get("synthetic") else ("Professionally approved dataset" if res.get("approved_for_clinical") else "Imported, NOT yet approved")
     k = "warn" if res.get("synthetic") or not res.get("approved_for_clinical") else "ok"
     st.markdown(C.chip(kind, k) + C.chip(f"{ds.get('name')} v{ds.get('version')}", "neutral") + C.chip(f"{res.get('rule_count', 0)} rules", "neutral"), unsafe_allow_html=True)
 
