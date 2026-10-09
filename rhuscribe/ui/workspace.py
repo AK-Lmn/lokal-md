@@ -16,7 +16,13 @@ from ..timeutil import local_display
 from . import common as C
 from . import medview, wsstate as W
 
-TABS = [("intake", "1 · Intake"), ("transcript", "2 · Transcript"), ("note", "3 · SOAP note"), ("meds", "4 · Medication safety"), ("approve", "5 · Review & approve")]
+TABS = [
+    ("intake", "1 · Patient Intake & Vitals"),
+    ("transcript", "2 · Audio Transcription"),
+    ("note", "3 · Clinical SOAP Note"),
+    ("meds", "4 · Medication Orders"),
+    ("approve", "5 · Review & Approval"),
+]
 TAB_LABEL = dict(TABS)
 LIST_STATUS = {"unknown": "Not asked / unknown", "none_known": "None known", "listed": "Yes - list below"}
 SEX = {"unknown": "Not recorded", "female": "Female", "male": "Male", "other": "Other"}
@@ -43,6 +49,13 @@ def render() -> None:
     can_edit = can(user, "encounter.edit") and not locked
 
     _header(store, enc_id, locked)
+    st.markdown(
+        '<div style="margin: 0.1rem 0 0.8rem;">'
+        '<h2 style="margin:0; font-size:1.5rem; font-weight:700; color:var(--ink);">Clinical workspace</h2>'
+        '<div style="color:var(--muted); font-size:0.88rem;">One encounter. From patient intake to clinician approval.</div>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
     if st.session_state.get("ws_tab_ctl") not in TAB_LABEL:
         st.session_state["ws_tab_ctl"] = "intake"
     tab = st.segmented_control("Workspace section", [k for k, _ in TABS], format_func=lambda k: TAB_LABEL[k], key="ws_tab_ctl", required=True, label_visibility="collapsed") or "intake"
@@ -65,10 +78,16 @@ def _header(store, enc_id: str, locked: bool) -> None:
     with c1:
         age = d.profile.age_text() if d else "?"
         sex = SEX.get(d.profile.sex, "") if d else ""
+        pref = st.session_state.get("ws_patient_ref", "")
+        ctype = d.consult_type if d else "Outpatient consultation"
         st.markdown(
-            f'<div class="rs-enchead"><span class="id">{C.esc(enc_id)}</span> &nbsp; {C.status_chip(status)}'
+            f'<div class="rs-enchead">'
+            f'<div style="display:flex; justify-content:space-between; align-items:center;">'
+            f'<div><span style="font-size:1.15rem; font-weight:700; color:var(--ink);">Patient Ref {C.esc(pref or enc_id)}</span> &nbsp; {C.status_chip(status)}'
             + (C.chip("Unsaved changes", "danger") if dirty else C.chip("All changes saved", "ok") if not locked else "")
-            + f'<div class="meta">Patient ref <b>{C.esc(st.session_state.get("ws_patient_ref", ""))}</b> · {C.esc(age)} · {C.esc(sex)}</div></div>',
+            + f'<div class="meta">{C.esc(age)} · {C.esc(sex)} · {C.esc(ctype)} · Encounter <code>{C.esc(enc_id)}</code></div></div>'
+            f'<div style="display:flex; align-items:center; gap:6px; color:#0b6e75; font-size:0.8rem; font-weight:600;"><span style="width:7px; height:7px; border-radius:50%; background:#0b6e75;"></span> On-device intelligence</div>'
+            f'</div></div>',
             unsafe_allow_html=True,
         )
     with c2:
