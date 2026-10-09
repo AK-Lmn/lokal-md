@@ -79,12 +79,10 @@ def _quick_peek_dialog(enc_id: str) -> None:
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("**Recorded Vitals**")
-        if v:
-            bps = f"{v.bp_systolic_mmhg}/{v.bp_diastolic_mmhg}" if v.bp_systolic_mmhg else "—"
-            hr = f"{v.heart_rate_bpm} bpm" if v.heart_rate_bpm else "—"
-            temp = f"{v.temperature_c:.1f} °C" if v.temperature_c else "—"
-            spo2 = f"{v.spo2_percent}%" if v.spo2_percent else "—"
-            st.markdown(f"- **BP**: {bps} &nbsp;&bull;&nbsp; **HR**: {hr}\n- **Temp**: {temp} &nbsp;&bull;&nbsp; **SpO2**: {spo2}")
+        if v and any([v.bp_systolic, v.heart_rate, v.temp_c, v.spo2, v.weight_kg]):
+            v_lines = v.lines()
+            for line in v_lines:
+                st.markdown(f"- {C.esc(line)}")
         else:
             st.caption("No vitals recorded.")
         st.markdown("**Chief Complaint & Diagnosis**")
