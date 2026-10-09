@@ -184,3 +184,51 @@ def test_pdf_text_has_required_content(clinician_store, monkeypatch):
     t2 = text_of(mk())
     assert "APPROVED NOTE" in t2 and "Approved by" in t2 and "Dr. Test Cruz" in t2 and "MD (synthetic)" in t2
     assert "Not a handwritten or digital signature" in t2.replace("\n", " ") or "handwritten" in t2
+
+
+# ---------------------------------------------------------------- Taglish & medication-detail handling
+TL = ("Doktor: Magandang umaga po. Ano pong nararamdaman ninyo?\nPasyente: Inuubo po ako at nilalagnat since tatlong araw na. "
+      "Nahihirapan po akong huminga kapag umaakyat ng hagdan.\nDoktor: May wheezing sa magkabilang baga. Acute bronchitis ang impression ko. Balik kayo sa isang linggo.")
+
+
+def tl_src():
+    s = src()
+    s.transcript = TL
+    return s
+
+
+def test_taglish_translation_is_kept_but_marked_unverified(monkeypatch):
+    fake_llm(monkeypatch, [{"chief_complaint": "cough and fever for 3 days", "symptoms": ["shortness of breath on climbing stairs"],
+                            "exam_findings": ["wheezing on both sides"], "working_diagnosis": "acute bronchitis", "follow_up": "return in one week"}])
+    g = soap.generate_note(tl_src(), use_llm=True, model="m")
+    n = g.note
+    assert n.subjective.chief_complaint and n.objective.exam_findings and n.flagged_items == []
+    assert n.assessment.working_diagnosis == "acute bronchitis"
+    assert n.provenance["working_diagnosis"] == "ai_extracted"
+
+
+def test_taglish_does_not_relax_numbers_or_diagnosis(monkeypatch):
+    fake_llm(monkeypatch, [{"chief_complaint": "cough for 9 days", "working_diagnosis": "pulmonary tuberculosis", "treatment_plan": "rest and fluids"}])
+    g = soap.generate_note(tl_src(), use_llm=True, model="m")
+    n = g.note
+    assert n.subjective.chief_complaint == "" and n.assessment.working_diagnosis == ""
+    assert len(n.flagged_items) >= 2
+
+
+def test_ai_plan_with_medicine_details_is_withheld(monkeypatch, ix):
+    fake_llm(monkeypatch, [{**GOOD, "treatment_plan": "Paracetamol 500 mg every 6 hours and rest"}])
+    s1 = src()
+    s1.transcript += "\nDoctor: Take paracetamol 500 mg every 6 hours and get plenty of rest."
+    g = soap.generate_note(s1, use_llm=True, model="m", ix=ix)
+    assert g.note.plan.treatment_plan == "" and any("Enter medicines as orders" in f for f in g.note.flagged_items)
+    # but a clinician-typed plan is kept verbatim
+    fake_llm(monkeypatch, [GOOD])
+    g2 = soap.generate_note(src(treatment_plan="Rest and fluids; paracetamol 500 mg PRN"), use_llm=True, model="m", ix=ix)
+    assert g2.note.plan.treatment_plan.startswith("Rest and fluids")
+
+
+def test_asr_drug_name_hints(ix):
+    h = soap.transcript_drug_hints("I will prescribe a Moxicillin 500 mg and paracitamol, also ibuprofen\nlosartan daily", ix)
+    heard = {a: b for a, b in h}
+    assert heard.get("a moxicillin") == "amoxicillin" and heard.get("paracitamol") == "paracetamol"
+    assert "ibuprofen" not in heard and "losartan" not in heard

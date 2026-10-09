@@ -21,7 +21,7 @@ TAB_LABEL = dict(TABS)
 LIST_STATUS = {"unknown": "Not asked / unknown", "none_known": "None known", "listed": "Yes - list below"}
 SEX = {"unknown": "Not recorded", "female": "Female", "male": "Male", "other": "Other"}
 PREG = {"unknown": "Unknown", "no": "Not pregnant", "yes": "Pregnant", "not_applicable": "Not applicable"}
-PROV_BADGE = {"clinician_input": ":green-badge[clinician]", "ai_extracted": ":orange-badge[AI-extracted · verify]", "mixed": ":orange-badge[clinician + AI]",
+PROV_BADGE = {"clinician_input": ":green-badge[clinician]", "ai_extracted": ":orange-badge[AI-extracted · verify]", "mixed": ":orange-badge[clinician + AI]", "ai_unverified": ":red-badge[AI · unverified translation]",
               "structured": ":blue-badge[from intake]", "clinician_entered_orders": ":blue-badge[from orders]"}
 
 
@@ -175,14 +175,15 @@ def _transcript(store, can_edit, ix, settings):
     if not dis:
         st.markdown("##### Capture or import audio")
         n = ss.setdefault("ws_aud_n", 0)
-        t_rec, t_up = st.tabs(["🎙 Record", "📁 Upload file"])
+        src_pick = st.radio("Audio source", ["record", "upload"], format_func={"record": "🎙 Record with microphone", "upload": "📁 Upload a file"}.get,
+                            horizontal=True, key="ws_aud_src", label_visibility="collapsed")
         audio = None
-        with t_rec:
+        if src_pick == "record":
             rec = st.audio_input("Record the consultation (microphone)", key=f"aud_rec_{n}", disabled=not asr["ready"])
             st.caption("Recording runs in your browser; nothing is sent anywhere. If the recording is interrupted, nothing is kept - record again or type the transcript.")
             if rec is not None and st.button("Transcribe recording", type="primary", key="go_rec", disabled=not asr["ready"]):
                 audio = (rec.getvalue(), ".wav", "audio/wav")
-        with t_up:
+        else:
             up = st.file_uploader("Upload an audio recording (WAV, MP3, M4A, OGG, FLAC)", type=["wav", "mp3", "m4a", "ogg", "flac"], key=f"aud_up_{n}", disabled=not asr["ready"])
             if up is not None and st.button("Transcribe file", type="primary", key="go_up", disabled=not asr["ready"]):
                 suffix = "." + up.name.rsplit(".", 1)[-1] if "." in up.name else ".wav"
@@ -202,6 +203,9 @@ def _transcript(store, can_edit, ix, settings):
                  placeholder="Type or paste the consultation here if audio is unavailable. One statement per line works well.")
     st.caption("Lines starting with [?] were recognised with low confidence. Check each against the audio or the patient, fix the text, and remove the [?]. "
                "Recognition of Tagalog/Taglish and medical terms is imperfect - always review.")
+    hints = soap.transcript_drug_hints(ss.get("ws_transcript", ""), ix)
+    if hints:
+        C.banner("Possible mis-heard drug names (check against the recording): " + "; ".join(f"'{h}' → {d}" for h, d in hints), "warn", "💊")
     if dis:
         return
     c1, c2, c3 = st.columns([1.4, 1.6, 2])
@@ -372,7 +376,7 @@ def _generate(store, enc_id, settings, use_llm: bool):
         return
     src = soap.NoteSource(data, ss.get("ws_transcript", ""), W.collect_orders())
     with st.spinner("Generating note locally - this can take a minute on a laptop ..." if use_llm else "Building draft ..."):
-        gen = soap.generate_note(src, use_llm=use_llm, model=settings["ollama_model"], timeout=settings["ollama_timeout_s"])
+        gen = soap.generate_note(src, use_llm=use_llm, model=settings["ollama_model"], timeout=settings["ollama_timeout_s"], ix=services.get_reference_index(C.conn(), settings))
     n = gen.note
     for key, (sec, attr, is_list) in W.NOTE_FIELDS.items():
         v = getattr(getattr(n, sec), attr)

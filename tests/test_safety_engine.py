@@ -191,3 +191,10 @@ def test_strength_parser():
     assert parse_strength("1 g").mg_per_unit == 1000
     assert parse_strength("125 mg/5 mL").mg_per_ml == 25
     assert parse_strength("500/125 mg").ambiguous
+
+
+def test_current_med_with_frequency_words_is_fully_recognised(ix):
+    r = resolve_name("warfarin 5 mg once daily", ix.drug_alias)
+    assert r.status == "resolved" and r.ingredients == ["warfarin"]
+    assert resolve_name("losartan 50mg twice a day after meals", ix.drug_alias).status == "resolved"
+    assert resolve_name("losartan xyzzyquux", ix.drug_alias).status == "partial"

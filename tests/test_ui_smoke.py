@@ -184,3 +184,23 @@ def test_08_history_requires_purpose_and_logs(app):
     # purpose gate: open button disabled until a purpose is chosen
     sel = at.dataframe[0]
     assert sel is not None
+
+
+def test_09_inactivity_lock_wipes_workspace_and_requires_login(app):
+    import time
+    at = app
+    nav(at, "Encounter History")
+    # open the encounter workspace again via session (simulates an open record with PHI in memory)
+    from rhuscribe.ui import wsstate as W  # noqa: F401
+    assert at.session_state["user"]["username"] == "drcruz"
+    at.session_state["last_active"] = time.time() - 3 * 3600
+    run(at)
+    assert "user" not in at.session_state and "vault" not in at.session_state
+    assert not any(str(k).startswith("ws_") for k in at.session_state.keys())
+    assert any("Sign in" in s.value for s in at.subheader)
+    # sign back in
+    labels = [t.label for t in at.text_input]
+    assert at.text_input[labels.index("Username")].value == "drcruz"
+    at.text_input[labels.index("Password")].input(PW)
+    click(at, "Sign in")
+    assert any(t.value == "Dashboard" for t in at.title)

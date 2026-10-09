@@ -112,11 +112,12 @@ class MedicationOrder(BaseModel):
 
     def summary(self) -> str:
         dose = f"{self.dose_amount:g} {self.dose_unit}".strip() if self.dose_amount else ""
-        parts = [self.drug_name, self.strength, dose, self.route, self.frequency]
-        s = " ".join(p for p in parts if p).strip()
+        name = self.drug_name + (f" ({self.strength})" if self.strength else "")
+        rest = ", ".join(p for p in (dose, self.route, self.frequency) if p)
+        s = f"{name} - {rest}" if rest else name
         if self.duration_days:
             s += f" x {self.duration_days} day(s)"
-        return s or "(blank order)"
+        return s.strip() or "(blank order)"
 
 
 # --------------------------------------------------------------------------- SOAP note

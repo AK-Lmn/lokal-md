@@ -9,6 +9,8 @@ from difflib import get_close_matches
 NOISE_WORDS = {
     "tablet", "tablets", "tab", "tabs", "capsule", "capsules", "cap", "caps", "syrup", "suspension", "susp",
     "drops", "drop", "ampule", "amp", "vial", "injection", "inj", "cream", "ointment", "sachet", "oral", "film",
+    "once", "daily", "twice", "thrice", "day", "days", "times", "time", "every", "hours", "hour", "hrs", "morning", "night", "bedtime", "weekly",
+    "week", "needed", "as", "at", "x", "bid", "tid", "qid", "od", "qd", "prn", "hs", "after", "before", "meals", "food", "continue", "continued",
     "coated", "forte", "plus", "and", "with", "sr", "xr", "er", "mr", "po", "iv", "im", "per", "the", "of", "for",
     "mg", "g", "mcg", "ml", "iu", "unit", "units", "pcs", "pc", "generic", "brand", "tabs.", "solution", "sol",
 }

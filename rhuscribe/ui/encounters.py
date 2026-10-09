@@ -39,7 +39,7 @@ def render_list() -> None:
     q = c1.text_input("Search", placeholder="Encounter ID, patient reference, chief complaint, diagnosis ...")
     status = c2.selectbox("Status", ["All", "open", "note_draft", "approved", "archived"], format_func=lambda s: "All statuses" if s == "All" else C.STATUS_CHIP[s][0])
     deep = c3.checkbox("Also search transcripts & notes", help="Slower: decrypts and searches every record.")
-    if c4.button("➕ New consultation", type="primary", width="stretch"):
+    if c4.button("➕ New", type="primary", width="stretch"):
         st.session_state["page"] = "new"
         st.rerun()
     rows = store.list_encounters(status=None if status == "All" else status, query=q, deep=deep)
