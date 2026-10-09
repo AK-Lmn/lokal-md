@@ -8,6 +8,7 @@ enableCORS = true
 enableXsrfProtection = true
 maxUploadSize = 200
 fileWatcherType = "none"
+enableStaticServing = true
 
 [browser]
 gatherUsageStats = false
@@ -26,4 +27,10 @@ primaryColor = "#0b6e75"
 backgroundColor = "#f4f7f9"
 secondaryBackgroundColor = "#e6eef2"
 textColor = "#14262e"
-font = "sans serif"
+font = "Inter"
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/inter-latin.woff2"
+weight = "100 900"
+style = "normal"

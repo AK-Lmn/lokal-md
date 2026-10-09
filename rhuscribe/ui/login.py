@@ -21,17 +21,25 @@ def _brand():
 def render():
     conn = C.conn()
     C.show_flash()
-    _, mid, _ = st.columns([1, 1.6, 1])
-    with mid:
-        _brand()
+    left, right = st.columns([1.05, 1], gap="large")
+    with left:
+        st.markdown(
+            f'<div class="rs-hero"><div class="rs-logo" style="background:rgba(255,255,255,.16)">{C.icon_html("stethoscope", 20, "#fff")}</div>'
+            f'<h2>{APP_NAME}</h2><p>Consultation notes and prescription review for rural health units, barangay health centres and disaster-response teams.</p>'
+            f'<ul><li>{C.icon_html("shield-check", 16, "#bfe3e6")}&nbsp; Runs entirely on this computer. No patient data leaves it.</li>'
+            f'<li>{C.icon_html("lock", 16, "#bfe3e6")}&nbsp; Records are encrypted; sessions lock when idle.</li>'
+            f'<li>{C.icon_html("mic", 16, "#bfe3e6")}&nbsp; Speech and note drafting use local AI models, no internet needed.</li>'
+            f'<li>{C.icon_html("file-text", 16, "#bfe3e6")}&nbsp; Every note stays a draft until a clinician approves it.</li></ul></div>',
+            unsafe_allow_html=True)
+    with right:
+        st.write("")
         if st.session_state.get("_setup_recovery") or not auth.is_setup_done(conn):
             _setup(conn)
         elif st.session_state.get("_recovery_mode"):
             _recovery(conn)
         else:
             _signin(conn)
-        st.markdown('<div class="rs-small" style="text-align:center;margin-top:1rem">All data stays on this computer. '
-                    'The application makes no internet connections while running.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="rs-small" style="margin-top:1rem">Demonstration software. Use synthetic patients only. Not a certified medical device.</div>', unsafe_allow_html=True)
 
 
 def _setup(conn):

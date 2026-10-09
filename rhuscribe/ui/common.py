@@ -1,8 +1,11 @@
 """Shared UI helpers: session access, design system (CSS), small HTML components."""
 from __future__ import annotations
 
+import base64
 import html
+import re
 import time
+from pathlib import Path
 
 import streamlit as st
 
@@ -74,7 +77,15 @@ h4, h5 { font-size: .95rem !important; font-weight: 650 !important; text-transfo
 p, li, label, span { color: inherit; }
 
 /* ---------- sidebar: light, quiet ---------- */
-section[data-testid="stSidebar"] { background: #eceff1; border-right: 1px solid var(--line); }
+section[data-testid="stSidebar"] { background: #eef2f3; border-right: 1px solid var(--line); }
+section[data-testid="stSidebar"] .stButton > button::before { opacity: .85; }
+.rs-brandrow { display:flex; align-items:center; gap:10px; padding: .3rem .3rem .2rem; margin-bottom: .6rem; }
+.rs-logo { width: 34px; height: 34px; border-radius: 9px; background: var(--accent); display:flex; align-items:center; justify-content:center; flex:none; }
+.rs-hero { background: linear-gradient(180deg,#0d6b73,#0a555c); color:#fff; border-radius: 14px; padding: 36px 32px; min-height: 420px; }
+.rs-hero h2 { color:#fff !important; font-size: 1.6rem !important; margin: 18px 0 8px; }
+.rs-hero p { color: #d7ecee; font-size: .95rem; line-height: 1.55; }
+.rs-hero li { color:#eaf6f7; margin: 10px 0; font-size:.93rem; list-style:none; }
+.rs-hero ul { padding: 0; margin: 22px 0 0; }
 section[data-testid="stSidebar"] [data-testid="stVerticalBlock"] { gap: .15rem; }
 section[data-testid="stSidebar"] .stButton > button { width: 100%; justify-content: flex-start; text-align: left; border: 0; border-radius: 6px;
   background: transparent; color: var(--ink2); padding: .42rem .7rem; font-weight: 500; font-size: .92rem; min-height: 0; }
@@ -114,9 +125,9 @@ details, [data-testid="stExpander"] { background: #fff; border: 1px solid var(--
 [data-baseweb="input"]:has(input:disabled) > div, [data-baseweb="select"] > div[aria-disabled="true"] > div { background: #eef1f3 !important; }
 
 /* ---------- surfaces ---------- */
-.rs-card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
-.rs-metric { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; }
-.rs-metric .v { font-size: 1.8rem; font-weight: 650; line-height: 1.1; color: var(--ink); }
+.rs-card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(22,37,44,.05); }
+.rs-metric { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 2px rgba(22,37,44,.05); border-top: 3px solid var(--accent); }
+.rs-metric .v { font-size: 2rem; font-weight: 650; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
 .rs-metric .l { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 
 /* status chips: outlined, dark text, small colour dot */
@@ -132,7 +143,7 @@ details, [data-testid="stExpander"] { background: #fff; border: 1px solid var(--
 .rs-banner.danger { border-left-color: var(--danger); } .rs-banner.ok { border-left-color: var(--ok); }
 .rs-banner.info { border-left-color: var(--info); } .rs-banner.warn { border-left-color:#c98a00; }
 
-.rs-enchead { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 9px 14px; margin-bottom: 8px; }
+.rs-enchead { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(22,37,44,.05); }
 .rs-enchead .id { font-family: Consolas, "Courier New", monospace; font-weight: 700; font-size: 1rem; }
 .rs-enchead .meta { color: var(--muted); font-size: .85rem; margin-top: 2px; }
 .rs-finding { border: 1px solid var(--line); border-left-width: 4px; border-radius: 6px; padding: 9px 12px; margin-bottom: 7px; background:#fff; }
@@ -150,8 +161,48 @@ details, [data-testid="stExpander"] { background: #fff; border: 1px solid var(--
 """
 
 
+ICON_MAP = {
+    "nav_dashboard": "layout-dashboard", "nav_encounters": "clipboard-list", "nav_new": "circle-plus", "nav_history": "history", "nav_settings": "settings",
+    "nav_ws_intake": "file-text", "nav_ws_transcript": "mic", "nav_ws_note": "file-text", "nav_ws_meds": "pill", "nav_ws_approve": "shield-check",
+    "btn_lock": "lock", "btn_signout": "log-out",
+}
+_ICON_DIR = Path(__file__).resolve().parent.parent.parent / "static" / "icons"
+
+
+def icon_uri(name: str) -> str:
+    """Lucide icon (ISC licence) as a CSS data URI - bundled locally, no network."""
+    try:
+        svg = (_ICON_DIR / f"{name}.svg").read_text(encoding="utf-8")
+    except OSError:
+        return ""
+    svg = re.sub(r"<!--.*?-->", "", svg, flags=re.S)
+    svg = re.sub(r'\s+class="[^"]*"', "", svg)
+    return "url(data:image/svg+xml;base64," + base64.b64encode(svg.strip().encode()).decode() + ")"
+
+
+def icon_html(name: str, size: int = 16, color: str = "currentColor") -> str:
+    u = icon_uri(name)
+    return f'<span style="display:inline-block;width:{size}px;height:{size}px;background:{color};-webkit-mask:{u} center/contain no-repeat;mask:{u} center/contain no-repeat;vertical-align:-3px"></span>' if u else ""
+
+
+def _icon_css() -> str:
+    out = []
+    for key, icon in ICON_MAP.items():
+        u = icon_uri(icon)
+        if u:
+            out.append(f'.st-key-{key} button::before{{content:"";flex:none;width:16px;height:16px;margin-right:9px;background:currentColor;-webkit-mask:{u} center/contain no-repeat;mask:{u} center/contain no-repeat;}}')
+    return "<style>" + "\n".join(out) + "</style>"
+
+
+FONT_CSS = """<style>
+@font-face { font-family: "Inter"; src: url("app/static/fonts/inter-latin.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+html, body, .stApp, [class*="css"], button, input, textarea, select { font-family: "Inter", "Segoe UI", system-ui, sans-serif !important; font-feature-settings: "cv11", "ss03"; }
+code, pre, .rs-enchead .id { font-family: Consolas, "Cascadia Mono", monospace !important; }
+</style>"""
+
+
 def inject_css() -> None:
-    st.markdown(CSS, unsafe_allow_html=True)
+    st.markdown(CSS + FONT_CSS + _icon_css(), unsafe_allow_html=True)
 
 
 def chip(text: str, kind: str = "neutral") -> str:

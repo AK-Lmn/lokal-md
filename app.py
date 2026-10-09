@@ -82,7 +82,7 @@ def sidebar() -> None:
     user = C.user()
     page = ss.get("page", "dashboard")
     with st.sidebar:
-        st.markdown(f'<div class="rs-brand">{APP_NAME}<small>Offline clinical assistant</small></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="rs-brandrow"><div class="rs-logo">{C.icon_html("stethoscope", 20, "#fff")}</div><div class="rs-brand" style="padding:0">{APP_NAME}<small>Offline clinical assistant</small></div></div>', unsafe_allow_html=True)
         st.markdown('<div class="rs-navlabel">Work</div>', unsafe_allow_html=True)
         for key, label in NAV:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
@@ -99,10 +99,10 @@ def sidebar() -> None:
         st.markdown("---")
         st.markdown(f'<div class="rs-small" style="margin-bottom:.5rem">{C.esc(user["display_name"])}<br>{C.esc(user["role"])}</div>', unsafe_allow_html=True)
         c1, c2 = st.columns(2)
-        if c1.button("Lock"):
+        if c1.button("Lock", key="btn_lock"):
             session.lock("manual")
             st.rerun()
-        if c2.button("Sign out"):
+        if c2.button("Sign out", key="btn_signout"):
             session.logout("Signed out.")
             st.rerun()
 

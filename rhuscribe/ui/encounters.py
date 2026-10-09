@@ -23,9 +23,9 @@ def open_encounter(enc_id: str, tab: str = "intake", purpose: str | None = None)
     st.rerun()
 
 
-def _table(rows: list[dict], key: str):
-    data = [{"Encounter": r["id"], "Patient ref": r["patient_ref"], "Chief complaint": r["chief_complaint"], "Status": C.STATUS_CHIP.get(r["status"], (r["status"],))[0],
-             "Updated": local_display(r["updated_at"])} for r in rows]
+def _table(rows: list[dict], key: str, compact: bool = False):
+    data = [{"Encounter": r["id"], "Patient ref": r["patient_ref"], **({} if compact else {"Chief complaint": r["chief_complaint"]}),
+             "Status": C.STATUS_CHIP.get(r["status"], (r["status"],))[0], "Updated": local_display(r["updated_at"])} for r in rows]
     ev = st.dataframe(data, hide_index=True, width="stretch", on_select="rerun", selection_mode="single-row", key=key)
     sel = ev.selection.rows if ev and ev.selection else []
     return rows[sel[0]] if sel else None

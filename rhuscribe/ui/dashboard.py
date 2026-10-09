@@ -39,7 +39,7 @@ def render() -> None:
         st.markdown("#### Drafts awaiting review")
         drafts = store.list_encounters(status="note_draft", limit=20)
         if drafts:
-            sel = _table(drafts, "dash_drafts")
+            sel = _table(drafts, "dash_drafts", compact=True)
             if sel and can(user, "encounter.view") and st.button("Open selected draft", type="primary"):
                 open_encounter(sel["id"], tab="approve")
         else:
@@ -47,7 +47,7 @@ def render() -> None:
         st.markdown("#### Recent encounters")
         recent = store.list_encounters(limit=8)
         if recent:
-            sel2 = _table(recent, "dash_recent")
+            sel2 = _table(recent, "dash_recent", compact=True)
             if sel2 and can(user, "encounter.view") and st.button("Open selected encounter"):
                 open_encounter(sel2["id"])
         else:
@@ -82,14 +82,14 @@ def _readiness(s: dict) -> None:
         except ValueError:
             pass
     rows = [
-        ("Stored data encryption", "AES-256-GCM, per field", "ok"),
-        ("Network guard", "Outbound non-local connections blocked" if netguard.is_installed() else "NOT active", "ok" if netguard.is_installed() else "danger"),
+        ("Data encryption", "AES-256-GCM", "ok"),
+        ("Network guard", "Outbound blocked" if netguard.is_installed() else "NOT active", "ok" if netguard.is_installed() else "danger"),
         ("Speech recognition", f"{s['whisper_model']} ready" if asr["ready"] else asr["message"], "ok" if asr["ready"] else "warn"),
         ("Local language model", f"{s['ollama_model']} ready" if lm["ready"] else lm["message"], "ok" if lm["ready"] else "warn"),
-        ("Medication reference", ("SYNTHETIC DEMO data" if ix.is_synthetic else ("Approved: " + ix.dataset["name"] if ix.is_approved_for_clinical else "Imported, not approved")) if ix else "None active", ("warn" if (not ix or ix.is_synthetic or not ix.is_approved_for_clinical) else "ok")),
-        ("Raw audio", "Deleted after processing" if s["audio_retention"] == "delete" else f"Kept {s['audio_retention_days']} days (policy: {s['audio_retention_policy_ref'] or '?'})", "ok" if s["audio_retention"] == "delete" else "warn"),
+        ("Medication data", ("SYNTHETIC DEMO" if ix.is_synthetic else ("Approved" if ix.is_approved_for_clinical else "Imported, unapproved")) if ix else "None active", ("warn" if (not ix or ix.is_synthetic or not ix.is_approved_for_clinical) else "ok")),
+        ("Raw audio", "Deleted after use" if s["audio_retention"] == "delete" else f"Kept {s['audio_retention_days']} days", "ok" if s["audio_retention"] == "delete" else "warn"),
         ("Last backup", "never" if age_days is None else f"{age_days} day(s) ago", "warn" if age_days is None or age_days > s["backup_reminder_days"] else "ok"),
     ]
-    html = "".join(f'<div style="display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid #e6edf0"><span>{C.esc(a)}</span><span>{C.chip(b, k)}</span></div>' for a, b, k in rows)
+    html = "".join(f'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #e3e9ec;font-size:.9rem"><span>{C.esc(a)}</span><span>{C.chip(b, k)}</span></div>' for a, b, k in rows)
     st.markdown(f'<div class="rs-card">{html}</div>', unsafe_allow_html=True)
     st.caption("Features marked unavailable do not stop manual transcripts, note editing, medication-rule checks or PDF export.")

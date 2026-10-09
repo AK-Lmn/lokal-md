@@ -1,0 +1,5 @@
+Bundled UI assets (served locally; no CDN at runtime)
+
+fonts/inter-latin.woff2 - Inter Variable (latin subset), (c) The Inter Project Authors, SIL Open Font License 1.1
+  https://github.com/rsms/inter  (packaged by @fontsource-variable/inter 5.0.18)
+icons/*.svg - Lucide icons (lucide-static 0.441.0), ISC License, https://lucide.dev
