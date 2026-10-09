@@ -96,6 +96,8 @@ def demo_bundle_dict() -> dict:
             {"ingredient": "ibuprofen", "min_age_years": 0.25, "max_age_years": 12, "max_single": 10, "max_daily": 40, "unit": "mg", "per_kg": True, "note": "demo only", "source_citation": SYN},
             {"ingredient": "metformin", "min_age_years": 18, "max_daily": 2550, "unit": "mg", "note": "demo only", "source_citation": SYN},
             {"ingredient": "amoxicillin", "min_age_years": 12, "max_single": 1000, "max_daily": 3000, "unit": "mg", "note": "demo only", "source_citation": SYN},
+            {"ingredient": "azithromycin", "min_age_years": 12, "max_single": 500, "max_daily": 500, "unit": "mg", "note": "adult dose limit (oral)", "source_citation": SYN},
+            {"ingredient": "azithromycin", "min_age_years": 0.5, "max_age_years": 12, "max_single": 10, "max_daily": 10, "unit": "mg", "per_kg": True, "note": "paediatric per-kg limit (oral)", "source_citation": SYN},
         ],
         "age_warnings": [
             {"subject": "aspirin", "max_age_years": 16, "severity": "major", "message": "Aspirin in children/adolescents: specific warning applies.", "management": "Clinician to confirm indication and consider alternatives.", "source_citation": SYN},

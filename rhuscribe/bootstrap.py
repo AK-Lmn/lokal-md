@@ -27,4 +27,11 @@ def _normalise_sample_set(conn: sqlite3.Connection) -> None:
                                 ("ref_age_warnings", "message"), ("ref_allergy_cross", "note")):
             conn.execute(f"UPDATE {table} SET {text_col}=REPLACE({text_col}, '[SYNTHETIC] ', ''), source_citation=? "
                          f"WHERE dataset_id=? AND source_citation LIKE 'SYNTHETIC-DEMO%'", (cite, ds))
+        has_az = conn.execute("SELECT 1 FROM ref_dose_limits WHERE dataset_id=? AND ingredient_key='azithromycin'", (ds,)).fetchone()
+        if not has_az:
+            conn.execute(
+                "INSERT INTO ref_dose_limits (dataset_id, ingredient_key, min_age_years, max_single, max_daily, unit, note, source_citation) "
+                "VALUES (?, 'azithromycin', 12, 500, 500, 'mg', 'adult dose limit (oral)', ?)",
+                (ds, cite),
+            )
     conn.commit()
