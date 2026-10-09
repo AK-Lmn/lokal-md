@@ -84,7 +84,11 @@ def _signin(conn):
     locked_user = st.session_state.get("locked_username", "")
     if locked_user:
         C.banner("Session locked. Sign in again to continue; unsaved work was kept as a draft where possible.", "info", "")
-    st.subheader("Sign in")
+    h1, h2 = st.columns([1, 1.25], vertical_alignment="center")
+    h1.subheader("Sign in")
+    if h2.button("Forgot password?", key="forgot_pw", width="stretch"):
+        st.session_state["_recovery_mode"] = True
+        st.rerun()
     with st.form("signin"):
         un = st.text_input("Username", value=locked_user)
         pw = st.text_input("Password", type="password")
@@ -94,15 +98,12 @@ def _signin(conn):
             user, vault = auth.login(conn, un, pw)
         except auth.AuthError as e:
             st.error(str(e))
-            st.caption("Forgot your password? Use your recovery key below.")
+            st.caption("Forgot your password? Use the button above the form.")
         else:
             st.session_state.update(user=user, vault=vault)
             st.session_state.pop("locked_username", None)
             C.touch()
             st.rerun()
-    if st.button("Forgot password? Use recovery key", type="tertiary"):
-        st.session_state["_recovery_mode"] = True
-        st.rerun()
 
 
 def _recovery(conn):

@@ -110,7 +110,7 @@ input:disabled, textarea:disabled, [aria-disabled="true"], [data-disabled="true"
 /* ---------- buttons ---------- */
 .stButton > button, .stDownloadButton > button, .stFormSubmitButton > button { border-radius: 6px; font-weight: 600; font-size: .92rem; border: 1px solid #aebbc2; background: #fff; color: var(--ink); box-shadow: none; }
 .stButton > button:hover, .stDownloadButton > button:hover { border-color: var(--accent); color: var(--accent-dark); background: #f4fafa; }
-.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"], .stDownloadButton > button[kind="primary"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primaryFormSubmit"], .stFormSubmitButton > button[kind="primary"], .stDownloadButton > button[kind="primary"] { background: var(--accent); border-color: var(--accent); color: #fff; }
 .stButton > button[kind="primary"]:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
 .stButton > button:disabled, .stDownloadButton > button:disabled, .stFormSubmitButton > button:disabled {
   background: #e9edef !important; color: #55656d !important; border: 1px solid #cdd6da !important; opacity: 1 !important; cursor: not-allowed; }

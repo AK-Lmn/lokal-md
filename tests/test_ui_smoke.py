@@ -215,4 +215,4 @@ def test_10_forgot_password_link_visible_after_failed_signin(app):
     at.text_input[labels.index("Password")].input("definitely-wrong-1A")
     click(at, "Sign in")
     assert at.error, "expected an error message"
-    assert any("Forgot password" in b.label for b in at.button)
+    assert any(b.key == "forgot_pw" for b in at.button)
