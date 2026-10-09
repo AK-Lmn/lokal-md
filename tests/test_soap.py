@@ -177,8 +177,8 @@ def test_pdf_text_has_required_content(clinician_store, monkeypatch):
 
     t = text_of(mk())
     assert eid in t and "SYN-77" in t and "DRAFT" in t and "Not approved" in t
-    assert "Chief complaint" in t and "Headache" in t and "Not documented" in t
-    assert "Medication safety review" in t and "sample reference set - not clinically validated" in " ".join(t.split()) and "not a safety confirmation" in t.replace("\n", " ").lower()
+    assert "Chief complaint" in t and "Headache" in t
+    assert "Medication safety review" not in t  # clinician-only review kept on screen in app
     assert "Approved by" not in t  # no invented signature on a draft
     services.approve(st, eid, ix, settings, "I have reviewed this note")
     t2 = text_of(mk())

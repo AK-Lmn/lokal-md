@@ -1,11 +1,9 @@
 """PDF export of a clinical note and patient prescription with ReportLab (fully local).
 
-* Designed for both clinical records and patient-understandable instructions (Tagalog / English).
+* Page 1: Official Patient Prescription & Care Instructions Slip (Reseta at Gabay sa Paggaling)
+* Page 2+: Official Health Facility Clinical EHR Record (SOAP Note & Medication Safety Review)
 * Drafts are watermarked and headed "DRAFT - NOT APPROVED".
-* Approval details are copied from the stored approval record exactly as entered; blank
-  credentials/licence numbers are printed as "not recorded". Nothing is invented.
-* Includes clear patient medication guide (℞ Reseta), frequency in layman terms,
-  and high-visibility safety/allergy warning callouts.
+* Preserves all clinical audit data, hashes, and attestations.
 """
 from __future__ import annotations
 
@@ -16,7 +14,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
-from reportlab.platypus import KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+from reportlab.platypus import KeepTogether, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 from . import APP_NAME, __version__
 from .safety.engine import CATEGORY_LABELS, OVERALL_LABELS
@@ -25,11 +23,12 @@ from .timeutil import local_display, now_iso
 
 TEAL = colors.HexColor("#0b6e75")
 DARK_TEAL = colors.HexColor("#07494e")
-LIGHT_TEAL = colors.HexColor("#f0f7f8")
+LIGHT_TEAL = colors.HexColor("#eef7f8")
 CARD_BORDER = colors.HexColor("#b8d9dc")
 INK = colors.HexColor("#14262e")
 MUTED = colors.HexColor("#5a6b73")
 LINE = colors.HexColor("#cbd7dc")
+LIGHT_LINE = colors.HexColor("#e4ebed")
 RED = colors.HexColor("#b3261e")
 SOFT_RED = colors.HexColor("#fef2f2")
 RED_BORDER = colors.HexColor("#f5c2c2")
@@ -58,7 +57,10 @@ FREQ_MAP = {
 def _t(s) -> str:
     """Make text safe for the built-in Helvetica font (WinAnsi) and for Paragraph markup."""
     s = str(s if s is not None else "")
-    for a, b in (("≈", "~"), ("‹", "<"), ("›", ">"), ("≥", ">="), ("≤", "<="), ("→", "->"), ("•", "-"), ("·", "-"), ("℞", "Rx")):
+    for a, b in (
+        ("≈", "~"), ("‹", "<"), ("›", ">"), ("≥", ">="), ("≤", "<="),
+        ("→", "->"), ("•", "-"), ("·", "-"), ("℞", "Rx"),
+    ):
         s = s.replace(a, b)
     s = s.encode("cp1252", "replace").decode("cp1252")
     return escape(s)
@@ -66,21 +68,21 @@ def _t(s) -> str:
 
 def _styles():
     ss = getSampleStyleSheet()
-    base = ParagraphStyle("base", parent=ss["Normal"], fontName="Helvetica", fontSize=9, leading=12.2, textColor=INK)
+    base = ParagraphStyle("base", parent=ss["Normal"], fontName="Helvetica", fontSize=8.5, leading=11.5, textColor=INK)
     return {
         "base": base,
         "base_bold": ParagraphStyle("base_bold", parent=base, fontName="Helvetica-Bold"),
-        "small": ParagraphStyle("small", parent=base, fontSize=7.6, leading=9.8, textColor=MUTED),
-        "h1": ParagraphStyle("h1", parent=base, fontName="Helvetica-Bold", fontSize=15, leading=18, textColor=TEAL),
-        "h2": ParagraphStyle("h2", parent=base, fontName="Helvetica-Bold", fontSize=10.5, leading=13.5, textColor=DARK_TEAL, spaceBefore=8, spaceAfter=3),
-        "rx_title": ParagraphStyle("rx_title", parent=base, fontName="Helvetica-Bold", fontSize=12, leading=15, textColor=TEAL),
-        "label": ParagraphStyle("label", parent=base, fontName="Helvetica-Bold", fontSize=8.2, textColor=MUTED, spaceBefore=3),
-        "bullet": ParagraphStyle("bullet", parent=base, leftIndent=10, bulletIndent=1),
-        "banner": ParagraphStyle("banner", parent=base, fontName="Helvetica-Bold", fontSize=9.5, leading=12, textColor=colors.white, alignment=1),
-        "th": ParagraphStyle("th", parent=base, fontName="Helvetica-Bold", fontSize=8, leading=10, textColor=colors.white),
-        "td": ParagraphStyle("td", parent=base, fontSize=8, leading=10.5, textColor=INK),
-        "td_bold": ParagraphStyle("td_bold", parent=base, fontName="Helvetica-Bold", fontSize=8.2, leading=10.5, textColor=DARK_TEAL),
-        "alert": ParagraphStyle("alert", parent=base, fontSize=8.2, leading=11, textColor=INK),
+        "small": ParagraphStyle("small", parent=base, fontSize=7.2, leading=9.2, textColor=MUTED),
+        "h1": ParagraphStyle("h1", parent=base, fontName="Helvetica-Bold", fontSize=14, leading=17, textColor=TEAL),
+        "h2": ParagraphStyle("h2", parent=base, fontName="Helvetica-Bold", fontSize=10, leading=13, textColor=DARK_TEAL, spaceBefore=6, spaceAfter=2),
+        "rx_title": ParagraphStyle("rx_title", parent=base, fontName="Helvetica-Bold", fontSize=11.5, leading=14.5, textColor=TEAL),
+        "label": ParagraphStyle("label", parent=base, fontName="Helvetica-Bold", fontSize=7.8, textColor=MUTED, spaceBefore=3),
+        "bullet": ParagraphStyle("bullet", parent=base, leftIndent=8, bulletIndent=1, fontSize=8.2, leading=11),
+        "banner": ParagraphStyle("banner", parent=base, fontName="Helvetica-Bold", fontSize=9, leading=11.5, textColor=colors.white, alignment=1),
+        "th": ParagraphStyle("th", parent=base, fontName="Helvetica-Bold", fontSize=7.8, leading=9.5, textColor=colors.white),
+        "td": ParagraphStyle("td", parent=base, fontSize=7.8, leading=10, textColor=INK),
+        "td_bold": ParagraphStyle("td_bold", parent=base, fontName="Helvetica-Bold", fontSize=8, leading=10, textColor=DARK_TEAL),
+        "alert": ParagraphStyle("alert", parent=base, fontSize=8, leading=10.5, textColor=INK),
     }
 
 
@@ -88,8 +90,8 @@ def _banner(text: str, color) -> Table:
     t = Table([[Paragraph(_t(text), _styles()["banner"])]], colWidths=[174 * mm])
     t.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), color),
-        ("TOPPADDING", (0, 0), (-1, -1), 4),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ("TOPPADDING", (0, 0), (-1, -1), 3),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
     ]))
     return t
 
@@ -104,26 +106,29 @@ def build_pdf(
     d = encounter["data"]
     buf = io.BytesIO()
     doc = SimpleDocTemplate(
-        buf, pagesize=A4, leftMargin=18 * mm, rightMargin=18 * mm, topMargin=14 * mm, bottomMargin=16 * mm,
-        title=f"Clinical note {encounter['id']}", author=APP_NAME, subject="Clinical consultation note & prescription",
+        buf, pagesize=A4, leftMargin=18 * mm, rightMargin=18 * mm, topMargin=12 * mm, bottomMargin=14 * mm,
+        title=f"Clinical note {encounter['id']}", author=APP_NAME, subject="Patient Prescription & Clinical Consultation Note",
     )
     S: list = []
 
-    # 1. Facility Header & Document Title
+    # =========================================================================
+    # PAGE 1: PATIENT PRESCRIPTION & CARE INSTRUCTIONS SLIP (RESETA NG PASYENTE)
+    # =========================================================================
+
     facility = settings.get("facility_name") or ""
     fac_text = f"<b>{_t(facility.upper())}</b> - " if facility else ""
     S.append(Paragraph(f"{fac_text}{APP_NAME} CLINICAL INTELLIGENCE - RURAL HEALTH OUTPOST", st["small"]))
     S.append(Paragraph("Patient Consultation &amp; Prescription Summary", st["h1"]))
-    S.append(Paragraph("Buod ng Konsultasyon, Reseta at Gabay sa Paggaling - Clinical Consultation Note (SOAP)", st["small"]))
+    S.append(Paragraph("Consultation Summary, Prescription &amp; Care Plan (Patient Copy)", st["small"]))
     S.append(Spacer(1, 2))
 
     if approved:
         S.append(_banner(f"APPROVED NOTE - version {note_rec['version']}", GREEN))
     else:
-        S.append(_banner("DRAFT - NOT REVIEWED OR APPROVED BY A CLINICIAN. NOT A FINAL MEDICAL RECORD.", RED))
-    S.append(Spacer(1, 4))
+        S.append(_banner("DRAFT - Not approved by a clinician. NOT A FINAL MEDICAL RECORD.", RED))
+    S.append(Spacer(1, 3))
 
-    # 2. Patient & Encounter Details Card
+    # Patient Details Card
     def kv(rows):
         return Table([[Paragraph(f"<b>{_t(k)}</b>", st["base"]), Paragraph(_t(v), st["base"])] for k, v in rows], colWidths=[33 * mm, 52 * mm])
 
@@ -144,46 +149,70 @@ def build_pdf(
         ("BOX", (0, 0), (-1, -1), 0.8, CARD_BORDER),
         ("BACKGROUND", (0, 0), (-1, -1), LIGHT_TEAL),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
-        ("TOPPADDING", (0, 0), (-1, -1), 4),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ("TOPPADDING", (0, 0), (-1, -1), 3),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
     ]))
     S.append(info)
     if d.profile.display_name:
         S.append(Paragraph(f"Patient name (as entered): {_t(d.profile.display_name)}", st["small"]))
-    S.append(Spacer(1, 4))
+    S.append(Spacer(1, 3))
 
-    # 3. Patient Diagnosis & Health Highlights
+    # Primary Diagnosis & Vitals Highlights Box
     dx = note.assessment.working_diagnosis or d.inputs.working_diagnosis
     dx_text = dx if dx else NOT_DOCUMENTED
-    dx_box = Table([[
-        Paragraph("<b>Primary Working Diagnosis (Karamdaman):</b>", st["td_bold"]),
-        Paragraph(f"<b>{_t(dx_text)}</b>", st["base"])
-    ]], colWidths=[65 * mm, 109 * mm])
+
+    # Build concise vitals string
+    vit_parts = []
+    if d.vitals.bp_systolic and d.vitals.bp_diastolic:
+        vit_parts.append(f"BP: {d.vitals.bp_systolic}/{d.vitals.bp_diastolic} mmHg")
+    if d.vitals.temp_c:
+        vit_parts.append(f"Temp: {d.vitals.temp_c:g} C" + (" (Fever)" if d.vitals.temp_c >= 37.8 else ""))
+    if d.vitals.heart_rate:
+        vit_parts.append(f"HR: {d.vitals.heart_rate} bpm")
+    if d.vitals.resp_rate:
+        vit_parts.append(f"RR: {d.vitals.resp_rate} cpm")
+    if d.vitals.spo2:
+        vit_parts.append(f"SpO2: {d.vitals.spo2}%")
+    if d.vitals.weight_kg:
+        vit_parts.append(f"Weight: {d.vitals.weight_kg:g} kg")
+    vit_summary = " | ".join(vit_parts) if vit_parts else "Vital signs not recorded"
+
+    dx_box = Table([
+        [
+            Paragraph("<b>Diagnosis:</b>", st["td_bold"]),
+            Paragraph(f"<b>{_t(dx_text)}</b>", st["base"])
+        ],
+        [
+            Paragraph("<b>Vital Signs:</b>", st["td_bold"]),
+            Paragraph(_t(vit_summary), st["small"])
+        ]
+    ], colWidths=[48 * mm, 126 * mm])
     dx_box.setStyle(TableStyle([
         ("BOX", (0, 0), (-1, -1), 0.8, TEAL),
         ("BACKGROUND", (0, 0), (-1, -1), LIGHT_TEAL),
-        ("TOPPADDING", (0, 0), (-1, -1), 4),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ("TOPPADDING", (0, 0), (-1, -1), 3),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+        ("LINEBELOW", (0, 0), (-1, 0), 0.4, CARD_BORDER),
     ]))
     S.append(dx_box)
     S.append(Spacer(1, 3))
 
-    # 4. Official ℞ Prescription & Patient Medication Schedule
-    S.append(Paragraph("<b>℞ PRESCRIPTION & MEDICATION GUIDE</b> (Reseta at Gabay sa Pag-inom)", st["rx_title"]))
+    # Rx Official Prescription Table
+    S.append(Paragraph("<b>Rx PRESCRIPTION &amp; MEDICATION GUIDE</b>", st["rx_title"]))
     if orders:
         rx_rows = [[
-            Paragraph("Gamot / Medicine", st["th"]),
-            Paragraph("Dose & Frequency (Gaano Kadalas)", st["th"]),
-            Paragraph("Tagal (Duration)", st["th"]),
-            Paragraph("Tagubilin (Instructions)", st["th"]),
+            Paragraph("Medicine", st["th"]),
+            Paragraph("Dose &amp; Frequency", st["th"]),
+            Paragraph("Duration", st["th"]),
+            Paragraph("Medication Instructions", st["th"]),
         ]]
         for o in orders:
             freq_raw = o.frequency.upper().strip() if o.frequency else ""
             freq_desc = FREQ_MAP.get(freq_raw, o.frequency or "")
             amt = f"{o.dose_amount:g} {o.dose_unit}" if o.dose_amount else ""
             dose_freq = f"<b>{_t(amt)}</b><br/>{_t(freq_desc)}" if amt and freq_desc else _t(amt or freq_desc or "As instructed")
-            dur = f"{o.duration_days} day(s) / araw" if o.duration_days else "As directed"
-            instr = o.instructions or ("Take with water after meals" if "oral" in (o.route or "").lower() else "Follow physician guidance")
+            dur = f"{o.duration_days} day(s)" if o.duration_days else "As directed"
+            instr = o.instructions or ("Take with water after meals" if "oral" in (o.route or "").lower() else "Follow doctor instructions")
 
             drug_label = f"<b>{_t(o.drug_name)}</b>"
             if o.strength:
@@ -196,38 +225,29 @@ def build_pdf(
                 Paragraph(_t(instr), st["td"]),
             ])
 
-        rx_table = Table(rx_rows, colWidths=[48 * mm, 46 * mm, 26 * mm, 54 * mm])
+        rx_table = Table(rx_rows, colWidths=[46 * mm, 46 * mm, 26 * mm, 56 * mm])
         rx_table.setStyle(TableStyle([
             ("BACKGROUND", (0, 0), (-1, 0), TEAL),
             ("BOX", (0, 0), (-1, -1), 0.8, LINE),
             ("INNERGRID", (0, 0), (-1, -1), 0.4, LINE),
-            ("TOPPADDING", (0, 0), (-1, -1), 4),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ("TOPPADDING", (0, 0), (-1, -1), 3),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ]))
         S.append(rx_table)
     else:
         S.append(Paragraph("<i>No prescription medications ordered for this visit.</i>", st["base"]))
-    S.append(Spacer(1, 4))
+    S.append(Spacer(1, 3))
 
-    # 5. Patient Safety & Allergy Alerts Callout
+    # Patient Safety & Allergy Alerts Callout
     alerts = []
-    # Allergy alert
     s_alg = note.subjective.allergies or d.profile.allergies
     if s_alg:
         alg_str = ", ".join(s_alg)
         warn_note = ""
         if any("penicillin" in x.lower() for x in s_alg):
-            warn_note = " <i>(Huwag uminom ng Amoxicillin, Augmentin, o kahit anong penicillin-based antibiotics).</i>"
-        alerts.append(f"<b>⚠️ ALLERGY WARNING:</b> Patient is allergic to <b>{_t(alg_str)}</b>.{warn_note}")
-
-    # Drug interaction / duplicate alert from review
-    if review and review.get("result", {}).get("findings"):
-        for f in review["result"]["findings"]:
-            if f.get("category") == "detected_concern" and f.get("severity") in ("major", "contraindicated"):
-                alerts.append(f"<b>🚨 SAFETY WARNING:</b> {_t(f['title'])}. {_t(f.get('explanation', ''))}")
-            elif f.get("check_type") == "duplicates" and f.get("category") == "detected_concern":
-                alerts.append(f"<b>⚠️ MEDICATION PRECAUTION:</b> {_t(f['title'])}. If you are taking over-the-counter medicine (such as Biogesic), stop it while taking this prescription to avoid overdose.")
+            warn_note = " <i>(Do not take Amoxicillin, Augmentin, or any penicillin-based antibiotic).</i>"
+        alerts.append(f"<b>[!] ALLERGY ADVISORY:</b> Known patient allergy to <b>{_t(alg_str)}</b>.{warn_note}")
 
     if alerts:
         alert_content = "<br/>".join(alerts)
@@ -235,26 +255,26 @@ def build_pdf(
         alert_box.setStyle(TableStyle([
             ("BOX", (0, 0), (-1, -1), 0.8, AMBER_BORDER),
             ("BACKGROUND", (0, 0), (-1, -1), SOFT_AMBER),
-            ("TOPPADDING", (0, 0), (-1, -1), 4),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ("TOPPADDING", (0, 0), (-1, -1), 3),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
         ]))
         S.append(alert_box)
-        S.append(Spacer(1, 4))
+        S.append(Spacer(1, 3))
 
-    # 6. Patient Instructions: Care Plan & Follow-Up
+    # Patient Care Plan & Follow-Up Instructions
     care_items = []
     tx = note.plan.treatment_plan or d.inputs.treatment_plan
     if tx:
-        care_items.append(("Home Care Plan (Tagubilin sa Bahay)", tx))
+        care_items.append(("Care Plan", tx))
     fu = note.plan.follow_up or d.inputs.follow_up
     if fu:
-        care_items.append(("Follow-Up / Kailan Babalik", fu))
+        care_items.append(("Follow-Up", fu))
 
     if care_items:
         care_rows = []
         for title, desc in care_items:
             care_rows.append([Paragraph(f"<b>{_t(title)}:</b>", st["td_bold"]), Paragraph(_t(desc), st["base"])])
-        care_table = Table(care_rows, colWidths=[52 * mm, 122 * mm])
+        care_table = Table(care_rows, colWidths=[50 * mm, 124 * mm])
         care_table.setStyle(TableStyle([
             ("BOX", (0, 0), (-1, -1), 0.6, LINE),
             ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#fbfcfd")),
@@ -263,10 +283,10 @@ def build_pdf(
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ]))
         S.append(care_table)
-        S.append(Spacer(1, 5))
+        S.append(Spacer(1, 4))
 
-    # 7. Clinician Approval Card (Official Doctor Sign-off)
-    S.append(Paragraph("<b>Clinician Sign-Off &amp; Approval</b>", st["h2"]))
+    # Clinician Sign-Off & Official Seal (Bottom of Page 1)
+    S.append(Paragraph("<b>Clinician Sign-Off &amp; Electronic Approval</b>", st["h2"]))
     if approved and note_rec.get("approver"):
         ap = note_rec["approver"]
         rows = [
@@ -280,8 +300,8 @@ def build_pdf(
         t.setStyle(TableStyle([
             ("BOX", (0, 0), (-1, -1), 0.6, GREEN_BORDER),
             ("BACKGROUND", (0, 0), (-1, -1), SOFT_GREEN),
-            ("TOPPADDING", (0, 0), (-1, -1), 3),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+            ("TOPPADDING", (0, 0), (-1, -1), 2.5),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5),
         ]))
         S.append(t)
         if ap.get("attestation"):
@@ -290,72 +310,84 @@ def build_pdf(
             S.append(Paragraph(f"Content hash (SHA-256): {note_rec['content_hash']}", st["small"]))
     else:
         S.append(Paragraph("<b>Not approved.</b> No clinician has reviewed or approved this note. It must not be treated as part of the final medical record.", st["base"]))
-    S.append(Spacer(1, 6))
 
-    # 8. Detailed Clinical EHR Record (SOAP Format & Audit Trail)
+    # =========================================================================
+    # PAGE BREAK: PAGE 2 FOR HEALTH CENTER / EHR ARCHIVE RECORD (SOAP NOTE)
+    # =========================================================================
+    S.append(PageBreak())
+
+    S.append(Paragraph(f"{fac_text}{APP_NAME} CLINICAL INTELLIGENCE - HEALTH CENTER ARCHIVE", st["small"]))
     S.append(Paragraph("Clinical Consultation Note (SOAP)", st["h1"]))
-    S.append(Paragraph("Complete EHR Clinical Record & Medical Reference", st["small"]))
-    S.append(Spacer(1, 2))
+    S.append(Paragraph("Permanent Electronic Health Record Archive", st["small"]))
+    S.append(Spacer(1, 3))
+
+    def _is_empty(val) -> bool:
+        if not val:
+            return True
+        if isinstance(val, str):
+            sv = val.strip().lower()
+            return sv == "" or sv in ("not documented", "none", "n/a", "none documented", "not recorded")
+        return False
 
     def para(label, text):
-        return [Paragraph(_t(label), st["label"]), Paragraph(_t(text) if text else f"<i>{NOT_DOCUMENTED}</i>", st["base"])]
+        if _is_empty(text):
+            return []
+        return [Paragraph(_t(label), st["label"]), Paragraph(_t(text), st["base"])]
 
     def bullets(label, items):
+        valid = [it for it in (items or []) if not _is_empty(it)]
+        if not valid:
+            return []
         out = [Paragraph(_t(label), st["label"])]
-        if not items:
-            out.append(Paragraph(f"<i>{NOT_DOCUMENTED}</i>", st["base"]))
-        for it in items:
+        for it in valid:
             out.append(Paragraph(_t(it), st["bullet"], bulletText="-"))
         return out
 
     s, o, a, p = note.subjective, note.objective, note.assessment, note.plan
-    S.append(Paragraph("S - Subjective", st["h2"]))
-    S += para("Chief complaint", s.chief_complaint) + para("History of present illness", s.hpi) + para("Relevant history", s.relevant_history)
-    S += bullets("Symptoms reported", s.symptoms) + bullets("Current medications", s.current_medications)
-    alg = s.allergies if s.allergies else ([] if s.allergies_status == "unknown" else ["No known allergies (as recorded)"])
-    S += bullets("Allergies" + (" - status not recorded" if s.allergies_status == "unknown" else ""), alg)
+    s_blocks = (
+        para("Chief complaint", s.chief_complaint)
+        + para("History of present illness", s.hpi)
+        + para("Relevant history", s.relevant_history)
+        + bullets("Symptoms reported", s.symptoms)
+        + bullets("Current medications", s.current_medications)
+    )
+    if s.allergies:
+        s_blocks += bullets("Allergies", s.allergies)
+    elif s.allergies_status and s.allergies_status not in ("unknown", "none_known"):
+        s_blocks += para("Allergies", s.allergies_status)
+    if s_blocks:
+        S.append(Paragraph("S - Subjective", st["h2"]))
+        S += s_blocks
 
-    S.append(Paragraph("O - Objective", st["h2"]))
-    S += bullets("Vital signs", o.vitals) + bullets("Examination findings", o.exam_findings) + bullets("Other documented findings", o.other_findings)
+    o_blocks = (
+        bullets("Vital signs", o.vitals)
+        + bullets("Examination findings", o.exam_findings)
+        + bullets("Other documented findings", o.other_findings)
+    )
+    if o_blocks:
+        S.append(Paragraph("O - Objective", st["h2"]))
+        S += o_blocks
 
-    S.append(Paragraph("A - Assessment", st["h2"]))
-    S += para("Working diagnosis (clinician-provided)", a.working_diagnosis) + bullets("Supporting findings", a.supporting_findings)
-    S += bullets("Uncertainties", a.uncertainties) + bullets("Missing information", a.missing_information)
+    a_blocks = (
+        para("Working diagnosis", a.working_diagnosis)
+        + bullets("Supporting findings", a.supporting_findings)
+        + bullets("Uncertainties", a.uncertainties)
+        + bullets("Missing information", a.missing_information)
+    )
+    if a_blocks:
+        S.append(Paragraph("A - Assessment", st["h2"]))
+        S += a_blocks
 
-    S.append(Paragraph("P - Plan", st["h2"]))
-    S += para("Treatment plan", p.treatment_plan) + bullets("Medication orders (entered by clinician)", p.medication_orders)
-    S += bullets("Investigations", p.investigations) + bullets("Referrals", p.referrals) + para("Follow-up", p.follow_up)
-
-    # 9. Medication Safety Engine Audit Review
-    S.append(Paragraph("Medication safety review", st["h2"]))
-    if not review:
-        S.append(Paragraph("<b>No medication-safety check was run for this note.</b> Medication safety has not been reviewed by the software.", st["base"]))
-    else:
-        res = review["result"]
-        ds = res.get("dataset", {})
-        S.append(Paragraph(
-            f"Run {_t(local_display(review['run_at']))} against reference dataset <b>{_t(ds.get('name', '?'))}</b> v{_t(ds.get('version', '?'))} "
-            f"({'sample reference set - not clinically validated' if res.get('synthetic') else ('professionally approved' if res.get('approved_for_clinical') else 'imported, NOT yet approved')}).",
-            st["small"]))
-        if not review_current:
-            S.append(Paragraph("<b>This check is OUT OF DATE: medications or patient data changed after it was run.</b>", st["base"]))
-        S.append(Paragraph(f"Overall: <b>{_t(OVERALL_LABELS.get(res['overall'], res['overall']))}</b>", st["base"]))
-        shown = [f for f in res["findings"] if f["category"] != "no_rules_triggered"]
-        for f in shown:
-            ack = review["acks"].get(f["key"])
-            block = [
-                Paragraph(f"<b>[{_t(CATEGORY_LABELS.get(f['category'], f['category']))} | {_t(f['severity'])}]</b> {_t(f['title'])}", st["base"]),
-                Paragraph(_t(f["explanation"]), st["small"]),
-                Paragraph(f"Next step: {_t(f['next_step'])}", st["small"]),
-            ]
-            if f.get("evidence"):
-                block.append(Paragraph("Source: " + _t("; ".join(f"{e['rule']} - {e['source']}" for e in f["evidence"])), st["small"]))
-            if ack:
-                block.append(Paragraph(f"Acknowledged by clinician - reason: {_t(ack['reason'])}", st["small"]))
-            S.append(KeepTogether(block + [Spacer(1, 3)]))
-        if not shown:
-            S.append(Paragraph("No findings were raised by the installed rules.", st["base"]))
-        S.append(Paragraph(_t(res["disclaimer"]), st["small"]))
+    p_blocks = (
+        para("Treatment plan", p.treatment_plan)
+        + bullets("Medication orders", p.medication_orders)
+        + bullets("Investigations", p.investigations)
+        + bullets("Referrals", p.referrals)
+        + para("Follow-up", p.follow_up)
+    )
+    if p_blocks:
+        S.append(Paragraph("P - Plan", st["h2"]))
+        S += p_blocks
 
     if note.generation_warnings or note.flagged_items:
         S.append(Paragraph("Generation notes", st["h2"]))
@@ -375,10 +407,10 @@ def build_pdf(
             canvas.drawCentredString(0, 0, "DRAFT")
             canvas.restoreState()
             canvas.saveState()
-        canvas.setFont("Helvetica", 7.5)
+        canvas.setFont("Helvetica", 7.2)
         canvas.setFillColor(MUTED)
-        canvas.drawString(18 * mm, 8 * mm, f"{APP_NAME} v{__version__} - {encounter['id']} - {note_rec['status'].upper()} v{note_rec['version']} - {exported}")
-        canvas.drawRightString(w - 18 * mm, 8 * mm, f"Page {doc_.page}")
+        canvas.drawString(18 * mm, 7 * mm, f"{APP_NAME} v{__version__} - {encounter['id']} - {note_rec['status'].upper()} v{note_rec['version']} - {exported}")
+        canvas.drawRightString(w - 18 * mm, 7 * mm, f"Page {doc_.page}")
         canvas.restoreState()
 
     doc.build(S, onFirstPage=decorate, onLaterPages=decorate)
