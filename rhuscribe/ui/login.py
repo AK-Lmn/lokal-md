@@ -94,11 +94,12 @@ def _signin(conn):
             user, vault = auth.login(conn, un, pw)
         except auth.AuthError as e:
             st.error(str(e))
-            return
-        st.session_state.update(user=user, vault=vault)
-        st.session_state.pop("locked_username", None)
-        C.touch()
-        st.rerun()
+            st.caption("Forgot your password? Use your recovery key below.")
+        else:
+            st.session_state.update(user=user, vault=vault)
+            st.session_state.pop("locked_username", None)
+            C.touch()
+            st.rerun()
     if st.button("Forgot password? Use recovery key", type="tertiary"):
         st.session_state["_recovery_mode"] = True
         st.rerun()

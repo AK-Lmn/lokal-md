@@ -204,3 +204,15 @@ def test_09_inactivity_lock_wipes_workspace_and_requires_login(app):
     at.text_input[labels.index("Password")].input(PW)
     click(at, "Sign in")
     assert any(t.value == "Dashboard" for t in at.title)
+
+
+def test_10_forgot_password_link_visible_after_failed_signin(app):
+    import time
+    at = app
+    click(at, "Sign out") if any(b.label == "Sign out" for b in at.sidebar.button) else None
+    labels = [t.label for t in at.text_input]
+    at.text_input[labels.index("Username")].input("drcruz")
+    at.text_input[labels.index("Password")].input("definitely-wrong-1A")
+    click(at, "Sign in")
+    assert at.error, "expected an error message"
+    assert any("Forgot password" in b.label for b in at.button)
