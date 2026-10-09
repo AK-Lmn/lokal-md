@@ -83,8 +83,8 @@ def sidebar() -> None:
     user = C.user()
     page = ss.get("page", "dashboard")
     with st.sidebar:
-        st.markdown(f'<div class="rs-brandrow"><div class="rs-logo">{C.logo_svg(38)}</div><div class="rs-brand" style="padding:0">{APP_NAME}<small>Local intelligence for local clinics</small></div></div>', unsafe_allow_html=True)
-        st.markdown('<div class="rs-navlabel">Work</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="rs-brandrow"><div class="rs-logo">{C.logo_svg(38)}</div><div class="rs-brand" style="padding:0">{APP_NAME}<small>Local intelligence for local clinics.</small></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="rs-navlabel">Workspace</div>', unsafe_allow_html=True)
         for key, label in NAV:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
         if W.active_id():
@@ -99,14 +99,15 @@ def sidebar() -> None:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
         st.markdown(
             '<div class="rs-vault-card">'
-            '<div class="rs-vault-badge"><span class="dot"></span> Offline vault active</div>'
+            f'<div class="rs-vault-badge">{C.icon_html("shield-check", 14)} Offline vault active</div>'
             '<div class="rs-vault-desc">Records stay on this device. No internet connection required.</div>'
-            '<div class="rs-vault-foot">🔒 Encrypted local storage</div>'
+            f'<div class="rs-vault-foot">{C.icon_html("hard-drive", 14)} Encrypted local storage</div>'
             '</div>',
             unsafe_allow_html=True,
         )
-        st.markdown("---")
-        st.markdown(f'<div class="rs-small" style="margin-bottom:.7rem;line-height:1.5">{C.esc(user["display_name"])}<br>{C.esc(user["role"])}</div>', unsafe_allow_html=True)
+        initials = "".join(w[0] for w in user["display_name"].replace("Dr.", "").split()[:2]).upper() or "?"
+        st.markdown(f'<div class="rs-account"><div class="rs-avatar">{C.esc(initials)}</div><div><div class="n">{C.esc(user["display_name"])}</div>'
+                    f'<div class="r">{C.esc(user["role"])}</div></div></div>', unsafe_allow_html=True)
         c1, c2 = st.columns(2)
         if c1.button("Lock", key="btn_lock"):
             session.lock("manual")

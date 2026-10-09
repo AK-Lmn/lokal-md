@@ -1,0 +1,640 @@
+<svg width="1600" height="1692" viewBox="0 0 1600 1692" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_4_1876)">
+<rect width="1600" height="1692" fill="#F8FAFC"/>
+<mask id="path-1-inside-1_4_1876" fill="white">
+<path d="M0 0H248V1692H0V0Z"/>
+</mask>
+<path d="M0 0H248V1692H0V0Z" fill="white"/>
+<path d="M248 0H247V1692H248H249V0H248Z" fill="#DCE5E9" mask="url(#path-1-inside-1_4_1876)"/>
+<g clip-path="url(#clip1_4_1876)">
+<g clip-path="url(#clip2_4_1876)">
+<rect x="20" y="30" width="38" height="38" rx="12" fill="#0B6E75"/>
+<path d="M31.3327 46.1248C30.8243 46.1248 30.3368 46.3267 29.9773 46.6862C29.6178 47.0457 29.4159 47.5332 29.4159 48.0416V49.9584C29.4159 50.4668 29.6178 50.9543 29.9773 51.3138C30.3368 51.6733 30.8243 51.8752 31.3327 51.8752H35.1664C35.4205 51.8752 35.6643 51.9762 35.8441 52.1559C36.0238 52.3357 36.1248 52.5794 36.1248 52.8336V56.6673C36.1248 57.1756 36.3267 57.6632 36.6862 58.0227C37.0457 58.3821 37.5332 58.5841 38.0416 58.5841H39.9584C40.4668 58.5841 40.9543 58.3821 41.3138 58.0227C41.6733 57.6632 41.8752 57.1756 41.8752 56.6673V52.8336C41.8752 52.5794 41.9762 52.3357 42.1559 52.1559C42.3357 51.9762 42.5794 51.8752 42.8336 51.8752H46.6673C47.1756 51.8752 47.6632 51.6733 48.0227 51.3138C48.3821 50.9543 48.5841 50.4668 48.5841 49.9584V48.0416C48.5841 47.5332 48.3821 47.0457 48.0227 46.6862C47.6632 46.3267 47.1756 46.1248 46.6673 46.1248H42.8336C42.5794 46.1248 42.3357 46.0238 42.1559 45.8441C41.9762 45.6643 41.8752 45.4205 41.8752 45.1664V41.3327C41.8752 40.8243 41.6733 40.3368 41.3138 39.9773C40.9543 39.6178 40.4668 39.4159 39.9584 39.4159H38.0416C37.5332 39.4159 37.0457 39.6178 36.6862 39.9773C36.3267 40.3368 36.1248 40.8243 36.1248 41.3327V45.1664C36.1248 45.4205 36.0238 45.6643 35.8441 45.8441C35.6643 46.0238 35.4205 46.1248 35.1664 46.1248H31.3327Z" stroke-linecap="round" stroke="white"/>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="23" letter-spacing="-0.7em"><tspan x="68" y="57.3636">Lokal.MD</tspan></text>
+</g>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="20" y="95.8636">Local intelligence for local clinics.</tspan></text>
+</g>
+<rect x="20" y="129" width="208" height="1" fill="#DCE5E9"/>
+<g clip-path="url(#clip3_4_1876)">
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="10" font-weight="bold" letter-spacing="1.3em"><tspan x="20" y="167.636">WORKSPACE</tspan></text>
+<rect x="20" y="178" width="208" height="46" rx="12" fill="white"/>
+<path d="M35 194.25H38.75C39.1642 194.25 39.5 194.586 39.5 195V200.25C39.5 200.664 39.1642 201 38.75 201H35C34.5858 201 34.25 200.664 34.25 200.25V195C34.25 194.586 34.5858 194.25 35 194.25ZM43.25 194.25H47C47.4142 194.25 47.75 194.586 47.75 195V197.25C47.75 197.664 47.4142 198 47 198H43.25C42.8358 198 42.5 197.664 42.5 197.25V195C42.5 194.586 42.8358 194.25 43.25 194.25ZM43.25 201H47C47.4142 201 47.75 201.336 47.75 201.75V207C47.75 207.414 47.4142 207.75 47 207.75H43.25C42.8358 207.75 42.5 207.414 42.5 207V201.75C42.5 201.336 42.8358 201 43.25 201ZM35 204H38.75C39.1642 204 39.5 204.336 39.5 204.75V207C39.5 207.414 39.1642 207.75 38.75 207.75H35C34.5858 207.75 34.25 207.414 34.25 207V204.75C34.25 204.336 34.5858 204 35 204Z" stroke-linecap="round" stroke="#52656F"/>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="60" y="205.727">Dashboard</tspan></text>
+<rect x="20" y="232" width="208" height="46" rx="12" fill="white"/>
+<path d="M44.0002 261.75V260.25C44.0002 259.454 43.6841 258.691 43.1215 258.129C42.5588 257.566 41.7957 257.25 41 257.25H36.4996C35.7039 257.25 34.9408 257.566 34.3781 258.129C33.8155 258.691 33.4994 259.454 33.4994 260.25V261.75M44.0002 248.346C44.6436 248.513 45.2134 248.888 45.6201 249.414C46.0269 249.94 46.2476 250.585 46.2476 251.25C46.2476 251.915 46.0269 252.56 45.6201 253.086C45.2134 253.611 44.6436 253.987 44.0002 254.154M48.5006 261.75V260.25C48.5001 259.585 48.2788 258.939 47.8716 258.414C47.4643 257.889 46.8941 257.514 46.2504 257.347M41.75 251.25C41.75 252.907 40.4068 254.25 38.7498 254.25C37.0928 254.25 35.7496 252.907 35.7496 251.25C35.7496 249.593 37.0928 248.25 38.7498 248.25C40.4068 248.25 41.75 249.593 41.75 251.25Z" stroke-linecap="round" stroke="#52656F"/>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="60" y="259.727">Patient Encounters</tspan></text>
+<rect x="20" y="286" width="208" height="46" rx="12" fill="#EDF8F6"/>
+<path d="M41 302.25H35.75C35.3522 302.25 34.9706 302.408 34.6893 302.689C34.408 302.971 34.25 303.352 34.25 303.75V314.25C34.25 314.648 34.408 315.029 34.6893 315.311C34.9706 315.592 35.3522 315.75 35.75 315.75H46.25C46.6478 315.75 47.0294 315.592 47.3107 315.311C47.592 315.029 47.75 314.648 47.75 314.25V309M45.7813 301.969C46.0797 301.671 46.4844 301.503 46.9063 301.503C47.3283 301.503 47.733 301.671 48.0313 301.969C48.3297 302.267 48.4973 302.672 48.4973 303.094C48.4973 303.516 48.3297 303.921 48.0313 304.219L41.2716 310.979C41.0935 311.157 40.8735 311.288 40.6318 311.358L38.4771 311.988C38.4125 312.007 38.3441 312.008 38.279 311.991C38.2139 311.975 38.1544 311.941 38.1069 311.893C38.0594 311.846 38.0255 311.786 38.0088 311.721C37.9921 311.656 37.9932 311.588 38.0121 311.523L38.6421 309.368C38.713 309.127 38.8435 308.907 39.0216 308.729L45.7813 301.969Z" stroke-linecap="round" stroke="#0B6E75"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="60" y="313.727">New Consultation</tspan></text>
+<rect x="20" y="340" width="208" height="46" rx="12" fill="white"/>
+<path d="M39.2529 357.103C39.2943 356.668 39.4962 356.264 39.8193 355.97C40.1423 355.677 40.5633 355.514 41.0001 355.514C41.4368 355.514 41.8578 355.677 42.1809 355.97C42.5039 356.264 42.7059 356.668 42.7472 357.103C42.772 357.384 42.8642 357.654 43.0158 357.892C43.1674 358.13 43.3741 358.327 43.6183 358.468C43.8625 358.609 44.137 358.689 44.4187 358.701C44.7004 358.714 44.9809 358.658 45.2364 358.539C45.6333 358.359 46.0829 358.333 46.4979 358.466C46.9129 358.599 47.2636 358.882 47.4816 359.259C47.6996 359.636 47.7694 360.081 47.6774 360.507C47.5854 360.933 47.3382 361.31 46.9839 361.564C46.7532 361.726 46.5649 361.941 46.4349 362.191C46.3048 362.441 46.237 362.719 46.237 363C46.237 363.282 46.3048 363.56 46.4349 363.81C46.5649 364.06 46.7532 364.275 46.9839 364.437C47.3382 364.691 47.5854 365.067 47.6774 365.493C47.7694 365.919 47.6996 366.364 47.4816 366.742C47.2636 367.119 46.9129 367.402 46.4979 367.535C46.0829 367.668 45.6333 367.642 45.2364 367.462C44.9809 367.343 44.7004 367.287 44.4187 367.299C44.137 367.312 43.8625 367.392 43.6183 367.532C43.3741 367.673 43.1674 367.871 43.0158 368.109C42.8642 368.346 42.772 368.617 42.7472 368.898C42.7059 369.333 42.5039 369.736 42.1809 370.03C41.8578 370.324 41.4368 370.487 41.0001 370.487C40.5633 370.487 40.1423 370.324 39.8193 370.03C39.4962 369.736 39.2943 369.333 39.2529 368.898C39.2281 368.617 39.136 368.346 38.9843 368.108C38.8327 367.871 38.6259 367.673 38.3816 367.532C38.1373 367.391 37.8626 367.311 37.5809 367.299C37.2991 367.287 37.0185 367.343 36.7629 367.462C36.3661 367.642 35.9164 367.668 35.5014 367.535C35.0864 367.402 34.7358 367.119 34.5178 366.742C34.2998 366.364 34.23 365.919 34.3219 365.493C34.4139 365.067 34.6611 364.691 35.0154 364.437C35.2461 364.275 35.4345 364.06 35.5645 363.81C35.6945 363.56 35.7624 363.282 35.7624 363C35.7624 362.719 35.6945 362.441 35.5645 362.191C35.4345 361.941 35.2461 361.726 35.0154 361.564C34.6616 361.31 34.4149 360.933 34.3231 360.508C34.2313 360.082 34.3011 359.637 34.5189 359.26C34.7367 358.883 35.0869 358.6 35.5015 358.467C35.9161 358.334 36.3654 358.359 36.7622 358.539C37.0177 358.658 37.2982 358.714 37.5799 358.701C37.8616 358.689 38.1361 358.609 38.3803 358.468C38.6245 358.327 38.8312 358.13 38.9828 357.892C39.1345 357.654 39.2266 357.384 39.2514 357.103M43.2495 363.001C43.2495 364.243 42.2421 365.251 40.9995 365.251C39.7568 365.251 38.7495 364.243 38.7495 363.001C38.7495 361.758 39.7568 360.751 40.9995 360.751C42.2421 360.751 43.2495 361.758 43.2495 363.001Z" stroke-linecap="round" stroke="#52656F"/>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="60" y="367.727">Settings</tspan></text>
+</g>
+<rect x="20.5" y="414.5" width="207" height="126" rx="11.5" fill="#F8FAFC"/>
+<rect x="20.5" y="414.5" width="207" height="126" rx="11.5" stroke="#DCE5E9"/>
+<rect x="34" y="428" width="149" height="27" rx="13.5" fill="#EDF8F6"/>
+<path d="M49.2502 441.5L50.4167 442.666L52.7498 440.333M55.6662 442.083C55.6662 445 53.6247 446.458 51.1983 447.304C51.0713 447.347 50.9332 447.345 50.8075 447.299C48.3753 446.458 46.3338 445 46.3338 442.083V438C46.3338 437.845 46.3953 437.697 46.5046 437.587C46.614 437.478 46.7624 437.417 46.9171 437.417C48.0836 437.417 49.5418 436.716 50.5567 435.83C50.6803 435.724 50.8375 435.666 51 435.666C51.1625 435.666 51.3197 435.724 51.4433 435.83C52.464 436.722 53.9164 437.417 55.0829 437.417C55.2376 437.417 55.386 437.478 55.4954 437.587C55.6047 437.697 55.6662 437.845 55.6662 438V442.083Z" stroke-linecap="round" stroke="#0B6E75"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="64" y="445.864">Offline vault active</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="34" y="478.864">Records stay on this device. No </tspan><tspan x="34" y="497.864">internet connection required.</tspan></text>
+<g clip-path="url(#clip4_4_1876)">
+<path d="M39.8332 522.333H39.8391M46.8021 520.007H35.1975M35.1975 520.007H35.1975M35.1975 520.007C35.2183 519.92 35.2492 519.834 35.2899 519.753L37.1789 515.981C37.2755 515.787 37.4244 515.623 37.6088 515.509C37.7933 515.395 38.006 515.334 38.2231 515.334H43.7769C43.994 515.334 44.2067 515.395 44.3912 515.509C44.5756 515.623 44.7245 515.787 44.8211 515.981L46.7101 519.753C46.7914 519.915 46.8338 520.094 46.8338 520.276V523.5C46.8338 523.809 46.7109 524.106 46.4921 524.325C46.2733 524.543 45.9765 524.666 45.667 524.666H36.333C36.0235 524.666 35.7267 524.543 35.5079 524.325C35.2891 524.106 35.1662 523.809 35.1662 523.5V520.276C35.1662 520.185 35.1768 520.095 35.1975 520.007ZM37.4997 522.333H37.5056" stroke-linecap="round" stroke="#0B6E75"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="54" y="524">Encrypted local storage</tspan></text>
+</g>
+<g clip-path="url(#clip5_4_1876)">
+<rect x="20" y="1619" width="208" height="1" fill="#DCE5E9"/>
+<g clip-path="url(#clip6_4_1876)">
+<rect x="20" y="1634" width="34" height="34" rx="17" fill="#F1F5F7"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="27.5" y="1655.36">MR</tspan></text>
+<g clip-path="url(#clip7_4_1876)">
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="64" y="1647.36">Dr. Maria Reyes</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="10" letter-spacing="0em"><tspan x="64" y="1664.14">Rural health physician</tspan></text>
+</g>
+</g>
+</g>
+<g clip-path="url(#clip8_4_1876)">
+<g clip-path="url(#clip9_4_1876)">
+<rect width="1352" height="282" transform="translate(248)" fill="white"/>
+<mask id="path-33-inside-2_4_1876" fill="white">
+<path d="M248 0H1600V88H248V0Z"/>
+</mask>
+<path d="M1600 88V87H248V88V89H1600V88Z" fill="#DCE5E9" mask="url(#path-33-inside-2_4_1876)"/>
+<g clip-path="url(#clip10_4_1876)">
+<rect x="280" y="22" width="44" height="44" rx="12" fill="#F1F5F7"/>
+<path d="M302 44.9583C304.646 44.9583 306.791 42.813 306.791 40.1667C306.791 37.5203 304.646 35.375 302 35.375C299.354 35.375 297.209 37.5203 297.209 40.1667C297.209 42.813 299.354 44.9583 302 44.9583ZM302 44.9583C304.033 44.9583 305.983 45.7661 307.421 47.2038C308.858 48.6416 309.666 50.5917 309.666 52.625M302 44.9583C299.967 44.9583 298.017 45.7661 296.579 47.2038C295.142 48.6416 294.334 50.5917 294.334 52.625" stroke-linecap="round" stroke="#0B6E75"/>
+<g clip-path="url(#clip11_4_1876)">
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="17" font-weight="bold" letter-spacing="0em"><tspan x="338" y="39.6818">Patient Ref PT-PQCTPD</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="338" y="61.8636">65yo Male  &#x2022;  Outpatient consultation</tspan></text>
+</g>
+<rect x="565" y="30.5" width="104" height="27" rx="13.5" fill="#F1F5F7"/>
+<path d="M583.451 41.5836C583.365 41.5319 583.293 41.4586 583.243 41.3708C583.193 41.2831 583.167 41.184 583.167 41.0831V38.1662M583.167 38.1662L578.5 38.1662C578.191 38.1662 577.894 38.2891 577.676 38.5079C577.457 38.7267 577.334 39.0235 577.334 39.333V48.667C577.334 48.9765 577.457 49.2733 577.676 49.4921C577.894 49.7109 578.191 49.8338 578.5 49.8338H585.5C585.81 49.8338 586.107 49.7109 586.325 49.4921C586.544 49.2733 586.667 48.9765 586.667 48.667V48.4599M583.167 38.1662C583.352 38.1659 583.535 38.2021 583.705 38.2728C583.876 38.3435 584.031 38.4473 584.161 38.5781L585.629 40.0459M579.667 47.5003H580.25M583.379 44.9533C583.241 45.092 583.139 45.2633 583.084 45.4515L582.596 47.1258C582.581 47.176 582.58 47.2292 582.593 47.2799C582.606 47.3306 582.633 47.3768 582.67 47.4138C582.707 47.4507 582.753 47.4771 582.804 47.4901C582.854 47.503 582.907 47.5022 582.958 47.4875L584.632 46.9992C584.82 46.9443 584.991 46.8428 585.13 46.7041L587.471 44.3653C587.703 44.1329 587.834 43.8177 587.834 43.489C587.834 43.1604 587.703 42.8452 587.471 42.6128C587.239 42.3804 586.923 42.2499 586.595 42.2499C586.266 42.2499 585.951 42.3804 585.719 42.6128L583.379 44.9533Z" stroke-linecap="round" stroke="#52656F"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="595" y="48.3636">Open Draft</tspan></text>
+</g>
+<g clip-path="url(#clip12_4_1876)">
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="1279" y="48.3636">Saved locally at 09:42</tspan></text>
+<rect x="1421.5" y="23.5" width="146" height="41" rx="11.5" fill="#0B6E75"/>
+<rect x="1421.5" y="23.5" width="146" height="41" rx="11.5" stroke="#0B6E75"/>
+<path d="M1449.04 50.375V45.4167C1449.04 45.2288 1448.97 45.0486 1448.83 44.9158C1448.7 44.783 1448.52 44.7083 1448.33 44.7083H1442.67C1442.48 44.7083 1442.3 44.783 1442.17 44.9158C1442.03 45.0486 1441.96 45.2288 1441.96 45.4167V50.375M1449.04 50.375H1450.46C1450.83 50.375 1451.19 50.2257 1451.46 49.9601C1451.73 49.6944 1451.88 49.3341 1451.88 48.9583V41.7333C1451.87 41.3597 1451.72 41.0032 1451.45 40.7417L1448.76 38.05C1448.5 37.7831 1448.14 37.6303 1447.77 37.625H1441.96M1449.04 50.375H1441.96M1441.96 50.375H1440.54C1440.17 50.375 1439.81 50.2257 1439.54 49.9601C1439.27 49.6944 1439.12 49.3341 1439.12 48.9583V39.0417C1439.12 38.6659 1439.27 38.3056 1439.54 38.0399C1439.81 37.7743 1440.17 37.625 1440.54 37.625H1441.96M1441.96 37.625V40.4583C1441.96 40.6462 1442.03 40.8264 1442.17 40.9592C1442.3 41.092 1442.48 41.1667 1442.67 41.1667H1447.62" stroke-linecap="round" stroke="white"/>
+<text fill="white" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" font-weight="bold" letter-spacing="0em"><tspan x="1462" y="48.7273">Save Changes</tspan></text>
+</g>
+<g clip-path="url(#clip13_4_1876)">
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="27" font-weight="bold" letter-spacing="-0.7em"><tspan x="280" y="138.318">Clinical workspace</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="280" y="165.727">One encounter. From patient intake to clinician approval.</tspan></text>
+</g>
+<g clip-path="url(#clip14_4_1876)">
+<circle cx="1425.5" cy="140.5" r="3.5" fill="#0B6E75"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="1436" y="144.864">On-device intelligence</tspan></text>
+</g>
+<mask id="path-50-inside-3_4_1876" fill="white">
+<path d="M280 189H531.2V243H280V189Z"/>
+</mask>
+<path d="M280 189H531.2V243H280V189Z" fill="white"/>
+<path d="M531.2 243V242H280V243V244H531.2V243Z" fill="#DCE5E9" mask="url(#path-50-inside-3_4_1876)"/>
+<rect x="290" y="204.5" width="23" height="23" rx="11.5" fill="#F1F5F7"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" font-weight="bold" letter-spacing="0em"><tspan x="298.5" y="220">1</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="321" y="220.364">Patient Intake &#38; Vitals</tspan></text>
+<mask id="path-55-inside-4_4_1876" fill="white">
+<path d="M539.2 189H790.4V243H539.2V189Z"/>
+</mask>
+<path d="M539.2 189H790.4V243H539.2V189Z" fill="white"/>
+<path d="M790.4 243V242H539.2V243V244H790.4V243Z" fill="#DCE5E9" mask="url(#path-55-inside-4_4_1876)"/>
+<rect x="549.2" y="204.5" width="23" height="23" rx="11.5" fill="#F1F5F7"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" font-weight="bold" letter-spacing="0em"><tspan x="557.2" y="220">2</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="580.2" y="220.364">Audio Transcription</tspan></text>
+<mask id="path-60-inside-5_4_1876" fill="white">
+<path d="M798.4 189H1049.6V243H798.4V189Z"/>
+</mask>
+<path d="M798.4 189H1049.6V243H798.4V189Z" fill="#EDF8F6"/>
+<path d="M1049.6 243V240H798.4V243V246H1049.6V243Z" fill="#0B6E75" mask="url(#path-60-inside-5_4_1876)"/>
+<rect x="808.4" y="204.5" width="23" height="23" rx="11.5" fill="#0B6E75"/>
+<text fill="white" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" font-weight="bold" letter-spacing="0em"><tspan x="815.9" y="220">3</tspan></text>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="839.4" y="220.364">Clinical SOAP Note</tspan></text>
+<mask id="path-65-inside-6_4_1876" fill="white">
+<path d="M1057.6 189H1308.8V243H1057.6V189Z"/>
+</mask>
+<path d="M1057.6 189H1308.8V243H1057.6V189Z" fill="white"/>
+<path d="M1308.8 243V242H1057.6V243V244H1308.8V243Z" fill="#DCE5E9" mask="url(#path-65-inside-6_4_1876)"/>
+<rect x="1067.6" y="204.5" width="23" height="23" rx="11.5" fill="#F1F5F7"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" font-weight="bold" letter-spacing="0em"><tspan x="1075.1" y="220">4</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="1098.6" y="220.364">Medication Orders</tspan></text>
+<mask id="path-70-inside-7_4_1876" fill="white">
+<path d="M1316.8 189H1568V243H1316.8V189Z"/>
+</mask>
+<path d="M1316.8 189H1568V243H1316.8V189Z" fill="white"/>
+<path d="M1568 243V242H1316.8V243V244H1568V243Z" fill="#DCE5E9" mask="url(#path-70-inside-7_4_1876)"/>
+<rect x="1326.8" y="204.5" width="23" height="23" rx="11.5" fill="#F1F5F7"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" font-weight="bold" letter-spacing="0em"><tspan x="1334.3" y="220">5</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="1357.8" y="220.364">Review &#38; Approval</tspan></text>
+<mask id="path-75-inside-8_4_1876" fill="white">
+<path d="M248 243H1600V282H248V243Z"/>
+</mask>
+<path d="M248 243H1600V282H248V243Z" fill="#F8FAFC"/>
+<path d="M1600 282V281H248V282V283H1600V282Z" fill="#DCE5E9" mask="url(#path-75-inside-8_4_1876)"/>
+<g clip-path="url(#clip15_4_1876)">
+<path d="M287.5 265V262.5M287.5 260H287.506M293.751 262.5C293.751 265.952 290.952 268.751 287.5 268.751C284.048 268.751 281.25 265.952 281.25 262.5C281.25 259.048 284.048 256.25 287.5 256.25C290.952 256.25 293.751 259.048 293.751 262.5Z" stroke-linecap="round" stroke="#52656F"/>
+</g>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="303" y="266.864">Illustrative sample encounter. Clinical narrative and medication entries are not a diagnosis or real prescription.</tspan></text>
+</g>
+<rect x="280.5" y="306.5" width="1287" height="181" rx="11.5" fill="white"/>
+<rect x="280.5" y="306.5" width="1287" height="181" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip16_4_1876)">
+<g clip-path="url(#clip17_4_1876)">
+<rect x="300" y="326" width="30" height="30" rx="12" fill="#EDF8F6"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="307.5" y="345.364">01</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="17" letter-spacing="0em"><tspan x="342" y="347.182">Patient Intake &#38; Vitals</tspan></text>
+</g>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="1364" y="345.364">Recorded 09:31  &#x2022;  Manual entry</tspan></text>
+</g>
+<g clip-path="url(#clip18_4_1876)">
+<rect x="300" y="372" width="370" height="96" rx="12" fill="#EDF8F6"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" font-weight="bold" letter-spacing="0.5em"><tspan x="316" y="398.5">PRESENTING CONCERN</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="15" font-weight="bold" letter-spacing="0em"><tspan x="316" y="424.455">Fever and cough for 2 days</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="316" y="448.864">Allergies: not yet confirmed</tspan></text>
+<rect x="686.5" y="372.5" width="275.667" height="92" rx="11.5" fill="#F8FAFC"/>
+<rect x="686.5" y="372.5" width="275.667" height="92" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip19_4_1876)">
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="702" y="400.864">BP &#xb7; Blood pressure</tspan></text>
+<path d="M945.251 396.5H943.494C943.184 396.499 942.883 396.6 942.636 396.787C942.389 396.974 942.21 397.236 942.127 397.534L940.462 403.456C940.451 403.493 940.429 403.525 940.398 403.548C940.367 403.571 940.33 403.584 940.292 403.584C940.254 403.584 940.216 403.571 940.186 403.548C940.155 403.525 940.133 403.493 940.122 403.456L936.212 389.544C936.201 389.507 936.178 389.475 936.148 389.452C936.117 389.429 936.08 389.416 936.042 389.416C936.003 389.416 935.966 389.429 935.935 389.452C935.905 389.475 935.882 389.507 935.872 389.544L934.207 395.466C934.124 395.763 933.946 396.024 933.7 396.211C933.455 396.398 933.155 396.499 932.847 396.5H931.083" stroke-linecap="round" stroke="#52656F"/>
+</g>
+<g clip-path="url(#clip20_4_1876)">
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="28" letter-spacing="-0.8em"><tspan x="702" y="442.182">120/80</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="803" y="441.864">mmHg</tspan></text>
+</g>
+<rect x="979.167" y="372.5" width="275.667" height="94" rx="11.5" fill="#F8FAFC"/>
+<rect x="979.167" y="372.5" width="275.667" height="94" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip21_4_1876)">
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="994.667" y="400.864">Temp &#xb7; Temperature</tspan></text>
+<path d="M1232.25 390.833V398.299C1232.79 398.61 1233.21 399.092 1233.45 399.668C1233.69 400.244 1233.73 400.883 1233.57 401.486C1233.41 402.088 1233.05 402.62 1232.56 403C1232.06 403.38 1231.46 403.586 1230.83 403.586C1230.21 403.586 1229.6 403.38 1229.11 403C1228.61 402.62 1228.26 402.088 1228.1 401.486C1227.93 400.883 1227.98 400.244 1228.22 399.668C1228.45 399.092 1228.88 398.61 1229.42 398.299V390.833C1229.42 390.457 1229.57 390.097 1229.83 389.831C1230.1 389.565 1230.46 389.416 1230.83 389.416C1231.21 389.416 1231.57 389.565 1231.84 389.831C1232.1 390.097 1232.25 390.457 1232.25 390.833Z" stroke-linecap="round" stroke="#52656F"/>
+</g>
+<g clip-path="url(#clip22_4_1876)">
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="28" letter-spacing="-0.8em"><tspan x="994.667" y="442.182">38.5&#xb0;C</tspan></text>
+<rect x="1094.67" y="424" width="53" height="27" rx="13.5" fill="#FFF4E3"/>
+<text fill="#95520B" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="1104.67" y="441.864">Fever</tspan></text>
+</g>
+<rect x="1271.83" y="372.5" width="275.667" height="92" rx="11.5" fill="#F8FAFC"/>
+<rect x="1271.83" y="372.5" width="275.667" height="92" rx="11.5" stroke="#DCE5E9"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="1287.33" y="400.864">HR &#xb7; Heart rate</tspan></text>
+<path d="M1517.28 397.209H1517.29M1517.29 397.209H1521.73L1522.08 396.5L1523.5 399.688L1524.92 394.73L1525.98 397.209H1529.7M1517.29 397.209C1517.66 397.719 1518.1 398.184 1518.54 398.625L1522.44 402.402C1522.58 402.552 1522.74 402.672 1522.92 402.753C1523.11 402.835 1523.31 402.876 1523.51 402.875C1523.71 402.874 1523.91 402.83 1524.09 402.746C1524.27 402.662 1524.44 402.54 1524.57 402.389L1528.46 398.625C1528.9 398.185 1529.34 397.719 1529.7 397.209M1517.29 397.209C1516.78 396.49 1516.42 395.682 1516.42 394.729C1516.42 393.941 1516.66 393.171 1517.1 392.522C1517.55 391.872 1518.18 391.374 1518.92 391.092C1519.65 390.809 1520.46 390.757 1521.22 390.942C1521.99 391.126 1522.68 391.539 1523.21 392.125C1523.25 392.165 1523.29 392.197 1523.34 392.218C1523.39 392.24 1523.45 392.251 1523.5 392.251C1523.55 392.251 1523.61 392.24 1523.66 392.218C1523.71 392.197 1523.75 392.165 1523.79 392.125C1524.31 391.535 1525.01 391.119 1525.78 390.932C1526.54 390.745 1527.35 390.797 1528.09 391.08C1528.82 391.362 1529.46 391.863 1529.9 392.515C1530.35 393.167 1530.59 393.939 1530.58 394.729C1530.58 395.679 1530.22 396.488 1529.7 397.209M1529.7 397.209H1529.71" stroke-linecap="round" stroke="#52656F"/>
+<g clip-path="url(#clip23_4_1876)">
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="28" letter-spacing="-0.8em"><tspan x="1287.33" y="442.182">88</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="1330.33" y="441.864">bpm</tspan></text>
+</g>
+</g>
+<rect x="280.5" y="508.5" width="1287" height="268" rx="11.5" fill="white"/>
+<rect x="280.5" y="508.5" width="1287" height="268" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip24_4_1876)">
+<g clip-path="url(#clip25_4_1876)">
+<rect x="300" y="528" width="30" height="30" rx="12" fill="#EDF8F6"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="307" y="547.364">02</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="17" letter-spacing="0em"><tspan x="342" y="549.182">Audio Transcription</tspan></text>
+</g>
+<rect x="1402" y="529.5" width="146" height="27" rx="13.5" fill="#EDF8F6"/>
+<g clip-path="url(#clip26_4_1876)">
+<path d="M1417.25 542.999L1418.42 544.166L1420.75 541.833M1414.25 541.028C1414.16 540.644 1414.17 540.246 1414.28 539.868C1414.39 539.491 1414.6 539.148 1414.88 538.871C1415.15 538.593 1415.5 538.39 1415.87 538.281C1416.25 538.172 1416.65 538.159 1417.03 538.245C1417.25 537.915 1417.54 537.644 1417.88 537.456C1418.22 537.268 1418.61 537.169 1419 537.169C1419.39 537.169 1419.78 537.268 1420.12 537.456C1420.46 537.644 1420.76 537.915 1420.97 538.245C1421.35 538.159 1421.75 538.171 1422.13 538.281C1422.51 538.39 1422.85 538.594 1423.13 538.872C1423.41 539.15 1423.61 539.494 1423.72 539.872C1423.83 540.25 1423.84 540.65 1423.75 541.034C1424.08 541.245 1424.36 541.535 1424.54 541.879C1424.73 542.222 1424.83 542.608 1424.83 543C1424.83 543.391 1424.73 543.777 1424.54 544.12C1424.36 544.464 1424.08 544.754 1423.75 544.965C1423.84 545.349 1423.83 545.748 1423.72 546.125C1423.61 546.502 1423.41 546.846 1423.13 547.124C1422.85 547.402 1422.51 547.606 1422.13 547.716C1421.75 547.826 1421.36 547.839 1420.97 547.754C1420.76 548.085 1420.47 548.358 1420.13 548.547C1419.78 548.736 1419.4 548.835 1419 548.835C1418.61 548.835 1418.22 548.736 1417.88 548.547C1417.54 548.358 1417.25 548.085 1417.03 547.754C1416.65 547.84 1416.25 547.827 1415.87 547.718C1415.5 547.609 1415.15 547.406 1414.88 547.129C1414.6 546.851 1414.39 546.508 1414.28 546.131C1414.17 545.754 1414.16 545.355 1414.25 544.971C1413.91 544.761 1413.64 544.47 1413.45 544.125C1413.26 543.78 1413.16 543.393 1413.16 543C1413.16 542.606 1413.26 542.219 1413.45 541.874C1413.64 541.529 1413.91 541.238 1414.25 541.028Z" stroke-linecap="round" stroke="#0B6E75"/>
+</g>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="1432" y="547.364">Verified transcript</tspan></text>
+</g>
+<g clip-path="url(#clip27_4_1876)">
+<rect x="300.5" y="574.5" width="369" height="182" rx="11.5" fill="#F8FAFC"/>
+<rect x="300.5" y="574.5" width="369" height="182" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip28_4_1876)">
+<g clip-path="url(#clip29_4_1876)">
+<path d="M324 602.667V604.667M324 602.667C325.238 602.667 326.425 602.175 327.3 601.3C328.175 600.425 328.667 599.238 328.667 598V596.667M324 602.667C322.762 602.667 321.575 602.175 320.7 601.3C319.825 600.425 319.333 599.238 319.333 598V596.667M324 591.333C325.105 591.333 326 592.228 326 593.333V598C326 599.105 325.105 600 324 600C322.895 600 322 599.105 322 598V593.333C322 592.228 322.895 591.333 324 591.333Z" stroke-linecap="round" stroke="#0B6E75"/>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="339" y="602.364">Doctor&#x2013;patient audio</tspan></text>
+</g>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="617" y="602">Taglish</tspan></text>
+</g>
+<rect x="316" y="640.5" width="3" height="7" rx="1.5" fill="#0B6E75"/>
+<rect x="321" y="625" width="3" height="38" rx="1.5" fill="#0B6E75"/>
+<rect x="326" y="637" width="3" height="14" rx="1.5" fill="#0B6E75"/>
+<rect x="331" y="630.5" width="3" height="27" rx="1.5" fill="#0B6E75"/>
+<rect x="336" y="637" width="3" height="14" rx="1.5" fill="#0B6E75"/>
+<rect x="341" y="639" width="3" height="10" rx="1.5" fill="#0B6E75"/>
+<rect x="346" y="638.5" width="3" height="11" rx="1.5" fill="#0B6E75"/>
+<rect x="351" y="636" width="3" height="16" rx="1.5" fill="#0B6E75"/>
+<rect x="356" y="631" width="3" height="26" rx="1.5" fill="#0B6E75"/>
+<rect x="361" y="635" width="3" height="18" rx="1.5" fill="#0B6E75"/>
+<rect x="366" y="625" width="3" height="38" rx="1.5" fill="#0B6E75"/>
+<rect x="371" y="638" width="3" height="12" rx="1.5" fill="#0B6E75"/>
+<rect x="376" y="625" width="3" height="38" rx="1.5" fill="#0B6E75"/>
+<rect x="381" y="639" width="3" height="10" rx="1.5" fill="#0B6E75"/>
+<rect x="386" y="631" width="3" height="26" rx="1.5" fill="#0B6E75"/>
+<rect x="391" y="638.5" width="3" height="11" rx="1.5" fill="#0B6E75"/>
+<rect x="396" y="639.5" width="3" height="9" rx="1.5" fill="#0B6E75"/>
+<rect x="401" y="638.5" width="3" height="11" rx="1.5" fill="#0B6E75"/>
+<rect x="406" y="634.5" width="3" height="19" rx="1.5" fill="#0B6E75"/>
+<rect x="411" y="631.5" width="3" height="25" rx="1.5" fill="#0B6E75"/>
+<rect x="416" y="633" width="3" height="22" rx="1.5" fill="#0B6E75"/>
+<rect x="421" y="626" width="3" height="36" rx="1.5" fill="#0B6E75"/>
+<rect x="426" y="635.5" width="3" height="17" rx="1.5" fill="#0B6E75"/>
+<rect x="431" y="625.5" width="3" height="37" rx="1.5" fill="#0B6E75"/>
+<rect x="436" y="640" width="3" height="8" rx="1.5" fill="#0B6E75"/>
+<rect x="441" y="631" width="3" height="26" rx="1.5" fill="#0B6E75"/>
+<rect x="446" y="639.5" width="3" height="9" rx="1.5" fill="#0B6E75"/>
+<rect x="451" y="640" width="3" height="8" rx="1.5" fill="#0B6E75"/>
+<rect x="456" y="638.5" width="3" height="11" rx="1.5" fill="#0B6E75"/>
+<rect x="461" y="633.5" width="3" height="21" rx="1.5" fill="#0B6E75"/>
+<rect x="466" y="632" width="3" height="24" rx="1.5" fill="#0B6E75"/>
+<rect x="471" y="631" width="3" height="26" rx="1.5" fill="#0B6E75"/>
+<rect x="476" y="627" width="3" height="34" rx="1.5" fill="#0B6E75"/>
+<rect x="481" y="633.5" width="3" height="21" rx="1.5" fill="#0B6E75"/>
+<rect x="486" y="626.5" width="3" height="35" rx="1.5" fill="#0B6E75"/>
+<rect x="491" y="638" width="3" height="12" rx="1.5" fill="#0B6E75"/>
+<rect x="496" y="632" width="3" height="24" rx="1.5" fill="#0B6E75"/>
+<rect x="501" y="640" width="3" height="8" rx="1.5" fill="#0B6E75"/>
+<rect x="506" y="640" width="3" height="8" rx="1.5" fill="#0B6E75"/>
+<rect x="511" y="639" width="3" height="10" rx="1.5" fill="#0B6E75"/>
+<rect x="516" y="632" width="3" height="24" rx="1.5" fill="#2DD4BF"/>
+<rect x="521" y="633.5" width="3" height="21" rx="1.5" fill="#2DD4BF"/>
+<rect x="526" y="629" width="3" height="30" rx="1.5" fill="#2DD4BF"/>
+<rect x="531" y="628" width="3" height="32" rx="1.5" fill="#2DD4BF"/>
+<rect x="536" y="631.5" width="3" height="25" rx="1.5" fill="#2DD4BF"/>
+<rect x="541" y="627.5" width="3" height="33" rx="1.5" fill="#2DD4BF"/>
+<rect x="546" y="636.5" width="3" height="15" rx="1.5" fill="#2DD4BF"/>
+<rect x="551" y="632.5" width="3" height="23" rx="1.5" fill="#2DD4BF"/>
+<rect x="556" y="640" width="3" height="8" rx="1.5" fill="#2DD4BF"/>
+<rect x="561" y="639.5" width="3" height="9" rx="1.5" fill="#2DD4BF"/>
+<rect x="566" y="639.5" width="3" height="9" rx="1.5" fill="#2DD4BF"/>
+<rect x="571" y="631" width="3" height="26" rx="1.5" fill="#2DD4BF"/>
+<rect x="576" y="635" width="3" height="18" rx="1.5" fill="#2DD4BF"/>
+<rect x="581" y="627.5" width="3" height="33" rx="1.5" fill="#2DD4BF"/>
+<rect x="586" y="630" width="3" height="28" rx="1.5" fill="#2DD4BF"/>
+<rect x="591" y="629.5" width="3" height="29" rx="1.5" fill="#2DD4BF"/>
+<rect x="596" y="629" width="3" height="30" rx="1.5" fill="#2DD4BF"/>
+<rect x="601" y="635" width="3" height="18" rx="1.5" fill="#2DD4BF"/>
+<rect x="606" y="633.5" width="3" height="21" rx="1.5" fill="#2DD4BF"/>
+<rect x="611" y="640" width="3" height="8" rx="1.5" fill="#2DD4BF"/>
+<rect x="616" y="638.5" width="3" height="11" rx="1.5" fill="#2DD4BF"/>
+<rect x="621" y="640.5" width="3" height="7" rx="1.5" fill="#2DD4BF"/>
+<rect x="626" y="630" width="3" height="28" rx="1.5" fill="#2DD4BF"/>
+<rect x="631" y="636.5" width="3" height="15" rx="1.5" fill="#2DD4BF"/>
+<rect x="636" y="626" width="3" height="36" rx="1.5" fill="#2DD4BF"/>
+<rect x="641" y="632" width="3" height="24" rx="1.5" fill="#2DD4BF"/>
+<rect x="646" y="628" width="3" height="32" rx="1.5" fill="#2DD4BF"/>
+<rect x="651" y="630.5" width="3" height="27" rx="1.5" fill="#2DD4BF"/>
+<g clip-path="url(#clip30_4_1876)">
+<g clip-path="url(#clip31_4_1876)">
+<rect x="316" y="682" width="30" height="30" rx="15" fill="#0B6E75"/>
+<path d="M327.208 693.209C327.208 693.018 327.258 692.831 327.354 692.666C327.449 692.501 327.586 692.364 327.752 692.269C327.917 692.174 328.104 692.124 328.295 692.125C328.486 692.126 328.673 692.177 328.837 692.273L335.337 696.063C335.501 696.158 335.637 696.295 335.731 696.459C335.826 696.623 335.876 696.809 335.876 696.999C335.876 697.189 335.827 697.375 335.732 697.539C335.638 697.704 335.502 697.841 335.338 697.936L328.837 701.727C328.673 701.823 328.486 701.874 328.295 701.875C328.104 701.876 327.917 701.826 327.752 701.731C327.586 701.636 327.449 701.499 327.354 701.334C327.258 701.169 327.208 700.982 327.208 700.791V693.209Z" stroke-linecap="round" stroke="white"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="IBM Plex Mono" font-size="11" letter-spacing="0em"><tspan x="355" y="701.125">00:42 / 01:18</tspan></text>
+</g>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" font-weight="bold" letter-spacing="0em"><tspan x="641" y="701">1&#xd7;</tspan></text>
+</g>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="316" y="738.5">Transcribed locally &#x2022; Audio retained in vault</tspan></text>
+<rect x="690.5" y="574.5" width="857" height="140" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip32_4_1876)">
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" font-weight="bold" letter-spacing="0.6em"><tspan x="706" y="600.5">TRANSCRIPT EXCERPT</tspan></text>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="1414" y="600.5">Reviewed by Dr. Reyes</tspan></text>
+</g>
+<g clip-path="url(#clip33_4_1876)">
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="706" y="626.864">Doctor</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="788" y="629.727">&#x201c;Kailan po nagsimula ang lagnat at ubo?&#x201d;</tspan></text>
+</g>
+<g clip-path="url(#clip34_4_1876)">
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="706" y="658.864">Patient</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="788" y="661.727">&#x201c;Two days na po, Doc. May ubo rin, pero wala namang hirap sa paghinga.&#x201d;</tspan></text>
+</g>
+<g clip-path="url(#clip35_4_1876)">
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="706" y="690.864">Doctor</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="788" y="693.727">&#x201c;Sige po. Iche-check natin ang vitals at medication history ninyo.&#x201d;</tspan></text>
+</g>
+</g>
+<rect x="280.5" y="797.5" width="1287" height="331" rx="11.5" fill="white"/>
+<rect x="280.5" y="797.5" width="1287" height="331" rx="11.5" stroke="#0B6E75"/>
+<g clip-path="url(#clip36_4_1876)">
+<g clip-path="url(#clip37_4_1876)">
+<rect x="300" y="817" width="30" height="30" rx="12" fill="#EDF8F6"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="306.5" y="836.364">03</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="17" letter-spacing="0em"><tspan x="342" y="838.182">Clinical SOAP Note</tspan></text>
+</g>
+<g clip-path="url(#clip38_4_1876)">
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="1240" y="836.364">Drafted from verified transcript</tspan></text>
+<rect x="1429" y="818.5" width="119" height="27" rx="13.5" fill="#F1F5F7"/>
+<path d="M1446 826.75H1441.92C1441.61 826.75 1441.31 826.873 1441.09 827.092C1440.87 827.311 1440.75 827.607 1440.75 827.917V836.083C1440.75 836.393 1440.87 836.69 1441.09 836.908C1441.31 837.127 1441.61 837.25 1441.92 837.25H1450.08C1450.39 837.25 1450.69 837.127 1450.91 836.908C1451.13 836.69 1451.25 836.393 1451.25 836.083V832M1449.72 826.531C1449.95 826.299 1450.27 826.169 1450.59 826.169C1450.92 826.169 1451.24 826.299 1451.47 826.531C1451.7 826.764 1451.83 827.078 1451.83 827.406C1451.83 827.735 1451.7 828.049 1451.47 828.281L1446.21 833.54C1446.07 833.678 1445.9 833.779 1445.71 833.834L1444.04 834.324C1443.99 834.339 1443.93 834.34 1443.88 834.327C1443.83 834.314 1443.79 834.287 1443.75 834.25C1443.71 834.213 1443.69 834.167 1443.67 834.117C1443.66 834.066 1443.66 834.013 1443.68 833.963L1444.17 832.287C1444.22 832.099 1444.32 831.928 1444.46 831.79L1449.72 826.531Z" stroke-linecap="round" stroke="#52656F"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="1459" y="836.364">Editable draft</tspan></text>
+</g>
+</g>
+<g clip-path="url(#clip39_4_1876)">
+<rect x="300.5" y="863.5" width="616" height="99" rx="11.5" fill="white"/>
+<rect x="300.5" y="863.5" width="616" height="99" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip40_4_1876)">
+<g clip-path="url(#clip41_4_1876)">
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" font-weight="bold" letter-spacing="0em"><tspan x="316" y="891.727">S</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="333" y="891.727">Subjective</tspan></text>
+</g>
+<path d="M896.125 883.208L896.129 883.212M896.129 883.212L898.288 885.371M896.129 883.212L897.31 882.03C897.597 881.744 897.985 881.583 898.39 881.583C898.795 881.583 899.184 881.744 899.47 882.03C899.756 882.317 899.917 882.705 899.917 883.11C899.917 883.515 899.756 883.903 899.47 884.19L898.288 885.371M896.129 883.212L890.081 889.261C889.955 889.386 889.862 889.54 889.81 889.71L889.094 892.067C889.08 892.114 889.079 892.164 889.091 892.211C889.103 892.259 889.128 892.302 889.162 892.337C889.197 892.371 889.24 892.396 889.288 892.408C889.335 892.42 889.385 892.418 889.432 892.404L891.79 891.689C891.959 891.638 892.114 891.545 892.239 891.42L898.288 885.371M898.288 885.371L898.292 885.375" stroke-linecap="round" stroke="#52656F"/>
+</g>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="316" y="920.227">Reports fever and cough for 2 days. No difficulty breathing reported in the transcript. </tspan><tspan x="316" y="941.227">Medication and allergy history require confirmation.</tspan></text>
+<rect x="931.5" y="863.5" width="616" height="99" rx="11.5" fill="white"/>
+<rect x="931.5" y="863.5" width="616" height="99" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip42_4_1876)">
+<g clip-path="url(#clip43_4_1876)">
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" font-weight="bold" letter-spacing="0em"><tspan x="947" y="891.727">O</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="966" y="891.727">Objective</tspan></text>
+</g>
+<path d="M1527.13 883.208L1527.13 883.212M1527.13 883.212L1529.29 885.371M1527.13 883.212L1528.31 882.03C1528.6 881.744 1528.99 881.583 1529.39 881.583C1529.8 881.583 1530.18 881.744 1530.47 882.03C1530.76 882.317 1530.92 882.705 1530.92 883.11C1530.92 883.515 1530.76 883.903 1530.47 884.19L1529.29 885.371M1527.13 883.212L1521.08 889.261C1520.95 889.386 1520.86 889.54 1520.81 889.71L1520.09 892.067C1520.08 892.114 1520.08 892.164 1520.09 892.211C1520.1 892.259 1520.13 892.302 1520.16 892.337C1520.2 892.371 1520.24 892.396 1520.29 892.408C1520.34 892.42 1520.38 892.418 1520.43 892.404L1522.79 891.689C1522.96 891.638 1523.11 891.545 1523.24 891.42L1529.29 885.371M1529.29 885.371L1529.29 885.375" stroke-linecap="round" stroke="#52656F"/>
+</g>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="947" y="920.227">BP 120/80 mmHg &#xb7; Temp 38.5&#xb0;C &#xb7; HR 88 bpm. Examination findings and additional </tspan><tspan x="947" y="941.227">observations have not yet been documented.</tspan></text>
+</g>
+<g clip-path="url(#clip44_4_1876)">
+<rect x="300.5" y="979.5" width="616" height="99" rx="11.5" fill="white"/>
+<rect x="300.5" y="979.5" width="616" height="99" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip45_4_1876)">
+<g clip-path="url(#clip46_4_1876)">
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" font-weight="bold" letter-spacing="0em"><tspan x="316" y="1007.73">A</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="334" y="1007.73">Assessment</tspan></text>
+</g>
+<path d="M896.125 999.208L896.129 999.212M896.129 999.212L898.288 1001.37M896.129 999.212L897.31 998.03C897.597 997.744 897.985 997.583 898.39 997.583C898.795 997.583 899.184 997.744 899.47 998.03C899.756 998.317 899.917 998.705 899.917 999.11C899.917 999.515 899.756 999.903 899.47 1000.19L898.288 1001.37M896.129 999.212L890.081 1005.26C889.955 1005.39 889.862 1005.54 889.81 1005.71L889.094 1008.07C889.08 1008.11 889.079 1008.16 889.091 1008.21C889.103 1008.26 889.128 1008.3 889.162 1008.34C889.197 1008.37 889.24 1008.4 889.288 1008.41C889.335 1008.42 889.385 1008.42 889.432 1008.4L891.79 1007.69C891.959 1007.64 892.114 1007.55 892.239 1007.42L898.288 1001.37M898.288 1001.37L898.292 1001.37" stroke-linecap="round" stroke="#52656F"/>
+</g>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="316" y="1036.23">Fever and cough documented as presenting symptoms. Clinical assessment pending </tspan><tspan x="316" y="1057.23">examination and clinician review. No diagnosis assigned.</tspan></text>
+<rect x="931.5" y="979.5" width="616" height="99" rx="11.5" fill="white"/>
+<rect x="931.5" y="979.5" width="616" height="99" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip47_4_1876)">
+<g clip-path="url(#clip48_4_1876)">
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" font-weight="bold" letter-spacing="0em"><tspan x="947" y="1007.73">P</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="964" y="1007.73">Plan</tspan></text>
+</g>
+<path d="M1527.13 999.208L1527.13 999.212M1527.13 999.212L1529.29 1001.37M1527.13 999.212L1528.31 998.03C1528.6 997.744 1528.99 997.583 1529.39 997.583C1529.8 997.583 1530.18 997.744 1530.47 998.03C1530.76 998.317 1530.92 998.705 1530.92 999.11C1530.92 999.515 1530.76 999.903 1530.47 1000.19L1529.29 1001.37M1527.13 999.212L1521.08 1005.26C1520.95 1005.39 1520.86 1005.54 1520.81 1005.71L1520.09 1008.07C1520.08 1008.11 1520.08 1008.16 1520.09 1008.21C1520.1 1008.26 1520.13 1008.3 1520.16 1008.34C1520.2 1008.37 1520.24 1008.4 1520.29 1008.41C1520.34 1008.42 1520.38 1008.42 1520.43 1008.4L1522.79 1007.69C1522.96 1007.64 1523.11 1007.55 1523.24 1007.42L1529.29 1001.37M1529.29 1001.37L1529.29 1001.37" stroke-linecap="round" stroke="#52656F"/>
+</g>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="947" y="1036.23">Confirm history and allergies; complete examination. Review any medication entries before </tspan><tspan x="947" y="1057.23">approval. Document follow-up and return precautions after assessment.</tspan></text>
+</g>
+<path d="M305.25 1102L306.417 1103.17L308.75 1100.83M311.666 1102.58C311.666 1105.5 309.625 1106.96 307.198 1107.8C307.071 1107.85 306.933 1107.85 306.808 1107.8C304.375 1106.96 302.334 1105.5 302.334 1102.58V1098.5C302.334 1098.35 302.395 1098.2 302.505 1098.09C302.614 1097.98 302.762 1097.92 302.917 1097.92C304.084 1097.92 305.542 1097.22 306.557 1096.33C306.68 1096.22 306.837 1096.17 307 1096.17C307.163 1096.17 307.32 1096.22 307.443 1096.33C308.464 1097.22 309.916 1097.92 311.083 1097.92C311.238 1097.92 311.386 1097.98 311.495 1098.09C311.605 1098.2 311.666 1098.35 311.666 1098.5V1102.58Z" stroke-linecap="round" stroke="#0B6E75"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="321" y="1106">Assistant-generated content supports documentation. Clinical decisions remain with the attending clinician.</tspan></text>
+<rect x="280.5" y="1149.5" width="1287" height="267" rx="11.5" fill="white"/>
+<rect x="280.5" y="1149.5" width="1287" height="267" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip49_4_1876)">
+<g clip-path="url(#clip50_4_1876)">
+<rect x="300" y="1169" width="30" height="30" rx="12" fill="#EDF8F6"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="306.5" y="1188.36">04</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="17" letter-spacing="0em"><tspan x="342" y="1190.18">Medication Orders</tspan></text>
+</g>
+<rect x="1329" y="1170.5" width="219" height="27" rx="13.5" fill="#EDF8F6"/>
+<path d="M1344.25 1184L1345.42 1185.17L1347.75 1182.83M1350.67 1184.58C1350.67 1187.5 1348.62 1188.96 1346.2 1189.8C1346.07 1189.85 1345.93 1189.85 1345.81 1189.8C1343.38 1188.96 1341.33 1187.5 1341.33 1184.58V1180.5C1341.33 1180.35 1341.4 1180.2 1341.5 1180.09C1341.61 1179.98 1341.76 1179.92 1341.92 1179.92C1343.08 1179.92 1344.54 1179.22 1345.56 1178.33C1345.68 1178.22 1345.84 1178.17 1346 1178.17C1346.16 1178.17 1346.32 1178.22 1346.44 1178.33C1347.46 1179.22 1348.92 1179.92 1350.08 1179.92C1350.24 1179.92 1350.39 1179.98 1350.5 1180.09C1350.6 1180.2 1350.67 1180.35 1350.67 1180.5V1184.58Z" stroke-linecap="round" stroke="#0B6E75"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="1359" y="1188.36">No rules triggered - All verified</tspan></text>
+</g>
+<g clip-path="url(#clip51_4_1876)">
+<rect width="1248" height="35" transform="translate(300 1215)" fill="#F8FAFC"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="316" y="1236.5">MEDICATION</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="626" y="1236.5">ROUTE</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="747" y="1236.5">DOSE / FREQUENCY</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="1175" y="1236.5">DURATION</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="1369" y="1236.5">ORDER STATUS</tspan></text>
+<mask id="path-241-inside-9_4_1876" fill="white">
+<path d="M300 1250H1548V1309H300V1250Z"/>
+</mask>
+<path d="M1548 1309V1308H300V1309V1310H1548V1309Z" fill="#DCE5E9" mask="url(#path-241-inside-9_4_1876)"/>
+<g clip-path="url(#clip52_4_1876)">
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" font-weight="bold" letter-spacing="0em"><tspan x="316" y="1275.73">Paracetamol</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="316" y="1293.5">Tablet &#x2022; Illustrative entry</tspan></text>
+</g>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="626" y="1283.86">Oral</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="747" y="1283.86">Not specified in sample</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="1175" y="1283.86">Clinician to confirm</tspan></text>
+<rect x="1369" y="1266" width="120" height="27" rx="13.5" fill="#F1F5F7"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="1379" y="1283.86">Draft &#xb7; not issued</tspan></text>
+<path d="M1524.21 1279.5C1524.21 1279.89 1523.89 1280.21 1523.5 1280.21C1523.11 1280.21 1522.79 1279.89 1522.79 1279.5C1522.79 1279.11 1523.11 1278.79 1523.5 1278.79C1523.89 1278.79 1524.21 1279.11 1524.21 1279.5ZM1529.17 1279.5C1529.17 1279.89 1528.85 1280.21 1528.46 1280.21C1528.07 1280.21 1527.75 1279.89 1527.75 1279.5C1527.75 1279.11 1528.07 1278.79 1528.46 1278.79C1528.85 1278.79 1529.17 1279.11 1529.17 1279.5ZM1519.25 1279.5C1519.25 1279.89 1518.93 1280.21 1518.54 1280.21C1518.15 1280.21 1517.83 1279.89 1517.83 1279.5C1517.83 1279.11 1518.15 1278.79 1518.54 1278.79C1518.93 1278.79 1519.25 1279.11 1519.25 1279.5Z" stroke-linecap="round" stroke="#52656F"/>
+<mask id="path-251-inside-10_4_1876" fill="white">
+<path d="M300 1309H1548V1368H300V1309Z"/>
+</mask>
+<path d="M1548 1368V1367H300V1368V1369H1548V1368Z" fill="#DCE5E9" mask="url(#path-251-inside-10_4_1876)"/>
+<g clip-path="url(#clip53_4_1876)">
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" font-weight="bold" letter-spacing="0em"><tspan x="316" y="1334.73">Oral rehydration salts</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="316" y="1352.5">Powder for solution &#x2022; Illustrative entry</tspan></text>
+</g>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="626" y="1342.86">Oral</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="747" y="1342.86">Not specified in sample</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="1175" y="1342.86">Clinician to confirm</tspan></text>
+<rect x="1369" y="1325" width="120" height="27" rx="13.5" fill="#F1F5F7"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="1379" y="1342.86">Draft &#xb7; not issued</tspan></text>
+<path d="M1524.21 1338.5C1524.21 1338.89 1523.89 1339.21 1523.5 1339.21C1523.11 1339.21 1522.79 1338.89 1522.79 1338.5C1522.79 1338.11 1523.11 1337.79 1523.5 1337.79C1523.89 1337.79 1524.21 1338.11 1524.21 1338.5ZM1529.17 1338.5C1529.17 1338.89 1528.85 1339.21 1528.46 1339.21C1528.07 1339.21 1527.75 1338.89 1527.75 1338.5C1527.75 1338.11 1528.07 1337.79 1528.46 1337.79C1528.85 1337.79 1529.17 1338.11 1529.17 1338.5ZM1519.25 1338.5C1519.25 1338.89 1518.93 1339.21 1518.54 1339.21C1518.15 1339.21 1517.83 1338.89 1517.83 1338.5C1517.83 1338.11 1518.15 1337.79 1518.54 1337.79C1518.93 1337.79 1519.25 1338.11 1519.25 1338.5Z" stroke-linecap="round" stroke="#52656F"/>
+</g>
+<rect x="300.5" y="1215.5" width="1247" height="152" rx="11.5" stroke="#DCE5E9"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="300" y="1394.5">Automated safety checks apply to illustrative entries only. Verification does not constitute clinical approval or authorization to dispense.</tspan></text>
+<rect x="280.5" y="1437.5" width="1287" height="222" rx="11.5" fill="white"/>
+<rect x="280.5" y="1437.5" width="1287" height="222" rx="11.5" stroke="#DCE5E9"/>
+<g clip-path="url(#clip54_4_1876)">
+<g clip-path="url(#clip55_4_1876)">
+<rect x="300" y="1457" width="30" height="30" rx="12" fill="#EDF8F6"/>
+<text fill="#0B6E75" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="307" y="1476.36">05</tspan></text>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="17" letter-spacing="0em"><tspan x="342" y="1478.18">Review &#38; Approval</tspan></text>
+</g>
+<rect x="1353" y="1458.5" width="195" height="27" rx="13.5" fill="#FFF4E3"/>
+<g clip-path="url(#clip56_4_1876)">
+<path d="M1370 1468.5V1472H1372.33M1375.83 1472C1375.83 1475.22 1373.22 1477.83 1370 1477.83C1366.78 1477.83 1364.17 1475.22 1364.17 1472C1364.17 1468.78 1366.78 1466.17 1370 1466.17C1373.22 1466.17 1375.83 1468.78 1375.83 1472Z" stroke-linecap="round" stroke="#95520B"/>
+</g>
+<text fill="#95520B" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="bold" letter-spacing="0em"><tspan x="1383" y="1476.36">Awaiting clinician approval</tspan></text>
+</g>
+<g clip-path="url(#clip57_4_1876)">
+<rect x="300.5" y="1503.5" width="881" height="95" rx="11.5" fill="#F8FAFC"/>
+<rect x="300.5" y="1503.5" width="881" height="95" rx="11.5" stroke="#DCE5E9"/>
+<rect x="318" y="1530" width="42" height="42" rx="12" fill="#F1F5F7"/>
+<path d="M347.625 1555.79L345.559 1554C345.491 1553.94 345.405 1553.89 345.312 1553.88C345.219 1553.86 345.124 1553.87 345.038 1553.91C344.951 1553.95 344.878 1554.01 344.827 1554.09C344.776 1554.17 344.749 1554.26 344.75 1554.35V1554.83C344.75 1555.09 344.649 1555.33 344.469 1555.51C344.29 1555.69 344.046 1555.79 343.792 1555.79H341.875C341.621 1555.79 341.377 1555.69 341.197 1555.51C341.018 1555.33 340.917 1555.09 340.917 1554.83C340.917 1553.1 338.981 1551.91 336.308 1551.35M336.308 1551.35C335.224 1551.13 334.018 1551.01 332.771 1551C332.135 1551 331.526 1551.25 331.077 1551.7C330.627 1552.15 330.375 1552.76 330.375 1553.4C330.375 1554.03 330.627 1554.64 331.077 1555.09C331.526 1555.54 332.135 1555.79 332.771 1555.79C334.479 1555.79 335.559 1553.8 336.308 1551.35ZM336.308 1551.35C337.303 1548.1 337.714 1544.06 338.241 1542.85C338.397 1542.5 338.637 1542.18 338.942 1541.94C339.246 1541.7 339.605 1541.53 339.987 1541.46C340.369 1541.39 340.764 1541.41 341.136 1541.52C341.508 1541.64 341.847 1541.84 342.124 1542.11C342.4 1542.39 342.605 1542.72 342.722 1543.1C342.839 1543.47 342.863 1543.86 342.793 1544.24C342.723 1544.63 342.561 1544.99 342.32 1545.29C342.08 1545.6 341.769 1545.84 341.413 1546M330.375 1559.63H347.625" stroke-linecap="round" stroke="#0B6E75"/>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" letter-spacing="0em"><tspan x="374" y="1533.73">Clinician electronic sign-off</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="374" y="1555.86">Dr. Maria Reyes &#x2022; Attending clinician</tspan></text>
+<text fill="#95520B" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="374" y="1577.86">Not signed &#x2022; Approval date and signature pending</tspan></text>
+<g clip-path="url(#clip58_4_1876)">
+<rect x="1206.5" y="1507.5" width="168" height="41" rx="11.5" fill="white"/>
+<rect x="1206.5" y="1507.5" width="168" height="41" rx="11.5" stroke="#DCE5E9"/>
+<path d="M1226.25 1532.25H1224.83C1224.46 1532.25 1224.1 1532.1 1223.83 1531.84C1223.57 1531.57 1223.42 1531.21 1223.42 1530.83V1527.29C1223.42 1526.92 1223.57 1526.56 1223.83 1526.29C1224.1 1526.02 1224.46 1525.87 1224.83 1525.87H1226.25M1226.25 1532.25V1534.38C1226.25 1534.77 1226.57 1535.08 1226.96 1535.08H1234.04C1234.43 1535.08 1234.75 1534.77 1234.75 1534.38V1532.25M1226.25 1532.25V1530.13C1226.25 1529.73 1226.57 1529.42 1226.96 1529.42H1234.04C1234.43 1529.42 1234.75 1529.73 1234.75 1530.13V1532.25M1226.25 1525.87H1234.75M1226.25 1525.87V1521.62C1226.25 1521.44 1226.32 1521.26 1226.46 1521.12C1226.59 1520.99 1226.77 1520.92 1226.96 1520.92H1234.04C1234.23 1520.92 1234.41 1520.99 1234.54 1521.12C1234.68 1521.26 1234.75 1521.44 1234.75 1521.62V1525.87M1234.75 1525.87H1236.17C1236.54 1525.87 1236.9 1526.02 1237.17 1526.29C1237.43 1526.56 1237.58 1526.92 1237.58 1527.29V1530.83C1237.58 1531.21 1237.43 1531.57 1237.17 1531.84C1236.9 1532.1 1236.54 1532.25 1236.17 1532.25H1234.75" stroke-linecap="round" stroke="#0B6E75"/>
+<text fill="#14262E" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="13" font-weight="bold" letter-spacing="0em"><tspan x="1247" y="1532.73">Print / Export PDF</tspan></text>
+<g clip-path="url(#clip59_4_1876)">
+<path d="M1214.17 1562.17H1209.5C1209.19 1562.17 1208.89 1562.29 1208.68 1562.51C1208.46 1562.73 1208.33 1563.02 1208.33 1563.33V1572.67C1208.33 1572.98 1208.46 1573.27 1208.68 1573.49C1208.89 1573.71 1209.19 1573.83 1209.5 1573.83H1216.5C1216.81 1573.83 1217.11 1573.71 1217.32 1573.49C1217.54 1573.27 1217.67 1572.98 1217.67 1572.67V1565.67M1214.17 1562.17C1214.35 1562.17 1214.53 1562.2 1214.7 1562.27C1214.88 1562.34 1215.03 1562.45 1215.16 1562.58L1217.25 1564.67C1217.38 1564.8 1217.49 1564.96 1217.56 1565.13C1217.63 1565.3 1217.67 1565.48 1217.67 1565.67M1214.17 1562.17V1565.08C1214.17 1565.24 1214.23 1565.39 1214.34 1565.5C1214.45 1565.61 1214.6 1565.67 1214.75 1565.67L1217.67 1565.67M1211.83 1566.25H1210.67M1215.33 1568.58H1210.67M1215.33 1570.92H1210.67" stroke-linecap="round" stroke="#52656F"/>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="1227" y="1573.5">Export includes a DRAFT watermark until clinician approval is </tspan><tspan x="1227" y="1590.5">recorded.</tspan></text>
+</g>
+</g>
+</g>
+<g clip-path="url(#clip60_4_1876)">
+<mask id="path-280-inside-11_4_1876" fill="white">
+<path d="M300 1615H1548V1640H300V1615Z"/>
+</mask>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="300" y="1637.5">This encounter remains an open draft. No medication orders have been issued.</tspan></text>
+<text fill="#52656F" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="11" letter-spacing="0em"><tspan x="1400" y="1637.5">PT-PQCTPD &#x2022; Stored offline</tspan></text>
+</g>
+<path d="M300 1615V1616H1548V1615V1614H300V1615Z" fill="#DCE5E9" mask="url(#path-280-inside-11_4_1876)"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_4_1876">
+<rect width="1600" height="1692" fill="white"/>
+</clipPath>
+<clipPath id="clip1_4_1876">
+<rect width="208" height="71" fill="white" transform="translate(20 30)"/>
+</clipPath>
+<clipPath id="clip2_4_1876">
+<rect width="149" height="38" fill="white" transform="translate(20 30)"/>
+</clipPath>
+<clipPath id="clip3_4_1876">
+<rect width="208" height="228" fill="white" transform="translate(20 158)"/>
+</clipPath>
+<clipPath id="clip4_4_1876">
+<rect width="145" height="14" fill="white" transform="translate(34 513)"/>
+</clipPath>
+<clipPath id="clip5_4_1876">
+<rect width="208" height="49" fill="white" transform="translate(20 1619)"/>
+</clipPath>
+<clipPath id="clip6_4_1876">
+<rect width="148" height="34" fill="white" transform="translate(20 1634)"/>
+</clipPath>
+<clipPath id="clip7_4_1876">
+<rect width="104" height="31" fill="white" transform="translate(64 1635.5)"/>
+</clipPath>
+<clipPath id="clip8_4_1876">
+<rect width="1352" height="1692" fill="white" transform="translate(248)"/>
+</clipPath>
+<clipPath id="clip9_4_1876">
+<rect width="1352" height="282" fill="white" transform="translate(248)"/>
+</clipPath>
+<clipPath id="clip10_4_1876">
+<rect width="389" height="44" fill="white" transform="translate(280 22)"/>
+</clipPath>
+<clipPath id="clip11_4_1876">
+<rect width="213" height="42" fill="white" transform="translate(338 23)"/>
+</clipPath>
+<clipPath id="clip12_4_1876">
+<rect width="289" height="42" fill="white" transform="translate(1279 23)"/>
+</clipPath>
+<clipPath id="clip13_4_1876">
+<rect width="346" height="57" fill="white" transform="translate(280 112)"/>
+</clipPath>
+<clipPath id="clip14_4_1876">
+<rect width="146" height="15" fill="white" transform="translate(1422 133)"/>
+</clipPath>
+<clipPath id="clip15_4_1876">
+<rect width="15" height="15" fill="white" transform="translate(280 255)"/>
+</clipPath>
+<clipPath id="clip16_4_1876">
+<rect width="1248" height="30" fill="white" transform="translate(300 326)"/>
+</clipPath>
+<clipPath id="clip17_4_1876">
+<rect width="217" height="30" fill="white" transform="translate(300 326)"/>
+</clipPath>
+<clipPath id="clip18_4_1876">
+<rect width="1248" height="96" fill="white" transform="translate(300 372)"/>
+</clipPath>
+<clipPath id="clip19_4_1876">
+<rect width="244.667" height="17" fill="white" transform="translate(702 388)"/>
+</clipPath>
+<clipPath id="clip20_4_1876">
+<rect width="139" height="34" fill="white" transform="translate(702 415)"/>
+</clipPath>
+<clipPath id="clip21_4_1876">
+<rect width="244.667" height="17" fill="white" transform="translate(994.667 388)"/>
+</clipPath>
+<clipPath id="clip22_4_1876">
+<rect width="153" height="36" fill="white" transform="translate(994.667 415)"/>
+</clipPath>
+<clipPath id="clip23_4_1876">
+<rect width="69" height="34" fill="white" transform="translate(1287.33 415)"/>
+</clipPath>
+<clipPath id="clip24_4_1876">
+<rect width="1248" height="30" fill="white" transform="translate(300 528)"/>
+</clipPath>
+<clipPath id="clip25_4_1876">
+<rect width="199" height="30" fill="white" transform="translate(300 528)"/>
+</clipPath>
+<clipPath id="clip26_4_1876">
+<rect width="14" height="14" fill="white" transform="translate(1412 536)"/>
+</clipPath>
+<clipPath id="clip27_4_1876">
+<rect width="1248" height="183" fill="white" transform="translate(300 574)"/>
+</clipPath>
+<clipPath id="clip28_4_1876">
+<rect width="338" height="16" fill="white" transform="translate(316 590)"/>
+</clipPath>
+<clipPath id="clip29_4_1876">
+<rect width="142" height="16" fill="white" transform="translate(316 590)"/>
+</clipPath>
+<clipPath id="clip30_4_1876">
+<rect width="338" height="30" fill="white" transform="translate(316 682)"/>
+</clipPath>
+<clipPath id="clip31_4_1876">
+<rect width="125" height="30" fill="white" transform="translate(316 682)"/>
+</clipPath>
+<clipPath id="clip32_4_1876">
+<rect width="826" height="13" fill="white" transform="translate(706 590)"/>
+</clipPath>
+<clipPath id="clip33_4_1876">
+<rect width="826" height="20" fill="white" transform="translate(706 615)"/>
+</clipPath>
+<clipPath id="clip34_4_1876">
+<rect width="826" height="20" fill="white" transform="translate(706 647)"/>
+</clipPath>
+<clipPath id="clip35_4_1876">
+<rect width="826" height="20" fill="white" transform="translate(706 679)"/>
+</clipPath>
+<clipPath id="clip36_4_1876">
+<rect width="1248" height="30" fill="white" transform="translate(300 817)"/>
+</clipPath>
+<clipPath id="clip37_4_1876">
+<rect width="194" height="30" fill="white" transform="translate(300 817)"/>
+</clipPath>
+<clipPath id="clip38_4_1876">
+<rect width="308" height="27" fill="white" transform="translate(1240 818.5)"/>
+</clipPath>
+<clipPath id="clip39_4_1876">
+<rect width="1248" height="100" fill="white" transform="translate(300 863)"/>
+</clipPath>
+<clipPath id="clip40_4_1876">
+<rect width="585" height="16" fill="white" transform="translate(316 879)"/>
+</clipPath>
+<clipPath id="clip41_4_1876">
+<rect width="82" height="16" fill="white" transform="translate(316 879)"/>
+</clipPath>
+<clipPath id="clip42_4_1876">
+<rect width="585" height="16" fill="white" transform="translate(947 879)"/>
+</clipPath>
+<clipPath id="clip43_4_1876">
+<rect width="78" height="16" fill="white" transform="translate(947 879)"/>
+</clipPath>
+<clipPath id="clip44_4_1876">
+<rect width="1248" height="100" fill="white" transform="translate(300 979)"/>
+</clipPath>
+<clipPath id="clip45_4_1876">
+<rect width="585" height="16" fill="white" transform="translate(316 995)"/>
+</clipPath>
+<clipPath id="clip46_4_1876">
+<rect width="93" height="16" fill="white" transform="translate(316 995)"/>
+</clipPath>
+<clipPath id="clip47_4_1876">
+<rect width="585" height="16" fill="white" transform="translate(947 995)"/>
+</clipPath>
+<clipPath id="clip48_4_1876">
+<rect width="44" height="16" fill="white" transform="translate(947 995)"/>
+</clipPath>
+<clipPath id="clip49_4_1876">
+<rect width="1248" height="30" fill="white" transform="translate(300 1169)"/>
+</clipPath>
+<clipPath id="clip50_4_1876">
+<rect width="191" height="30" fill="white" transform="translate(300 1169)"/>
+</clipPath>
+<clipPath id="clip51_4_1876">
+<rect x="300" y="1215" width="1248" height="153" rx="12" fill="white"/>
+</clipPath>
+<clipPath id="clip52_4_1876">
+<rect width="294" height="33" fill="white" transform="translate(316 1263)"/>
+</clipPath>
+<clipPath id="clip53_4_1876">
+<rect width="294" height="33" fill="white" transform="translate(316 1322)"/>
+</clipPath>
+<clipPath id="clip54_4_1876">
+<rect width="1248" height="30" fill="white" transform="translate(300 1457)"/>
+</clipPath>
+<clipPath id="clip55_4_1876">
+<rect width="191" height="30" fill="white" transform="translate(300 1457)"/>
+</clipPath>
+<clipPath id="clip56_4_1876">
+<rect width="14" height="14" fill="white" transform="translate(1363 1465)"/>
+</clipPath>
+<clipPath id="clip57_4_1876">
+<rect width="1248" height="96" fill="white" transform="translate(300 1503)"/>
+</clipPath>
+<clipPath id="clip58_4_1876">
+<rect width="342" height="88" fill="white" transform="translate(1206 1507)"/>
+</clipPath>
+<clipPath id="clip59_4_1876">
+<rect width="342" height="34" fill="white" transform="translate(1206 1561)"/>
+</clipPath>
+<clipPath id="clip60_4_1876">
+<path d="M300 1615H1548V1640H300V1615Z" fill="white"/>
+</clipPath>
+</defs>
+</svg>
