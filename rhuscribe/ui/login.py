@@ -9,42 +9,6 @@ from .. import APP_NAME, auth, config
 from . import common as C
 
 
-def _brand():
-    st.markdown(
-        f'<div style="text-align:center;margin:1.2rem 0 .8rem">'
-        f'<div style="font-size:1.7rem;font-weight:750;color:#0b6e75">{APP_NAME}</div>'
-        f'<div class="rs-small">Local intelligence for local clinics.</div></div>',
-        unsafe_allow_html=True,
-    )
-
-
-def render():
-    conn = C.conn()
-    st.markdown("<style>.block-container{padding-top:11vh !important}</style>", unsafe_allow_html=True)
-    C.show_flash()
-    _, mid, _ = st.columns([0.35, 6, 0.35])
-    with mid:
-        left, right = st.columns([1.05, 1], gap="large", vertical_alignment="center")
-        with left:
-            st.markdown(
-                f'<div class="rs-hero"><div class="rs-logo" style="width:46px;height:46px">{C.logo_svg(46)}</div>'
-                f'<h2>{APP_NAME}</h2><div class="rs-tagline">Local intelligence for local clinics.</div>'
-                f'<div class="rs-tagsub">Lokal.MD: on-device clinical intelligence for Philippine healthcare.</div>'
-                f'<ul><li>{C.icon_html("shield-check", 16, "#bfe3e6")}&nbsp; Runs entirely on this computer. No patient data leaves it.</li>'
-                f'<li>{C.icon_html("lock", 16, "#bfe3e6")}&nbsp; Records are encrypted; sessions lock when idle.</li>'
-                f'<li>{C.icon_html("mic", 16, "#bfe3e6")}&nbsp; Speech and note drafting use local AI models, no internet needed.</li>'
-                f'<li>{C.icon_html("file-text", 16, "#bfe3e6")}&nbsp; Every note stays a draft until a clinician approves it.</li></ul></div>',
-                unsafe_allow_html=True)
-        with right:
-            if st.session_state.get("_setup_recovery") or not auth.is_setup_done(conn):
-                _setup(conn)
-            elif st.session_state.get("_recovery_mode"):
-                _recovery(conn)
-            else:
-                _signin(conn)
-            st.markdown('<div class="rs-small" style="margin-top:1rem">Not a certified medical device. Clinical decisions remain with the clinician.</div>', unsafe_allow_html=True)
-
-
 def _setup(conn):
     if st.session_state.get("_setup_recovery"):
         st.subheader("Save your recovery key")
@@ -82,45 +46,78 @@ def _setup(conn):
 
 def _signin(conn):
     locked_user = st.session_state.get("locked_username", "")
+    st.markdown(f'<div class="rs-offstrip">{C.icon_html("shield-check", 14)} 100% Offline Vault &bull; Zero Cloud Dependency</div>', unsafe_allow_html=True)
     if locked_user:
         C.banner("Session locked. Sign in again to continue; unsaved work was kept as a draft where possible.", "info", "")
-    h1, h2 = st.columns([1, 1.25], vertical_alignment="center")
-    h1.subheader("Sign in")
-    if h2.button("Forgot password?", key="forgot_pw", width="stretch"):
-        st.session_state["_recovery_mode"] = True
-        st.rerun()
-    with st.form("signin"):
-        un = st.text_input("Username", value=locked_user)
-        pw = st.text_input("Password", type="password")
-        go = st.form_submit_button("Sign in", type="primary")
+    st.subheader("Welcome to your clinical vault")
+    st.markdown('<div class="rs-sub" style="margin:0">Sign in securely on this workstation.</div>', unsafe_allow_html=True)
+    with st.form("signin", border=False):
+        un = st.text_input("Username", value=locked_user, placeholder="e.g. dr.reyes")
+        pw = st.text_input("Password", type="password", placeholder="Enter your password")
+        st.markdown(f'<div class="rs-keynote">{C.icon_html("lock", 13)} Your password unlocks the AES-256-GCM vault key on this device only</div>', unsafe_allow_html=True)
+        go = st.form_submit_button("Unlock Clinical Vault", type="primary", width="stretch", icon=":material/lock_open:")
     if go:
         try:
             user, vault = auth.login(conn, un, pw)
         except auth.AuthError as e:
             st.error(str(e))
-            st.caption("Forgot your password? Use the button above the form.")
+            st.caption("Forgot your password? Use the recovery link below.")
         else:
             st.session_state.update(user=user, vault=vault)
             st.session_state.pop("locked_username", None)
             C.touch()
             st.rerun()
+    if st.button("Forgot password / Emergency account recovery", key="forgot_pw", type="tertiary"):
+        st.session_state["_recovery_mode"] = True
+        st.rerun()
 
 
 def _recovery(conn):
-    st.subheader("Reset password with recovery key")
-    with st.form("recovery"):
-        un = st.text_input("Username")
-        rk = st.text_input("Recovery key")
-        pw = st.text_input("New password", type="password")
-        go = st.form_submit_button("Reset password", type="primary")
+    st.markdown(f'<div class="rs-rechead"><div class="ic">{C.icon_html("shield-check", 22)}</div><div><div class="t">Emergency Vault Recovery &amp; Reset</div>'
+                '<div class="s">Securely restore your clinician access to this clinic&#39;s offline vault.</div></div></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="rs-banner teal"><span>{C.icon_html("info", 16)}</span><span>Because {APP_NAME} runs 100% offline with zero cloud servers, passwords '
+                'cannot be recovered via email. Use the recovery key that was shown when your account was created.</span></div>', unsafe_allow_html=True)
+    with st.form("recovery", border=False):
+        un = st.text_input("Username", placeholder="Enter your username")
+        rk = st.text_area("Recovery key", placeholder="Enter your recovery key exactly as it was saved", height=96)
+        st.caption("Verified on this device only. Find it in your clinic's secure recovery kit.")
+        a, b = st.columns(2)
+        pw = a.text_input("New password", type="password", placeholder="Create a strong password")
+        pw2 = b.text_input("Confirm new password", type="password", placeholder="Re-enter your password")
+        st.caption(f"Use at least {config.MIN_PASSWORD_LEN} characters with upper and lower case letters and a digit.")
+        go = st.form_submit_button("Verify Key & Restore Access", type="primary", width="stretch", icon=":material/verified_user:")
     if go:
-        try:
-            auth.reset_with_recovery_key(conn, un, rk, pw)
-            st.session_state["_recovery_mode"] = False
-            C.flash("Password reset. You can now sign in.")
-            st.rerun()
-        except auth.AuthError as e:
-            st.error(str(e))
-    if st.button("Back to sign in", type="tertiary"):
+        if pw != pw2:
+            st.error("Passwords do not match.")
+        else:
+            try:
+                auth.reset_with_recovery_key(conn, un, rk.strip(), pw)
+                st.session_state["_recovery_mode"] = False
+                C.flash("Password reset. You can now sign in.")
+                st.rerun()
+            except auth.AuthError as e:
+                st.error(str(e))
+    if st.button("Back to Clinician Login", key="rec_back", type="tertiary"):
         st.session_state["_recovery_mode"] = False
         st.rerun()
+
+
+def render():
+    conn = C.conn()
+    st.markdown("<style>.block-container{padding-top:7vh !important}</style>", unsafe_allow_html=True)
+    C.show_flash()
+    setup = st.session_state.get("_setup_recovery") or not auth.is_setup_done(conn)
+    recovery = not setup and st.session_state.get("_recovery_mode")
+    _, mid, _ = st.columns([1, 1.6, 1] if (setup or recovery) else [1, 1.2, 1])
+    with mid:
+        st.markdown(f'<div class="rs-login-brand"><div class="rs-logo" style="width:40px;height:40px">{C.logo_svg(40)}</div>{APP_NAME}</div>'
+                    '<div class="rs-login-tag">Local intelligence for local clinics.</div>', unsafe_allow_html=True)
+        with st.container(key="login_card"):
+            if setup:
+                _setup(conn)
+            elif recovery:
+                _recovery(conn)
+            else:
+                _signin(conn)
+    st.markdown(f'<div class="rs-login-foot">{C.icon_html("monitor", 14)} Rural Health Unit workstation mode &bull; Records never leave this computer &bull; '
+                'Not a certified medical device</div>', unsafe_allow_html=True)

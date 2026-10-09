@@ -16,28 +16,25 @@ from . import wsstate as W
 
 
 def render() -> None:
-    st.title("Settings")
+    C.page_header("Clinic settings", "Configure your local AI, medication safeguards, and patient data privacy.",
+                  [("Offline · All systems local", "hard-drive", "soft")])
     C.show_flash()
     user = C.user()
-    tabs = st.tabs(["Models", "Privacy & retention", "Medication reference", "My account", "Users", "Backup & restore", "Audit log", "Data deletion", "About"])
-    with tabs[0]:
-        _models()
-    with tabs[1]:
-        _privacy()
-    with tabs[2]:
-        _reference()
-    with tabs[3]:
-        _account()
-    with tabs[4]:
-        _users()
-    with tabs[5]:
-        _backup()
-    with tabs[6]:
-        _audit()
-    with tabs[7]:
-        _deletion()
-    with tabs[8]:
-        _about()
+    sections = [
+        (":material/memory: Local AI & Whisper", _models, "cpu", "On-device inference configuration", "Transcribe and reason securely, without sending data outside your clinic."),
+        (":material/shield: Privacy & retention", _privacy, "shield-check", "Data retention & clinic privacy", "Minimise sensitive data and keep your offline vault protected."),
+        (":material/medication: Medication safety", _reference, "pill", "Medication safety reference data", "Local medication references and rule data for safer prescribing."),
+        (":material/person: My account", _account, "user", "My account", "Your password, credentials and recovery key."),
+        (":material/group: Users & roles", _users, "users", "User management & roles", "Clinic accounts and what each role may access."),
+        (":material/backup: Backup & restore", _backup, "hard-drive", "Encrypted backup & restore", "Backups stay encrypted and on media you control."),
+        (":material/receipt_long: Audit log", _audit, "history", "Audit log", "Hash-chained record of access and changes."),
+        (":material/delete: Data deletion", _deletion, "info", "Data deletion", "Retention review and permanent deletion."),
+        (":material/info: About", _about, "info", "About this workstation", "Version, licences and intended use."),
+    ]
+    for tab, (_, fn, icon, title, sub) in zip(st.tabs([t[0] for t in sections]), sections):
+        with tab, st.container(border=True):
+            C.card_head(icon, title, sub)
+            fn()
 
 
 def _need(perm: str, msg: str = "Only an administrator can change these settings.") -> bool:

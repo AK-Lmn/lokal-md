@@ -1,6 +1,8 @@
 """Encounter list, history (with access purpose), and opening an encounter into the workspace."""
 from __future__ import annotations
 
+from datetime import datetime
+
 import streamlit as st
 
 from .. import audit
@@ -31,59 +33,150 @@ def _table(rows: list[dict], key: str, compact: bool = False):
     return rows[sel[0]] if sel else None
 
 
+PAGE = 12
+HIST_PAGE = 8
+
+
+def _pager(key: str, n: int, size: int, cols) -> tuple[int, int]:
+    pages = max(1, -(-n // size))
+    pg = min(max(1, st.session_state.get(key, 1)), pages)
+    if cols[1].button("‹ Previous", key=f"{key}_prev", disabled=pg <= 1, width="stretch"):
+        st.session_state[key] = pg - 1
+        st.rerun()
+    cols[2].markdown(f'<div class="rs-tfoot" style="text-align:center">Page {pg:02d} / {pages:02d}</div>', unsafe_allow_html=True)
+    if cols[3].button("Next ›", key=f"{key}_next", disabled=pg >= pages, width="stretch"):
+        st.session_state[key] = pg + 1
+        st.rerun()
+    return (pg - 1) * size, min(pg * size, n)
+
+
 def render_list() -> None:
     store = C.store()
-    st.title("Patient Encounters")
+    user = C.user()
+    right = C.page_header("Patient Encounters", "Browse, filter, and audit local pseudonymised clinical consultations", ratio=(3, 1))
+    with right:
+        st.markdown('<div style="display:flex;justify-content:flex-end">', unsafe_allow_html=True)
+        if st.button("New Consultation", key="enc_new", type="primary"):
+            st.session_state["page"] = "new"
+            st.rerun()
     C.show_flash()
-    c1, c2, c3, c4 = st.columns([2.6, 1.5, 1.5, 1.4], vertical_alignment="bottom")
-    q = c1.text_input("Search", placeholder="Encounter ID, patient reference, chief complaint, diagnosis ...")
-    status = c2.selectbox("Status", ["All", "open", "note_draft", "approved", "archived"], format_func=lambda s: "All statuses" if s == "All" else C.STATUS_CHIP[s][0])
-    deep = c3.checkbox("Also search transcripts & notes", help="Slower: decrypts and searches every record.")
-    if c4.button("New encounter", type="primary", width="stretch"):
-        st.session_state["page"] = "new"
-        st.rerun()
+    q = st.text_input("Search", placeholder="Search by patient reference (e.g. PT-PQCTPD), encounter ID, chief complaint or diagnosis ...",
+                      label_visibility="collapsed", key="enc_q")
+    c1, c2, c3 = st.columns([1.2, 1.9, 2.4], vertical_alignment="center")
+    status = c1.selectbox("Status", ["All", "open", "note_draft", "approved", "archived"], label_visibility="collapsed", key="enc_status",
+                          format_func=lambda s: "Status: All" if s == "All" else f"Status: {C.STATUS_CHIP[s][0]}")
+    deep = c2.checkbox("Also search transcripts & notes", help="Slower: decrypts and searches every record.")
+    cnt = store.counts()
+    archived = cnt["total"] - cnt["open"] - cnt["drafts"] - cnt["approved"]
+    c3.markdown(f'<div class="rs-counts" style="justify-content:flex-end"><span>All<b>{cnt["total"]}</b></span><span class="open">Open<b>{cnt["open"]}</b></span>'
+                f'<span class="draft">Draft note<b>{cnt["drafts"]}</b></span><span class="appr">Approved<b>{cnt["approved"]}</b></span><span>Archived<b>{archived}</b></span></div>',
+                unsafe_allow_html=True)
     rows = store.list_encounters(status=None if status == "All" else status, query=q, deep=deep)
     if not rows:
-        C.empty_state("No encounters found", "Create one with New consultation." if not q else "Try a different search.")
+        C.empty_state("No encounters found", "Create one with New Consultation." if not q else "Try a different search.")
         return
-    st.caption(f"{len(rows)} record(s). Select a row to open it.")
-    sel = _table(rows, "enc_tbl")
-    if sel:
-        a, b = st.columns([1, 5])
-        if a.button("Open encounter", type="primary"):
-            if not can(C.user(), "encounter.view"):
-                st.error("Your role cannot open clinical content.")
-            else:
-                open_encounter(sel["id"])
+    with st.container(border=True, key="tbl_enc"):
+        w = [1.35, 0.75, 1.15, 2.3, 1.05, 1.5]
+        C.th(st.columns(w, vertical_alignment="center"), ["Patient Reference", "Age/Sex", "Date & Time", "Consultation", "Note Status", "Actions"])
+        foot = st.container()
+        f = st.columns([3.2, 0.9, 0.8, 0.9], vertical_alignment="center")
+        lo, hi = _pager("enc_page", len(rows), PAGE, f)
+        f[0].markdown(f'<div class="rs-tfoot">Showing {lo + 1}-{hi} of {len(rows)} local encounters · Pseudonymised records only</div>', unsafe_allow_html=True)
+        with foot:
+            for r in rows[lo:hi]:
+                c = st.columns(w, vertical_alignment="center")
+                d, t = C.split_ts(r["created_at"])
+                C.td(c[0], f'<span class="rs-ref">{C.esc(r["patient_ref"])}</span><span class="m rs-mono" style="font-size:10px;margin-top:6px">{C.esc(r["id"])}</span>')
+                C.td(c[1], C.age_sex(r))
+                C.td(c[2], f'{C.esc(d)}<span class="m">{C.esc(t)} · Local time</span>')
+                C.td(c[3], f'{C.esc(r["chief_complaint"] or "No chief complaint recorded")}<span class="m">{C.esc(r.get("consult_type", ""))}</span>')
+                C.td(c[4], C.status_chip(r["status"]))
+                if c[5].button("Open Workspace", key=f"eo_{r['id']}", icon=":material/north_east:", disabled=not can(user, "encounter.view"),
+                               help=None if can(user, "encounter.view") else "Your role cannot open clinical content."):
+                    open_encounter(r["id"])
 
 
 def render_history() -> None:
     store = C.store()
     s = C.settings()
     user = C.user()
-    st.title("Encounter History")
-    st.caption("Retrieve earlier records. Opening a record is access to personal health information and is logged with its purpose.")
+    conn = C.conn()
+    C.page_header("Encounter History & Audit Trail", "Cryptographically verified, tamper-evident consultation archives stored locally",
+                  [("Immutable · Read-only", "lock", "soft")])
     C.show_flash()
     if not can(user, "history.view"):
         C.banner("Your role can see record metadata only, not clinical content.", "info")
-    c1, c2, c3 = st.columns([2.4, 2, 1.6], vertical_alignment="bottom")
-    pref = c1.text_input("Patient reference (all visits of one patient)", placeholder="e.g. PT-00123")
-    q = c2.text_input("Text search", placeholder="complaint, diagnosis ...")
-    scope = c3.selectbox("Show", ["Approved & archived", "All records"])
-    rows = store.list_encounters(query=q, limit=500)
-    if scope == "Approved & archived":
-        rows = [r for r in rows if r["status"] in ("approved", "archived")]
-    if pref.strip():
-        ids = set(store.encounters_for_patient(pref.strip())) if can(user, "encounter.view") else set()
-        rows = [r for r in rows if r["id"] in ids]
-    if not rows:
-        C.empty_state("No matching records")
-        return
-    sel = _table(rows, "hist_tbl")
-    if not sel:
-        st.caption("Select a record to see its versions, activity and options.")
-        return
-    st.markdown(f"#### {C.esc(sel['id'])}")
+    cnt = store.counts()
+    ok, n_checked, bad = audit.verify_chain(conn)
+    b1, b2 = st.columns([5, 1.25], vertical_alignment="center")
+    b1.markdown(f'<div class="rs-hashbar{"" if ok else " bad"}">{C.icon_html("shield-check", 20)} {cnt["total"]} Encounters Recorded &bull; {cnt["approved"]} Approved '
+                f'&bull; 100% Encrypted At Rest<span class="tag">{"HASH CHAIN INTACT" if ok else f"HASH CHAIN BROKEN AT #{bad}"}</span></div>', unsafe_allow_html=True)
+    if b2.button("Verify archive integrity", key="hist_verify", width="stretch"):
+        audit.record(conn, user, "audit.verified", None, None, {"ok": ok, "rows": n_checked})
+        C.flash(f"Audit chain verified: {n_checked} entries intact." if ok else f"Audit chain broken at entry #{bad}. Contact the administrator.", "success" if ok else "error")
+        st.rerun()
+    encs = {r["id"]: r for r in store.list_encounters(limit=500)}
+    logs = audit.recent(conn, 2000)
+    if not can(user, "audit.view"):
+        logs = [r for r in logs if r["user_id"] == user["id"]]
+    with st.container(border=True, key="tbl_hist"):
+        h1, h2 = st.columns([3, 1.4])
+        h1.markdown(f'<div class="rs-tblhead" style="padding:4px 0 0"><div><div class="t">Consultation audit log {C.chip("Append-only ledger", "neutral")}</div>'
+                    '<div class="s">Every clinical event preserved in order. Original records cannot be altered or removed.</div></div></div>', unsafe_allow_html=True)
+        h2.markdown(f'<div style="text-align:right;padding-top:6px"><span class="rs-ok">{C.icon_html("shield-check", 13)} '
+                    f'{"All displayed records verified" if ok else "Chain broken - see banner"}</span><div class="rs-mono" style="font-size:10px;color:var(--muted);margin-top:4px">'
+                    f'LAST CHECK {C.esc(datetime.now().strftime("%Y-%m-%d %H:%M"))}</div></div>', unsafe_allow_html=True)
+        f = st.columns([1.4, 1.3, 1.3, 1.6], vertical_alignment="bottom")
+        ev = f[0].selectbox("Event type", ["All"] + sorted({r["action"] for r in logs}), key="hist_ev",
+                            format_func=lambda a: "All event types" if a == "All" else C.action_text(a))
+        pref = f[1].text_input("Patient code", placeholder="Search patient code", key="hist_pref")
+        eid = f[2].text_input("Encounter ID", placeholder="ENC-...", key="hist_eid")
+        rows = [r for r in logs if ev == "All" or r["action"] == ev]
+        if pref.strip():
+            ids = set(store.encounters_for_patient(pref.strip())) if can(user, "encounter.view") else set()
+            rows = [r for r in rows if r["target_id"] in ids]
+        if eid.strip():
+            rows = [r for r in rows if eid.strip().upper() in (r["target_id"] or "").upper()]
+        f[3].markdown(f'<div class="rs-tfoot" style="text-align:right;padding-bottom:10px">{len(rows)} events shown / <b style="color:var(--ink)">Newest first</b></div>',
+                      unsafe_allow_html=True)
+        w = [1.25, 1.15, 0.95, 1.65, 1.15, 1.35, 1.2]
+        C.th(st.columns(w, vertical_alignment="center"), ["Timestamp", "Encounter ID", "Patient Ref", "Action", "Performed By", "Signature / Hash", "Archive access"])
+        body = st.container()
+        pf = st.columns([3.2, 0.9, 0.8, 0.9], vertical_alignment="center")
+        lo, hi = _pager("hist_page", len(rows), HIST_PAGE, pf)
+        pf[0].markdown(f'<div class="rs-tfoot">Showing {lo + 1 if rows else 0}-{hi} of {len(rows)} audit events across {len(encs)} encounters</div>', unsafe_allow_html=True)
+        with body:
+            if not rows:
+                C.empty_state("No matching events")
+            for r in rows[lo:hi]:
+                c = st.columns(w, vertical_alignment="center")
+                d, t = C.split_ts(r["ts"])
+                enc = encs.get(r["target_id"]) if r["target_type"] == "encounter" else None
+                C.td(c[0], f'<span class="rs-mono">{C.esc(d)}T{C.esc(t)}</span><span class="m">Local time</span>')
+                C.td(c[1], f'<b class="rs-mono">{C.esc(r["target_id"])}</b>' if r["target_type"] == "encounter" else f'<span class="m">{C.esc(r["target_type"] or "system")}</span>')
+                C.td(c[2], f'<span class="rs-mono" style="color:var(--muted)">{C.esc(enc["patient_ref"]) if enc else "—"}</span>')
+                kind = "ok" if r["action"] in ("note.approved", "export.pdf", "medreview.run") else "neutral"
+                C.td(c[3], C.chip(C.action_text(r["action"]), kind))
+                C.td(c[4], f'<b>{C.esc(r["username"] or "system")}</b><span class="m">Authenticated user</span>')
+                good = ok or r["id"] < bad
+                C.td(c[5], f'<span class="rs-mono">{C.esc(r["hash"][:8])}...{C.esc(r["hash"][-6:])}</span>'
+                           + ('<span class="m rs-ok">&#10003; Integrity verified</span>' if good else '<span class="m" style="color:var(--danger)">Unverified</span>'))
+                if enc and c[6].button("View record", key=f"hv_{r['id']}", icon=":material/visibility:"):
+                    st.session_state["hist_sel"] = enc["id"]
+                    st.rerun()
+    sel = encs.get(st.session_state.get("hist_sel"))
+    if sel:
+        with st.container(border=True):
+            _record_panel(store, s, user, sel)
+    st.markdown(f'<div class="rs-feats"><div><span class="ic">{C.icon_html("hard-drive", 18)}</span><span><b>Stored on this device</b>Encrypted local vault · No external data transfer</span></div>'
+                f'<div><span class="ic">{C.icon_html("link", 18)}</span><span><b>Cryptographically linked</b>SHA-256 hashes preserve a tamper-evident event chain</span></div>'
+                f'<div><span class="ic">{C.icon_html("lock", 18)}</span><span><b>Immutable clinical record</b>Approved versions are read-only. Amendments create new versions.</span></div></div>',
+                unsafe_allow_html=True)
+
+
+def _record_panel(store, s, user, sel) -> None:
+    C.card_head("file-text", f"{sel['id']} · {sel['patient_ref']}", sel.get("chief_complaint") or "", C.STATUS_CHIP.get(sel["status"], (sel["status"], "neutral")))
+    st.caption("Opening a record is access to personal health information and is logged with its purpose.")
     if can(user, "encounter.view"):
         v = store.list_versions(sel["id"])
         if v:
@@ -100,7 +193,8 @@ def render_history() -> None:
     if user["role"] in ("clinician", "admin"):
         with st.expander("Activity log for this record"):
             rows_a = audit.recent(C.conn(), 100, sel["id"])
-            st.dataframe([{"When": local_display(r["ts"]), "User": r["username"], "Action": r["action"], "Detail": r["detail"]} for r in rows_a], hide_index=True, width="stretch")
+            st.dataframe([{"When": local_display(r["ts"]), "User": r["username"], "Action": C.action_text(r["action"]), "Detail": r["detail"]} for r in rows_a],
+                         hide_index=True, width="stretch")
     _manage(store, sel)
 
 
