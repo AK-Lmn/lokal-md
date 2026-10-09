@@ -99,8 +99,6 @@ def sidebar() -> None:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
         st.markdown("---")
         st.markdown(f'<div class="rs-small" style="margin-bottom:.7rem;line-height:1.5">{C.esc(user["display_name"])}<br>{C.esc(user["role"])}</div>', unsafe_allow_html=True)
-        if C.settings().get("operating_mode") != "clinical":
-            st.markdown('<div style="margin-bottom:.6rem">' + C.chip("Demonstration mode", "warn") + "</div>", unsafe_allow_html=True)
         c1, c2 = st.columns(2)
         if c1.button("Lock", key="btn_lock"):
             session.lock("manual")

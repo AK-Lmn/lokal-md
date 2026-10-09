@@ -14,7 +14,7 @@ from .transcription import has_uncertain
 
 
 def get_reference_index(conn: sqlite3.Connection, settings: dict) -> RefIndex | None:
-    """Active dataset index. In clinical mode, fails closed unless the dataset is approved."""
+    """Active dataset index. In strict mode, fails closed unless the dataset is approved."""
     ix = refdata.load_active_index(conn)
     if ix and settings.get("operating_mode") == "clinical" and not ix.is_approved_for_clinical:
         return None
@@ -70,7 +70,7 @@ def approval_readiness(store: Store, enc_id: str, ix: RefIndex | None, settings:
     orders = store.get_orders(enc_id)
     review = store.latest_review(enc_id)
     if settings.get("operating_mode") == "clinical" and ix is None:
-        r.blockers.append("Clinical mode requires an active, professionally approved medication reference dataset.")
+        r.blockers.append("Strict mode requires an active, professionally approved medication reference dataset.")
     if orders or enc["data"].profile.current_medications:
         if not review:
             r.blockers.append("Medication safety check has not been run.")
@@ -91,7 +91,7 @@ def approval_readiness(store: Store, enc_id: str, ix: RefIndex | None, settings:
     if mentions:
         r.warnings.append("Medicines mentioned but not entered as orders (so not safety-checked): " + ", ".join(mentions))
     if ix is not None and ix.is_synthetic:
-        r.warnings.append("Reference data is SYNTHETIC demonstration data - this record is for demonstration only.")
+        r.warnings.append("Medication reference data is a synthetic sample set and has not been clinically validated.")
     return r
 
 

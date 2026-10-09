@@ -80,7 +80,6 @@ def test_03_signout_and_login_as_clinician(app):
     at.text_input[labels.index("Password")].input(PW)
     click(at, "Sign in")
     assert any(t.value == "Dashboard" for t in at.title)
-    assert any("Demonstration mode" in m.value for m in at.sidebar.markdown)
 
 
 def test_04_new_consultation_to_workspace(app):

@@ -17,7 +17,7 @@ SYN = "SYNTHETIC-DEMO (unverified) - for software testing only"
 def demo_bundle_dict() -> dict:
     return {
         "meta": {
-            "name": "SYNTHETIC DEMO DATA",
+            "name": "Synthetic sample data",
             "version": "demo-1",
             "source_description": "Synthetic records for testing the rules engine. NOT clinically validated. Do not use for patient care.",
         },

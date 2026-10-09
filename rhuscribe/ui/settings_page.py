@@ -127,31 +127,32 @@ def _reference():
     conn = C.conn()
     user = C.user()
     s = C.settings()
-    st.markdown("##### Operating mode")
+    st.markdown("##### Reference data enforcement")
     ix = refdata.load_active_index(conn)
     mode = s["operating_mode"]
-    st.markdown(C.chip("DEMONSTRATION mode" if mode != "clinical" else "CLINICAL mode", "warn" if mode != "clinical" else "ok"), unsafe_allow_html=True)
-    st.caption("Demonstration mode is for testing with synthetic patients. Clinical mode is only allowed when an imported dataset has been professionally reviewed and approved and is active; otherwise medication checks fail closed.")
+    st.markdown(C.chip("Strict" if mode == "clinical" else "Standard", "ok" if mode == "clinical" else "neutral"), unsafe_allow_html=True)
+    st.caption("Standard: checks run against whichever dataset is active, and its origin is shown on every result and PDF. "
+               "Strict: checks run only against an imported dataset that a second qualified person has reviewed and approved; otherwise they fail closed and note approval is blocked.")
     if can(user, "settings.edit"):
         if mode != "clinical":
             ok = bool(ix and ix.is_approved_for_clinical)
-            typed = st.text_input("To enable clinical mode type: ENABLE CLINICAL MODE", key="clin_confirm", disabled=not ok)
-            if st.button("Switch to clinical mode", disabled=not ok or typed.strip() != "ENABLE CLINICAL MODE"):
+            typed = st.text_input("To enable strict mode type: ENABLE STRICT MODE", key="clin_confirm", disabled=not ok)
+            if st.button("Enable strict mode", disabled=not ok or typed.strip() != "ENABLE STRICT MODE"):
                 settings_store.set_many(conn, {"operating_mode": "clinical"}, user["id"])
-                audit.record(conn, user, "settings.mode_clinical", "settings", None, {"dataset": ix.dataset["name"]})
+                audit.record(conn, user, "settings.mode_strict", "settings", None, {"dataset": ix.dataset["name"]})
                 st.rerun()
             if not ok:
-                st.caption("Not available: no approved imported dataset is active.")
-        elif st.button("Return to demonstration mode"):
-            settings_store.set_many(conn, {"operating_mode": "demo"}, user["id"])
-            audit.record(conn, user, "settings.mode_demo", "settings")
+                st.caption("Not available until an approved imported dataset is active.")
+        elif st.button("Return to standard mode"):
+            settings_store.set_many(conn, {"operating_mode": "standard"}, user["id"])
+            audit.record(conn, user, "settings.mode_standard", "settings")
             st.rerun()
 
     st.markdown("##### Datasets")
     dss = refdata.list_datasets(conn)
     for d in dss:
         with st.container(border=True):
-            kind = "SYNTHETIC DEMO" if d["kind"] == "synthetic_demo" else "Imported"
+            kind = "Synthetic sample" if d["kind"] == "synthetic_demo" else "Imported"
             stat = {"pending_review": ("Awaiting review", "warn"), "approved": ("Approved", "ok"), "rejected": ("Rejected", "danger"), "retired": ("Retired", "neutral")}[d["status"]]
             st.markdown(f"**{C.esc(d['name'])}** v{C.esc(d['version'])} " + C.chip(kind, "warn" if d["kind"] == "synthetic_demo" else "info") + C.chip(*stat) + (C.chip("ACTIVE", "ok") if d["active"] else ""), unsafe_allow_html=True)
             st.caption(f"{d['source_description']}  ·  imported {local_display(d['imported_at'])}")
@@ -192,10 +193,10 @@ def _reference():
     if not can(user, "refdata.import"):
         st.info("Only a pharmacist or administrator can import reference data.")
         return
-    st.caption("Imported data starts as 'awaiting review' and cannot back clinical mode until a DIFFERENT qualified person approves it. Every record must carry a source citation.")
+    st.caption("Imported data starts as 'awaiting review' and cannot be used in strict mode until a DIFFERENT qualified person approves it. Every record must carry a source citation.")
     t1, t2 = st.tabs(["JSON bundle", "CSV files"])
     with t1:
-        st.download_button("Download format example (synthetic demo bundle)", json.dumps(demo_bundle_dict(), indent=1), file_name="reference_bundle_example.json", mime="application/json")
+        st.download_button("Download format example (sample bundle)", json.dumps(demo_bundle_dict(), indent=1), file_name="reference_bundle_example.json", mime="application/json")
         up = st.file_uploader("Reference bundle (.json)", type=["json"], key="ref_json")
         if up and st.button("Validate & import", key="imp_json"):
             _do_import(lambda: refdata.parse_bundle_json(up.getvalue().decode("utf-8", "replace")))
@@ -389,7 +390,7 @@ def _about():
         "**Intended use:** documentation aid and rule-based medication-review aid for qualified health workers. It does not diagnose, prescribe or approve anything.\n\n"
         "**Limitations**\n"
         "- Speech recognition and the language model make mistakes, especially with Tagalog/Taglish, accents, noise and drug names. Every transcript and note must be reviewed.\n"
-        "- Medication checks use only the installed reference dataset. The bundled dataset is **synthetic demonstration data**. No alert does not mean safe.\n"
+        "- Medication checks use only the installed reference dataset. The bundled dataset is a **synthetic sample set**. No alert does not mean safe.\n"
         "- Not a certified medical device. Not evaluated for regulatory or Data Privacy Act compliance. Deployment requires institutional clinical-safety, privacy and security review.\n"
         "- Single-workstation design; no TLS or multi-site sync. Keep the server bound to this computer.")
     st.caption("Network behaviour: the app only talks to localhost (Streamlit UI and the local Ollama server). A process-level guard blocks other outbound connections.")

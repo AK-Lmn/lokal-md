@@ -3,7 +3,7 @@
 A local-first documentation aid for Rural Health Units, barangay health centres and disaster-response teams in the
 Philippines. Runs on one ordinary laptop; **no cloud AI, no telemetry**. Records are encrypted at rest.
 
-> **Status: functional MVP / demonstration.** Ships with *synthetic* medication reference data. It is not a certified
+> **Status: functional MVP.** Ships with a *synthetic sample* medication reference set (labelled as such on every result and PDF). It is not a certified
 > medical device and has not been assessed for Data Privacy Act or regulatory compliance. See "Limitations".
 
 ## Quick start (Windows)

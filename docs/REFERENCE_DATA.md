@@ -1,13 +1,13 @@
 # Medication reference data
 
-Tala ships **only synthetic demonstration data** (`rhuscribe/safety/demo_data.py`). Every record is
+Tala ships **only a synthetic sample dataset** (`rhuscribe/safety/demo_data.py`). Every record is
 tagged `SYNTHETIC-DEMO (unverified)`. It exists to test the rules engine and **must not be used for patient care**.
 
-## Going live (clinical mode)
+## Strict mode (reviewed data only)
 1. A pharmacist/administrator **imports** a verified dataset (Settings → Medication reference). Every record needs a `source_citation`.
 2. A *different* qualified person (pharmacist or clinician) **reviews and approves** it, recording what was checked.
-3. An administrator **activates** it and switches the app to **clinical mode**. Until then every screen and PDF is marked as demonstration.
-   If the active dataset is not approved, clinical mode fails closed (no checks run, approval is blocked).
+3. An administrator **activates** it and switches the app to **strict mode** (Settings → Medication reference). In the default standard mode, results and PDFs state the origin of the active dataset (for example "synthetic sample data - not clinically validated").
+   In strict mode, if the active dataset is not approved, checks fail closed (no checks run, approval is blocked).
 
 ## JSON bundle format (see the example download in the app)
 Sections: `meta`, `classes`, `ingredients` (with `aliases`, `brands`, `classes`), `products` (combination products),

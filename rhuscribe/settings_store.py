@@ -8,8 +8,8 @@ from . import config
 from .timeutil import now_iso
 
 DEFAULTS: dict = {
-    # operating mode: 'demo' (synthetic data only) or 'clinical' (requires approved reference data)
-    "operating_mode": "demo",
+    # reference-data enforcement: 'standard' (any active dataset) or 'clinical' = STRICT (only a reviewed + approved imported dataset)
+    "operating_mode": "standard",
     # models
     "whisper_model": config.DEFAULT_WHISPER,
     "whisper_device": "cpu",

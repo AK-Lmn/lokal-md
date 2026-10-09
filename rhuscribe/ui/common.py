@@ -248,8 +248,3 @@ def status_chip(status: str) -> str:
     label, kind = STATUS_CHIP.get(status, (status, "neutral"))
     return chip(label, kind)
 
-
-def demo_banner() -> None:
-    s = settings()
-    if s.get("operating_mode") != "clinical":
-        banner("DEMONSTRATION MODE - synthetic reference data. Use synthetic patients only. Not validated for patient care.", "demo", "")

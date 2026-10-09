@@ -42,7 +42,7 @@ def render():
                 _recovery(conn)
             else:
                 _signin(conn)
-            st.markdown('<div class="rs-small" style="margin-top:1rem">Demonstration software. Use synthetic patients only. Not a certified medical device.</div>', unsafe_allow_html=True)
+            st.markdown('<div class="rs-small" style="margin-top:1rem">Not a certified medical device. Clinical decisions remain with the clinician.</div>', unsafe_allow_html=True)
 
 
 def _setup(conn):

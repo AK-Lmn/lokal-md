@@ -86,7 +86,7 @@ def _readiness(s: dict) -> None:
         ("Network guard", "Outbound blocked" if netguard.is_installed() else "NOT active", "ok" if netguard.is_installed() else "danger"),
         ("Speech recognition", f"{s['whisper_model']} ready" if asr["ready"] else asr["message"], "ok" if asr["ready"] else "warn"),
         ("Local language model", f"{s['ollama_model']} ready" if lm["ready"] else lm["message"], "ok" if lm["ready"] else "warn"),
-        ("Medication data", ("SYNTHETIC DEMO" if ix.is_synthetic else ("Approved" if ix.is_approved_for_clinical else "Imported, unapproved")) if ix else "None active", ("warn" if (not ix or ix.is_synthetic or not ix.is_approved_for_clinical) else "ok")),
+        ("Medication data", ("Synthetic sample" if ix.is_synthetic else ("Approved" if ix.is_approved_for_clinical else "Imported, unapproved")) if ix else "None active", ("warn" if (not ix or ix.is_synthetic or not ix.is_approved_for_clinical) else "ok")),
         ("Raw audio", "Deleted after use" if s["audio_retention"] == "delete" else f"Kept {s['audio_retention_days']} days", "ok" if s["audio_retention"] == "delete" else "warn"),
         ("Last backup", "never" if age_days is None else f"{age_days} day(s) ago", "warn" if age_days is None or age_days > s["backup_reminder_days"] else "ok"),
     ]

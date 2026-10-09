@@ -1,6 +1,6 @@
 """Medication reference data: validated bundle format, SQLite persistence, import/review.
 
-The software ships ONLY clearly-labelled synthetic demonstration data (demo_data.py).
+The software ships ONLY clearly-labelled synthetic sample data (demo_data.py).
 Verified pharmaceutical content must be imported by authorised staff and approved by a
 second professional before it can back real patient-care workflows.
 """
@@ -485,7 +485,7 @@ def set_active(conn, ds_id: str, actor: dict | None = None, clinical_mode: bool 
     if ds["status"] in ("retired", "rejected"):
         raise RefError("A retired or rejected dataset cannot be activated.")
     if clinical_mode and not (ds["kind"] == "imported" and ds["status"] == "approved"):
-        raise RefError("Clinical mode requires an imported dataset that has been professionally reviewed and approved.")
+        raise RefError("Strict mode requires an imported dataset that has been professionally reviewed and approved.")
     conn.execute("UPDATE ref_datasets SET active=0")
     conn.execute("UPDATE ref_datasets SET active=1 WHERE id=?", (ds_id,))
     conn.commit()
@@ -500,7 +500,7 @@ def review_dataset(conn, actor: dict, ds_id: str, approve: bool, notes: str, att
     if not ds:
         raise RefError("Dataset not found")
     if ds["kind"] == "synthetic_demo":
-        raise RefError("Synthetic demonstration data cannot be approved for clinical use.")
+        raise RefError("Synthetic sample data cannot be approved for clinical use.")
     if ds["imported_by"] == actor["id"]:
         raise RefError("The reviewer must be a different person from the importer.")
     if approve and not attestation:

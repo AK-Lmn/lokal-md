@@ -400,8 +400,6 @@ def _meds(store, can_edit, ix, settings):
         C.banner("No usable medication reference dataset is active - checks cannot run. See Settings, Medication reference.", "danger")
     else:
         medview.dataset_line({"dataset": ix.dataset, "synthetic": ix.is_synthetic, "approved_for_clinical": ix.is_approved_for_clinical, "rule_count": ix.rule_count})
-        if ix.is_synthetic:
-            C.banner("The loaded rules are SYNTHETIC demonstration data. Results below are for testing the software only.", "demo", "")
 
     st.markdown("##### Medication orders")
     st.caption("Enter the medicines the clinician has decided to prescribe. The software never prescribes or approves anything - it only checks what you enter.")
@@ -541,7 +539,7 @@ def _export(store, enc_id, ix, settings):
             creator = C.conn().execute("SELECT display_name FROM users WHERE id=?", (rec.get("approved_by") or store.get_encounter(enc_id)["created_by"],)).fetchone()
             pdf = pdf_export.build_pdf(encounter=store.get_encounter(enc_id), note_rec=rec, orders=store.get_orders(enc_id), review=review, review_current=cur,
                                        settings=settings, author_name=creator["display_name"] if creator else "", exported_by=C.user()["display_name"],
-                                       demo_mode=settings.get("operating_mode") != "clinical")
+                                       demo_mode=False)
             ss["ws_pdf"] = (enc_id, rec["status"], rec["version"], pdf)
             audit.record(C.conn(), C.user(), "export.pdf", "encounter", enc_id, {"status": rec["status"], "version": rec["version"]})
         except Exception as e:

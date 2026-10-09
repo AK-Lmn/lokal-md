@@ -3,7 +3,7 @@
 * Drafts are watermarked and headed "DRAFT - NOT APPROVED".
 * Approval details are copied from the stored approval record exactly as entered; blank
   credentials/licence numbers are printed as "not recorded". Nothing is invented.
-* Records created in demonstration mode are marked as synthetic/not for patient care.
+* The medication section states whether the reference data are a synthetic sample set.
 """
 from __future__ import annotations
 
@@ -80,9 +80,6 @@ def build_pdf(
         S.append(_banner(f"APPROVED NOTE - version {note_rec['version']}", GREEN))
     else:
         S.append(_banner("DRAFT - NOT REVIEWED OR APPROVED BY A CLINICIAN. NOT A FINAL MEDICAL RECORD.", RED))
-    if demo_mode:
-        S.append(Spacer(1, 2))
-        S.append(_banner("DEMONSTRATION MODE - SYNTHETIC DATA - NOT FOR PATIENT CARE", AMBER))
     S.append(Spacer(1, 6))
 
     def kv(rows):
@@ -133,7 +130,7 @@ def build_pdf(
         ds = res.get("dataset", {})
         S.append(Paragraph(
             f"Run {_t(local_display(review['run_at']))} against reference dataset <b>{_t(ds.get('name', '?'))}</b> v{_t(ds.get('version', '?'))} "
-            f"({'SYNTHETIC DEMO - not clinically validated' if res.get('synthetic') else ('professionally approved' if res.get('approved_for_clinical') else 'imported, NOT yet approved')}).",
+            f"({'SYNTHETIC SAMPLE DATA - not clinically validated' if res.get('synthetic') else ('professionally approved' if res.get('approved_for_clinical') else 'imported, NOT yet approved')}).",
             st["small"]))
         if not review_current:
             S.append(Paragraph("<b>This check is OUT OF DATE: medications or patient data changed after it was run.</b>", st["base"]))
@@ -182,12 +179,12 @@ def build_pdf(
     def decorate(canvas, doc_):
         canvas.saveState()
         w, h = A4
-        if not approved or demo_mode:
+        if not approved:
             canvas.setFont("Helvetica-Bold", 64)
             canvas.setFillColor(colors.Color(0.7, 0.1, 0.1, alpha=0.07))
             canvas.translate(w / 2, h / 2)
             canvas.rotate(45)
-            canvas.drawCentredString(0, 0, "DRAFT" if not approved else "DEMO DATA")
+            canvas.drawCentredString(0, 0, "DRAFT")
             canvas.restoreState()
             canvas.saveState()
         canvas.setFont("Helvetica", 7.5)
