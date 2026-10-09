@@ -1,6 +1,6 @@
 # Medication reference data
 
-RHU Scribe ships **only synthetic demonstration data** (`rhuscribe/safety/demo_data.py`). Every record is
+Tala ships **only synthetic demonstration data** (`rhuscribe/safety/demo_data.py`). Every record is
 tagged `SYNTHETIC-DEMO (unverified)`. It exists to test the rules engine and **must not be used for patient care**.
 
 ## Going live (clinical mode)

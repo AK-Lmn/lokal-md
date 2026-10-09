@@ -79,21 +79,21 @@ p, li, label, span { color: inherit; }
 /* ---------- sidebar: light, quiet ---------- */
 section[data-testid="stSidebar"] { background: #eef2f3; border-right: 1px solid var(--line); }
 section[data-testid="stSidebar"] .stButton > button::before { opacity: .85; }
-.rs-brandrow { display:flex; align-items:center; gap:10px; padding: .3rem .3rem .2rem; margin-bottom: .6rem; }
-.rs-logo { width: 34px; height: 34px; border-radius: 9px; background: var(--accent); display:flex; align-items:center; justify-content:center; flex:none; }
-.rs-hero { background: linear-gradient(180deg,#0d6b73,#0a555c); color:#fff; border-radius: 14px; padding: 36px 32px; min-height: 420px; }
+.rs-brandrow { display:flex; align-items:center; gap:10px; padding: .4rem .5rem .6rem; margin-bottom: .9rem; }
+.rs-logo { width: 38px; height: 38px; flex:none; line-height:0; }
+.rs-hero { background: #0d6b73; color:#fff; border-radius: 14px; padding: 40px 36px; min-height: 440px; }
 .rs-hero h2 { color:#fff !important; font-size: 1.6rem !important; margin: 18px 0 8px; }
 .rs-hero p { color: #d7ecee; font-size: .95rem; line-height: 1.55; }
 .rs-hero li { color:#eaf6f7; margin: 10px 0; font-size:.93rem; list-style:none; }
 .rs-hero ul { padding: 0; margin: 22px 0 0; }
-section[data-testid="stSidebar"] [data-testid="stVerticalBlock"] { gap: .15rem; }
+section[data-testid="stSidebar"] [data-testid="stVerticalBlock"] { gap: .3rem; }
 section[data-testid="stSidebar"] .stButton > button { width: 100%; justify-content: flex-start; text-align: left; border: 0; border-radius: 6px;
-  background: transparent; color: var(--ink2); padding: .42rem .7rem; font-weight: 500; font-size: .92rem; min-height: 0; }
+  background: transparent; color: var(--ink2); padding: .6rem .85rem; font-weight: 500; font-size: .92rem; min-height: 0; }
 section[data-testid="stSidebar"] .stButton > button:hover { background: #dfe5e8; color: var(--ink); }
 section[data-testid="stSidebar"] .stButton > button[kind="primary"] { background: #fff; color: var(--accent-dark); font-weight: 650; box-shadow: inset 3px 0 0 var(--accent); }
 .rs-brand { font-weight: 700; font-size: 1.1rem; color: var(--ink); padding: .2rem .3rem 0; }
 .rs-brand small { display:block; font-weight: 400; font-size: .76rem; color: var(--muted); }
-.rs-navlabel { text-transform: uppercase; font-size: .68rem; letter-spacing: .07em; color: var(--muted); margin: 1.1rem 0 .75rem .5rem; font-weight: 600; line-height: 1.3; }
+.rs-navlabel { text-transform: uppercase; font-size: .68rem; letter-spacing: .07em; color: var(--muted); padding: 1.2rem 0 1rem .85rem; font-weight: 600; line-height: 1.3; margin: 0; }
 
 /* ---------- inputs: white, bordered, always readable ---------- */
 [data-testid="stWidgetLabel"], [data-testid="stWidgetLabel"] * { color: var(--ink) !important; opacity: 1 !important; font-size: .88rem; font-weight: 500; }
@@ -178,6 +178,14 @@ def icon_uri(name: str) -> str:
     svg = re.sub(r"<!--.*?-->", "", svg, flags=re.S)
     svg = re.sub(r'\s+class="[^"]*"', "", svg)
     return "url(data:image/svg+xml;base64," + base64.b64encode(svg.strip().encode()).decode() + ")"
+
+
+def logo_svg(size: int = 34) -> str:
+    try:
+        svg = (_ICON_DIR.parent / "logo.svg").read_text(encoding="utf-8")
+    except OSError:
+        return ""
+    return svg.replace("<svg ", f'<svg width="{size}" height="{size}" style="display:block" ', 1)
 
 
 def icon_html(name: str, size: int = 16, color: str = "currentColor") -> str:

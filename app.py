@@ -1,10 +1,11 @@
-"""RHU Scribe - offline clinical consultation & prescription-review assistant.
+"""Tala - offline clinical consultation & prescription-review assistant.
 
 Run:  streamlit run app.py        (binds to 127.0.0.1 only; see .streamlit/config.toml)
 """
 from __future__ import annotations
 
 import os
+from pathlib import Path
 
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
@@ -17,7 +18,7 @@ netguard.install()  # refuse any non-loopback outbound connection from this proc
 
 import streamlit as st  # noqa: E402
 
-st.set_page_config(page_title="RHU Scribe", page_icon="🩺", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Tala", page_icon=str(Path(__file__).parent / "static" / "favicon.png"), layout="wide", initial_sidebar_state="expanded")
 
 from rhuscribe import APP_NAME  # noqa: E402
 from rhuscribe.auth import can  # noqa: E402
@@ -82,7 +83,7 @@ def sidebar() -> None:
     user = C.user()
     page = ss.get("page", "dashboard")
     with st.sidebar:
-        st.markdown(f'<div class="rs-brandrow"><div class="rs-logo">{C.icon_html("stethoscope", 20, "#fff")}</div><div class="rs-brand" style="padding:0">{APP_NAME}<small>Offline clinical assistant</small></div></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="rs-brandrow"><div class="rs-logo">{C.logo_svg(38)}</div><div class="rs-brand" style="padding:0">{APP_NAME}<small>Notes that work when the lights go out</small></div></div>', unsafe_allow_html=True)
         st.markdown('<div class="rs-navlabel">Work</div>', unsafe_allow_html=True)
         for key, label in NAV:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
@@ -97,7 +98,9 @@ def sidebar() -> None:
         for key, label in NAV2:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
         st.markdown("---")
-        st.markdown(f'<div class="rs-small" style="margin-bottom:.5rem">{C.esc(user["display_name"])}<br>{C.esc(user["role"])}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="rs-small" style="margin-bottom:.7rem;line-height:1.5">{C.esc(user["display_name"])}<br>{C.esc(user["role"])}</div>', unsafe_allow_html=True)
+        if C.settings().get("operating_mode") != "clinical":
+            st.markdown('<div style="margin-bottom:.6rem">' + C.chip("Demonstration mode", "warn") + "</div>", unsafe_allow_html=True)
         c1, c2 = st.columns(2)
         if c1.button("Lock", key="btn_lock"):
             session.lock("manual")
@@ -127,7 +130,6 @@ def main() -> None:
     W.keep_state()
     process_nav()
     sidebar()
-    C.demo_banner()
     if unsaved_guard():
         idle_watch()
         return

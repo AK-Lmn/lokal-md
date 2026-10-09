@@ -1,4 +1,4 @@
-# RHU Scribe — offline clinical consultation & prescription-review assistant
+# Tala — offline clinical consultation & prescription-review assistant
 
 A local-first documentation aid for Rural Health Units, barangay health centres and disaster-response teams in the
 Philippines. Runs on one ordinary laptop; **no cloud AI, no telemetry**. Records are encrypted at rest.

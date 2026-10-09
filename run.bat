@@ -1,5 +1,5 @@
 @echo off
-REM Starts RHU Scribe on this computer only (127.0.0.1:8501). Works without internet.
+REM Starts Tala on this computer only (127.0.0.1:8501). Works without internet.
 cd /d "%~dp0"
 if not exist .venv\Scripts\python.exe (
   echo Run setup.bat first.

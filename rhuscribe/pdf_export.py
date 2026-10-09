@@ -161,7 +161,7 @@ def build_pdf(
         ap = note_rec["approver"]
         rows = [("Approved by", ap.get("name") or "not recorded"), ("Credentials", ap.get("credentials") or "not recorded"),
                 ("Licence no.", ap.get("license_no") or "not recorded"), ("Approved at", local_display(note_rec["approved_at"])),
-                ("Method", "Electronic approval within RHU Scribe (account sign-in). Not a handwritten or digital signature.")]
+                ("Method", "Electronic approval within Tala (account sign-in). Not a handwritten or digital signature.")]
         t = Table([[Paragraph(f"<b>{_t(k)}</b>", st["base"]), Paragraph(_t(v), st["base"])] for k, v in rows], colWidths=[34 * mm, 140 * mm])
         t.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 0.6, LINE)]))
         S.append(t)
