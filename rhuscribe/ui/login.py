@@ -13,7 +13,7 @@ def _brand():
     st.markdown(
         f'<div style="text-align:center;margin:1.2rem 0 .8rem">'
         f'<div style="font-size:1.7rem;font-weight:750;color:#0b6e75">{APP_NAME}</div>'
-        f'<div class="rs-small">Offline clinical consultation &amp; prescription-review assistant</div></div>',
+        f'<div class="rs-small">Local intelligence for local clinics.</div></div>',
         unsafe_allow_html=True,
     )
 
@@ -28,7 +28,7 @@ def render():
         with left:
             st.markdown(
                 f'<div class="rs-hero"><div class="rs-logo" style="width:46px;height:46px">{C.logo_svg(46)}</div>'
-                f'<h2>{APP_NAME}</h2><div class="rs-tagline">Clinical notes that keep working when the lights go out.</div>'
+                f'<h2>{APP_NAME}</h2><div class="rs-tagline">Local intelligence for local clinics.</div>'
                 f'<div class="rs-tagsub">Lokal.MD: on-device clinical intelligence for Philippine healthcare.</div>'
                 f'<ul><li>{C.icon_html("shield-check", 16, "#bfe3e6")}&nbsp; Runs entirely on this computer. No patient data leaves it.</li>'
                 f'<li>{C.icon_html("lock", 16, "#bfe3e6")}&nbsp; Records are encrypted; sessions lock when idle.</li>'

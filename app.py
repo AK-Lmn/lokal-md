@@ -83,7 +83,7 @@ def sidebar() -> None:
     user = C.user()
     page = ss.get("page", "dashboard")
     with st.sidebar:
-        st.markdown(f'<div class="rs-brandrow"><div class="rs-logo">{C.logo_svg(38)}</div><div class="rs-brand" style="padding:0">{APP_NAME}<small>Notes that work when the lights go out</small></div></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="rs-brandrow"><div class="rs-logo">{C.logo_svg(38)}</div><div class="rs-brand" style="padding:0">{APP_NAME}<small>Local intelligence for local clinics</small></div></div>', unsafe_allow_html=True)
         st.markdown('<div class="rs-navlabel">Work</div>', unsafe_allow_html=True)
         for key, label in NAV:
             st.button(label, key=f"nav_{key}", type="primary" if page == key else "secondary", on_click=request_nav, args=(key,))
