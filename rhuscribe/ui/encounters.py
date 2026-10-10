@@ -70,9 +70,10 @@ def _quick_peek_dialog(enc_id: str) -> None:
     v = data.vitals if data else None
     inp = data.inputs if data else None
 
-    c1, c2 = st.columns([3, 1.2], vertical_alignment="center")
+    sex_label = C.SEX.get(p.sex, p.sex) if (p and hasattr(C, 'SEX')) else (p.sex if p else "")
+    status_label = C.STATUS_CHIP.get(enc.get("status", ""), (enc.get("status", ""),))[0]
     c1.markdown(f'<div style="font-size:1.2rem;font-weight:700;color:var(--ink)">Patient Ref {C.esc(data.patient_ref if data else enc_id)}</div>'
-                f'<div style="color:var(--muted);font-size:0.85rem">{C.esc(p.age_text() if p else "?")} · {C.esc(p.sex if p else "")} · {C.esc(enc.get("status", ""))}</div>', unsafe_allow_html=True)
+                f'<div style="color:var(--muted);font-size:0.85rem">{C.esc(p.age_text() if p else "?")} · {C.esc(sex_label)} · {C.esc(status_label)}</div>', unsafe_allow_html=True)
     c2.markdown(C.status_chip(enc.get("status", "open")), unsafe_allow_html=True)
     st.divider()
 
@@ -97,8 +98,11 @@ def _quick_peek_dialog(enc_id: str) -> None:
                 st.markdown(f"- **{C.esc(o.drug_name)}** {C.esc(o.strength or '')} — {C.esc(o.frequency or '')}")
         else:
             st.caption("No medication orders recorded.")
-        if review:
-            st.markdown(f"Safety Engine: `{review['overall_status']}` ({len(review.get('findings', []))} findings checked)")
+        if review and "result" in review:
+            r_res = review["result"]
+            r_overall = r_res.get("overall", "unknown")
+            r_findings = r_res.get("findings", [])
+            st.markdown(f"Safety Engine: `{r_overall}` ({len(r_findings)} findings checked)")
         else:
             st.caption("No safety review run yet.")
 

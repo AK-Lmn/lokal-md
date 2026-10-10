@@ -31,7 +31,12 @@ def render() -> None:
         (":material/delete: Data deletion", _deletion, "info", "Data deletion", "Retention review and permanent deletion."),
         (":material/info: About", _about, "info", "About this workstation", "Version, licences and intended use."),
     ]
-    for tab, (_, fn, icon, title, sub) in zip(st.tabs([t[0] for t in sections]), sections):
+    tab_labels = [t[0] for t in sections]
+    default_tab = st.session_state.get("settings_active_tab")
+    if default_tab not in tab_labels:
+        default_tab = tab_labels[0]
+    tabs = st.tabs(tab_labels, default=default_tab, key="settings_active_tab", on_change="rerun")
+    for tab, (_, fn, icon, title, sub) in zip(tabs, sections):
         with tab, st.container(border=True):
             C.card_head(icon, title, sub)
             fn()
@@ -191,7 +196,7 @@ def _reference():
         st.info("Only a pharmacist or administrator can import reference data.")
         return
     st.caption("Imported data starts as 'awaiting review' and cannot be used in strict mode until a DIFFERENT qualified person approves it. Every record must carry a source citation.")
-    t1, t2 = st.tabs(["JSON bundle", "CSV files"])
+    t1, t2 = st.tabs(["JSON bundle", "CSV files"], key="ref_import_tab", on_change="rerun")
     with t1:
         st.download_button("Download format example (sample bundle)", json.dumps(demo_bundle_dict(), indent=1), file_name="reference_bundle_example.json", mime="application/json")
         up = st.file_uploader("Reference bundle (.json)", type=["json"], key="ref_json")
