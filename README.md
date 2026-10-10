@@ -1,30 +1,56 @@
-# Lokal.MD — offline clinical consultation & prescription-review assistant
+# Lokal.MD — Local Intelligence for Local Clinics
+
+<p align="center">
+  <img src="static/logo.svg" width="96" alt="Lokal.MD Logo" /><br />
+  <b>"Local intelligence for local clinics."</b><br />
+  <i>Offline clinical consultation, Taglish speech transcription & medication safety-review assistant.</i>
+</p>
+
+---
 
 > **AppBuildersPH Hackathon 2026 Submission** · **Theme: Local AI (On-Device Inference)**  
-> *"An AI product that remains genuinely useful when the cloud disappears."*
+> *"An AI healthcare product that remains genuinely useful when the cloud disappears."*
 
-A local-first, air-gapped documentation aid for Rural Health Units (RHUs), barangay health stations, and disaster-response teams in the Philippines. Runs on one ordinary laptop; **no cloud AI, no telemetry, no API bills**. Patient health records are encrypted at rest with AES-256-GCM.
+A local-first, air-gapped clinical documentation and medication safety workstation designed for Rural Health Units (RHUs), barangay health stations, and disaster-response medical missions across the Philippines. Runs entirely on an ordinary laptop or workstation; **no cloud AI, no telemetry, no subscription bills**. All patient health records are encrypted at rest with AES-256-GCM.
 
 ### Why Local AI is Fundamental
-Under the **Philippine Data Privacy Act of 2012**, transmitting patient consultations and identifiable medical records to third-party cloud servers creates severe compliance, ethical, and security risks. Furthermore, during typhoons, natural disasters, or in remote island/mountain RHUs with zero connectivity, cloud healthcare tools fail completely. Lokal.MD runs 100% on-device: patient data never leaves the hardware, operations never stop during blackouts, and public health units incur ₱0 in subscription fees.
+Under the **Philippine Data Privacy Act of 2012 (DPA)**, transmitting patient consultations and identifiable medical records to third-party cloud servers creates severe compliance, ethical, and privacy risks. Furthermore, during typhoons, natural disasters, or in remote island/mountain RHUs with zero connectivity, cloud healthcare tools fail completely. Lokal.MD runs 100% on-device: patient data never leaves the hardware, operations never stop during blackouts, and public health units incur ₱0 in subscription fees.
 
 ### AI Disclosures
 - **Speech-to-Text**: `faster-whisper` (Systran/faster-whisper-base/small) running locally via CTranslate2.
 - **Clinical Structuring (SOAP Notes)**: `llama3.2:3b` running on-device via local Ollama.
-- **Safety Engine**: Deterministic offline SQLite rules engine checking contraindications, allergies, and dosage limits.
+- **Safety Engine**: Deterministic offline SQLite rules engine checking contraindications, allergies, and dosage limits against the Philippine National Formulary (PNF) standards.
 - **AI Development Tools**: Built using **Devin** (Cognition) + Antigravity.
 
-> **Status: functional MVP.** Ships with a *synthetic sample* medication reference set (labelled as such on every result and PDF). It is not a certified
-> medical device and has not been assessed for Data Privacy Act or regulatory compliance. See "Limitations".
+> **Status: functional MVP.** Ships with a *synthetic sample* medication reference set (labelled as such on every result and PDF). It is not a certified medical device and has not been assessed for Data Privacy Act or regulatory compliance. See "Limitations".
 
-## Quick start (Windows)
+---
+
+## ⚡ Quick Start
+
+### Windows
+```cmd
+setup.bat      # once, with internet: creates venv, downloads dependencies, Whisper & Ollama
+run.bat        # daily use, 100% offline; opens http://127.0.0.1:8501
 ```
-setup.bat      # once, with internet: venv, dependencies, Whisper "small", Ollama + llama3.2:3b
-run.bat        # daily use, offline; opens http://127.0.0.1:8501
+
+### macOS & Linux
+```bash
+# 1. Setup virtual environment and dependencies
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 2. Prepare local models (one-time while online)
+python scripts/prepare_models.py
+
+# 3. Launch application (100% offline)
+streamlit run app.py
 ```
-Manual: `pip install -r requirements.txt`, `python scripts/prepare_models.py`, `streamlit run app.py`.
-First launch asks you to create the administrator account and shows a one-time **recovery key**.
-Tests: `python -m pytest`. Offline self-test (run with the network unplugged): `python scripts/check_offline.py`.
+
+- First launch prompts you to create the clinic administrator account and securely presents a one-time **master recovery key**.
+- Run automated tests: `pytest` (94 passing tests).
+- Offline air-gap self-test: `python scripts/check_offline.py`.
 
 ## What it does
 | Area | Implementation |
